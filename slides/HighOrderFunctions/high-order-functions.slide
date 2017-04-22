@@ -36,7 +36,7 @@ Go does not support Generics
 .play -edit map_use.go
 
 
-* Simple Filter Function (1/2)
+* Simple Filter Function (1/3)
 
 .code hof/filter.go
 
