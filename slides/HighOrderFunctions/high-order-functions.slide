@@ -1,0 +1,94 @@
+Higher-Order Functions in Go
+9 Apr 2017
+Tags: go functional
+
+Stefan Hans
+Go Rookie and Native Speaker Wannabe
+contact@stefan-hans.de
+https://github.com/stefanhans/golang-contexting
+
+* A Little Theory at First
+
+- functions as first-class citizens, i.e. as types
+- immutable state
+- functional and pure functional programming
+- monads
+
+.image images/academic_gopher.png
+
+* Higher-Order Functions in Go
+
+Go does not supports higher-order functions like map, filter or fold
+
+_"If_a_language_has_too_many_features,_you_waste_time_choosing_which_ones_to_use._
+_Then_implement,_refine,_possibly_rethink_and_redo."_
+
+Rob Pike, _Simplicity_is_Complicated_
+
+* Simple Map Function (1/2)
+
+.code hof/map.go
+
+Go does not support Generics
+
+* Simple Map Function (2/2)
+
+.play -edit map_use.go
+
+
+* Simple Filter Function (1/2)
+
+.code hof/filter.go
+
+Go does not support Generics
+
+* Simple Filter Function (2/2)
+
+.play -edit filter_use.go
+
+* Currying Function
+
+.play -edit currying.go
+
+* Simple Fold Function (1/2)
+
+.play -edit fold_use.go
+
+* Simple High-Order Function As Reference Method
+
+	func (list *ListOfInt) RefMap(f listMapFunc) {
+		for i := 0; i < len(*list); i++ {
+			(*list)[i] = f((*list)[i])
+		}
+	}
+
+.play -edit ref_map_use.go
+
+* Parallel High-Order Function As Reference Method (1/2)
+Helper function
+
+	func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
+		for i := from; i < to; i++ {
+			(*list)[i] = f((*list)[i])
+		}
+		c <- true
+	}
+
+Exported function
+
+	func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
+		var from, to int
+		c := make(chan bool)
+		batchSize := int(math.Ceil(float64(len(*list)) / float64(cores)))
+		for i := 0; i < cores; i++ {
+			to = int(math.Min(float64(from+batchSize), float64(len(*list))))
+			go list.chanRefMap(f, from, to, c)
+			from = to
+		}
+		for i:=0; i<cores; i++ { <-c }
+	}
+
+* Parallel High-Order Function As Reference Method (2/2)
+
+.play -edit par_ref_map_use.go
+
