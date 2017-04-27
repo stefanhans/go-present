@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
+	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 	"fmt"
 	"time"
 )

@@ -1,5 +1,5 @@
 package main
-import (. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
+import (. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 	"fmt"
 	"runtime"
 	"time")
