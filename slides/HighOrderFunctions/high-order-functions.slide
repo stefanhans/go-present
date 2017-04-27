@@ -13,12 +13,19 @@ https://github.com/stefanhans/golang-contexting
 - immutable state
 - functional and pure functional programming
 - monads
+- lazy lists as types defined by functions (Hindley–Milner)
 
 .image images/academic_gopher.png
 
 * Higher-Order Functions in Go
 
 Go does not supports higher-order functions like map, filter or fold
+
+Go does not support generics - no sufficient compiler approach found yet
+
+.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
+
+.image images/gopher-talks.png
 
 _"If_a_language_has_too_many_features,_you_waste_time_choosing_which_ones_to_use._
 _Then_implement,_refine,_possibly_rethink_and_redo."_
@@ -29,18 +36,14 @@ Rob Pike, _Simplicity_is_Complicated_
 
 .code hof/map.go
 
-Go does not support Generics
-
 * Simple Map Function (2/2)
 
 .play -edit map_use.go
 
 
-* Simple Filter Function (1/3)
+* Simple Filter Function (1/2)
 
 .code hof/filter.go
-
-Go does not support Generics
 
 * Simple Filter Function (2/2)
 
@@ -50,9 +53,24 @@ Go does not support Generics
 
 .play -edit currying.go
 
-* Simple Fold Function (1/2)
+* Fold Function Approach
 
-.play -edit fold_use.go
+.play -edit fold_approach.go
+
+* Fold Function With Monads (1/2)
+
+Monad laws (simplified):
+
+- neutral element
+- associative function
+
+.code hof/fold.go
+
+* Fold Function With Monads (2/2)
+
+.play -edit monad.go
+
+Why should the function be associative?
 
 * Simple High-Order Function As Reference Method
 
@@ -91,4 +109,74 @@ Exported function
 * Parallel High-Order Function As Reference Method (2/2)
 
 .play -edit par_ref_map_use.go
+
+
+* Parallel High-Order Function With Internal Reference Method (1/2)
+
+Using chanRefMap as helper function on an internal copy
+
+	func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
+
+		// Create internal copy
+		out := make(ListOfInt, len(list))
+		copy(out, list)
+
+		c := make(chan bool)
+		var from, to int
+		batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
+		for i := 0; i < cores; i++ {
+			to = int(math.Min(float64(from+batchSize), float64(len(out))))
+			go (&out).chanRefMap(f, from, to, c)
+			from = to
+		}
+		for i := 0; i < cores; i++ {
+			<-c
+		}
+		return out
+	}
+
+* Parallel High-Order Function With Internal Reference Method (2/2)
+
+.play -edit pmap_use.go
+
+* Lazy Lists Defined by Function (1/2)
+
+	type FloatMonad struct {
+		NeutralElement float64
+		AssocFunc      func(float64) float64
+	}
+	type LazyListOfFloat struct {
+		Monad FloatMonad
+		floats []float64
+		last float64
+	}
+	func(list *LazyListOfFloat) Next() float64 {
+		if list.floats == nil {
+			list.last = list.Monad.NeutralElement
+		} else {
+			list.last = list.Monad.AssocFunc(list.last)
+		}
+		list.floats = append(list.floats, list.last)
+		return list.last
+	}
+	func(list *LazyListOfFloat) Get(ord int) float64 {
+		for i:=len(list.floats);  i<ord; i++ {
+			list.Next()
+		}
+		return list.floats[ord-1]
+	}
+
+* Lazy Lists Defined by Function (2/2)
+
+.play -edit lazy_list_use.go
+
+* Links
+dotGo 2015 - Francesc Campoy Flores - Functional Go?
+.link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s
+A concurrent prime sieve (The Go Playground)
+.link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
+
+
+
+
 

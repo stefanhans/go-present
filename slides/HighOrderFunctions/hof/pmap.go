@@ -28,3 +28,19 @@ func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
 		<-c
 	}
 }
+
+func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
+	out := make(ListOfInt, len(list))
+	copy(out, list)
+
+	c := make(chan bool)
+	var from, to int
+	batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
+	for i := 0; i < cores; i++ {
+		to = int(math.Min(float64(from+batchSize), float64(len(out))))
+		go (&out).chanRefMap(f, from, to, c)
+		from = to
+	}
+	for i := 0; i < cores; i++ { <-c }
+	return out
+}

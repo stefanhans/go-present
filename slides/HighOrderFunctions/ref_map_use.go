@@ -1,7 +1,7 @@
 package main
 import ("fmt"
 	"time"
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof")
+	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof")
 
 func main() {
 	tenTimes := func(x int) int {

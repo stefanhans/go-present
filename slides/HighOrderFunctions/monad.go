@@ -1,7 +1,7 @@
 package main
 
 import (
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
+	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
 	"fmt"
 )
 
