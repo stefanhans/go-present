@@ -6,4 +6,4 @@ Repository for Go Slides and Articles
 ## Slides ![academic-gopheer](HighOrderFunctions/images/academic_gopher.png?raw=true)
 
 - **High-Order Functions** `Rookie's introduction into functional programming with Go`
-![academic-gopheer](HighOrderFunctions/images/academic_gopher.png?raw=true)
+![academic-gopheer](./HighOrderFunctions/images/academic_gopher.png?raw=true)
