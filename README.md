@@ -1,6 +1,6 @@
 # go-present
 
-Repository for Go Slides and Articles
+Repository for slides and articles about Go
 
 ## Slides
 
