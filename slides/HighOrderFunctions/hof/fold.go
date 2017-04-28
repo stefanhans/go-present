@@ -12,3 +12,4 @@ func (list ListOfInt) Fold(monad ListFoldMonad) int {
 	}
 	return out
 }
+// END OMIT

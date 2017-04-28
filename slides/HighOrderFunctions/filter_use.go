@@ -1,8 +1,9 @@
 package main
 
 import (
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 	"fmt"
+
+	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
 
 func main() {
@@ -12,3 +13,5 @@ func main() {
 
 	fmt.Printf("List %v: Filter(isEven) yields %v\n", list, list.Filter(isEven))
 }
+
+// END OMIT

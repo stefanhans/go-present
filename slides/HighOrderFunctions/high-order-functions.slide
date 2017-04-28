@@ -38,7 +38,7 @@ Rob Pike, _Simplicity_is_Complicated_
 
 * Simple Map Function (2/2)
 
-.play -edit map_use.go
+.play -edit map_use.go /func main/,/END/
 
 
 * Simple Filter Function (1/2)
@@ -47,28 +47,31 @@ Rob Pike, _Simplicity_is_Complicated_
 
 * Simple Filter Function (2/2)
 
-.play -edit filter_use.go
+.play -edit filter_use.go /func main/,/END/
 
 * Currying Function
 
-.play -edit currying.go
+.play -edit currying.go /func main/,/END/
 
 * Fold Function Approach
 
-.play -edit fold_approach.go
+.play -edit fold_approach.go /START/,/END/
 
 * Fold Function With Monads (1/2)
 
 Monad laws (simplified):
 
 - neutral element
-- associative function
+	f(n, y) = x
 
-.code hof/fold.go
+- associative function
+	f(f(x, y), z) = f(x, f(y, z))
+
+.code hof/fold.go /type ListFoldMonad/,/END/
 
 * Fold Function With Monads (2/2)
 
-.play -edit monad.go
+.play -edit monad.go /func main/,/END/
 
 Why should the function be associative?
 
@@ -80,7 +83,7 @@ Why should the function be associative?
 		}
 	}
 
-.play -edit ref_map_use.go
+.play -edit ref_map_use.go /func main/,/END/
 
 * Parallel High-Order Function As Reference Method (1/2)
 Helper function
@@ -108,7 +111,7 @@ Exported function
 
 * Parallel High-Order Function As Reference Method (2/2)
 
-.play -edit par_ref_map_use.go
+.play -edit par_ref_map_use.go /func main/,/END/
 
 
 * Parallel High-Order Function With Internal Reference Method (1/2)
@@ -137,7 +140,7 @@ Using chanRefMap as helper function on an internal copy
 
 * Parallel High-Order Function With Internal Reference Method (2/2)
 
-.play -edit pmap_use.go
+.play -edit pmap_use.go /func main/,/END/
 
 * Lazy Lists Defined by Function (1/2)
 
@@ -168,7 +171,7 @@ Using chanRefMap as helper function on an internal copy
 
 * Lazy Lists Defined by Function (2/2)
 
-.play -edit lazy_list_use.go
+.play -edit lazy_list_use.go /func main/,/END/
 
 * Links
 dotGo 2015 - Francesc Campoy Flores - Functional Go?
