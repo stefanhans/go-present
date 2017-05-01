@@ -1,8 +1,9 @@
 package main
 
 import (
-	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
 	"fmt"
+
+	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
 
 func main() {
@@ -13,6 +14,8 @@ func main() {
 
 	fmt.Printf("list%v.Map(tenTimes).Filter(isEven) yields %v\n", list,
 		list.
-			Filter(isEven).
+		Filter(isEven).
 			Map(tenTimes))
 }
+
+// END OMIT

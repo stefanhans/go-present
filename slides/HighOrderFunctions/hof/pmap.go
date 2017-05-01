@@ -24,9 +24,7 @@ func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
 		go list.chanRefMap(f, from, to, c)
 		from = to
 	}
-	for i := 0; i < cores; i++ {
-		<-c
-	}
+	for i := 0; i < cores; i++ { <-c }
 }
 
 func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {

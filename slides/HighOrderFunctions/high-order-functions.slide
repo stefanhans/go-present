@@ -68,7 +68,7 @@ Actually, anonymous functions, function literals, and closures are the same thin
 
 * Simple Map Function (2/2)
 
-.play -edit map_use.go
+.play -edit map_use.go /func main/,/^}/
 
 
 * Simple Filter Function (1/2)
@@ -77,136 +77,82 @@ Actually, anonymous functions, function literals, and closures are the same thin
 
 * Simple Filter Function (2/2)
 
-.play -edit filter_use.go
+.play -edit filter_use.go /func main/,/END/
 
 * Currying Function
 
-.play -edit currying.go
+.play -edit currying.go /func main/,/END/
 
 * Fold Function Approach
 
-.play -edit fold_approach.go
+.play -edit fold_approach.go /START/,/END/
 
 * Fold Function With Monads (1/2)
 
 Monad laws (simplified):
 
 - neutral element
-- associative function
+	f(n, y) = x
 
-.code hof/fold.go
+- associative function
+	f(f(x, y), z) = f(x, f(y, z))
+
+.code hof/fold.go /type ListFoldMonad/,/END/
 
 * Fold Function With Monads (2/2)
 
-.play -edit monad.go
+.play -edit monad.go /func main/,/^}/
 
 Why should the function be associative?
 
 * Simple High-Order Function As Reference Method
 
-func (list *ListOfInt) RefMap(f listMapFunc) {
-for i := 0; i < len(*list); i++ {
-(*list)[i] = f((*list)[i])
-}
-}
+.code hof/pmap.go /RefMap/,/^}/
 
-.play -edit ref_map_use.go
+.play -edit ref_map_use.go /func main/,/^}/
 
 * Parallel High-Order Function As Reference Method (1/2)
 Helper function
 
-func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
-for i := from; i < to; i++ {
-(*list)[i] = f((*list)[i])
-}
-c <- true
-}
+.code hof/pmap.go /chanRefMap/,/^}/
 
 Exported function
 
-func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
-var from, to int
-c := make(chan bool)
-batchSize := int(math.Ceil(float64(len(*list)) / float64(cores)))
-for i := 0; i < cores; i++ {
-to = int(math.Min(float64(from+batchSize), float64(len(*list))))
-go list.chanRefMap(f, from, to, c)
-from = to
-}
-for i:=0; i<cores; i++ { <-c }
-}
+.code hof/pmap.go /ParRefMap/,/^}/
 
 * Parallel High-Order Function As Reference Method (2/2)
 
-.play -edit par_ref_map_use.go
+.play -edit par_ref_map_use.go /func main/,/^}/
 
 
 * Parallel High-Order Function With Internal Reference Method (1/2)
 
 Using chanRefMap as helper function on an internal copy
 
-func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
-
-// Create internal copy
-out := make(ListOfInt, len(list))
-copy(out, list)
-
-c := make(chan bool)
-var from, to int
-batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
-for i := 0; i < cores; i++ {
-to = int(math.Min(float64(from+batchSize), float64(len(out))))
-go (&out).chanRefMap(f, from, to, c)
-from = to
-}
-for i := 0; i < cores; i++ {
-<-c
-}
-return out
-}
+.code hof/pmap.go /PMap/,/^}/
 
 * Parallel High-Order Function With Internal Reference Method (2/2)
 
-.play -edit pmap_use.go
+.play -edit pmap_use.go /func main/,/^}/
 
-* Lazy Lists Defined by Function (1/2)
+* Lazy Lists Defined by Function (1/3)
 
-type FloatMonad struct {
-NeutralElement float64
-AssocFunc      func(float64) float64
-}
-type LazyListOfFloat struct {
-Monad FloatMonad
-floats []float64
-last float64
-}
-func(list *LazyListOfFloat) Next() float64 {
-if list.floats == nil {
-list.last = list.Monad.NeutralElement
-} else {
-list.last = list.Monad.AssocFunc(list.last)
-}
-list.floats = append(list.floats, list.last)
-return list.last
-}
-func(list *LazyListOfFloat) Get(ord int) float64 {
-for i:=len(list.floats);  i<ord; i++ {
-list.Next()
-}
-return list.floats[ord-1]
-}
+.code hof/lazy_list.go /FloatMonad/,/^}/
 
-* Lazy Lists Defined by Function (2/2)
+.code hof/lazy_list.go /LazyListOfFloat/,/^}/
 
-.play -edit lazy_list_use.go
+* Lazy Lists Defined by Function (2/3)
+
+.code hof/lazy_list.go /Next/,/^}/
+
+.code hof/lazy_list.go /Get/,/^}/
+
+* Lazy Lists Defined by Function (3/3)
+
+.play -edit lazy_list_use.go /func main/,/^}/
 
 * Links
 dotGo 2015 - Francesc Campoy Flores - Functional Go?
 .link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s
 A concurrent prime sieve (The Go Playground)
 .link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
-
-
-
-
-

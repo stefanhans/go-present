@@ -6,12 +6,12 @@ type FloatMonad struct {
 }
 
 type LazyListOfFloat struct {
-	Monad FloatMonad
+	Monad  FloatMonad
 	floats []float64
-	last float64
+	last   float64
 }
 
-func(list *LazyListOfFloat) Next() float64 {
+func (list *LazyListOfFloat) Next() float64 {
 	if list.floats == nil {
 		list.last = list.Monad.NeutralElement
 	} else {
@@ -21,9 +21,11 @@ func(list *LazyListOfFloat) Next() float64 {
 	return list.last
 }
 
-func(list *LazyListOfFloat) Get(ord int) float64 {
-	for i:=len(list.floats);  i<ord; i++ {
+func (list *LazyListOfFloat) Get(ord int) float64 {
+	for i := len(list.floats); i < ord; i++ {
 		list.Next()
 	}
 	return list.floats[ord-1]
 }
+
+// END OMIT
