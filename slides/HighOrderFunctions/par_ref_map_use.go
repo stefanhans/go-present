@@ -1,11 +1,10 @@
 package main
 
 import (
+	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
 	"fmt"
 	"runtime"
 	"time"
-
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
 
 func main() {
@@ -23,5 +22,3 @@ func main() {
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))
 }
-
-// END OMIT

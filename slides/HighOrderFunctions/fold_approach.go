@@ -1,10 +1,6 @@
 package main
-
 import "fmt"
-
-// START OMIT
 type List []int
-
 type ListFoldFunc func(int, int) int
 
 func (list List) Fold(f ListFoldFunc) int {
@@ -22,5 +18,3 @@ func main() {
 
 	fmt.Printf("List %v: Fold(sum) yields %v\n", list, list.Fold(sum))
 }
-
-// END OMIT

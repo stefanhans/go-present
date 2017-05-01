@@ -1,9 +1,8 @@
 package main
 
 import (
+	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
 	"fmt"
-
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
 
 func main() {
@@ -17,5 +16,3 @@ func main() {
 			Filter(isEven).
 			Map(tenTimes))
 }
-
-// END OMIT

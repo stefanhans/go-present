@@ -1,9 +1,8 @@
 package main
 
 import (
+	. "bitbucket.org/stefanhans/golang-ctx/presentations/HighOrderFunctions/hof"
 	"fmt"
-
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
 
 func main() {
@@ -13,5 +12,3 @@ func main() {
 
 	fmt.Printf("List %v: Map(tenTimes) yields %v\n", list, list.Map(tenTimes))
 }
-
-// END OMIT

@@ -1,29 +1,26 @@
 Higher-Order Functions in Go
-27 Apr 2017
+9 Apr 2017
 Tags: go functional
 
 Stefan Hans
 Go Rookie and Native Speaker Wannabe
 contact@stefan-hans.de
-https://github.com/stefanhans/go-present/
+https://github.com/stefanhans/golang-contexting
 
 * A Little Theory at First
 
 - functions as first-class citizens, i.e. as types
-- immutable state
+- anonymous functions, function literals, and closures
 - functional and pure functional programming
+- state
 - monads
-- lazy lists as types defined by functions (Hindley–Milner)
+- abstract data types defined by functions (Hindley–Milner)
 
 .image images/academic_gopher.png
 
 * Higher-Order Functions in Go
 
 Go does not supports higher-order functions like map, filter or fold
-
-Go does not support generics - no sufficient compiler approach found yet
-
-.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
 
 .image images/gopher-talks.png
 
@@ -32,13 +29,46 @@ _Then_implement,_refine,_possibly_rethink_and_redo."_
 
 Rob Pike, _Simplicity_is_Complicated_
 
+* Generics in Go
+
+Go does not support generics - no sufficient compiler approach found yet
+
+.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
+
+.image images/project.png
+
+* Anonymous Functions, Function Literals, Closures (1/3)
+- anonymous functions have no name
+- a function literal is a notation of a function type
+- closures are functions which can see their environment, i.e. next outer scope
+
+What is this? Does it compile? How could you extend it?
+.play -edit closure00.go /CLOSURESTART/,/CLOSURE END/
+Does that compile? If not, why?
+.play -edit closure01.go /CLOSURESTART/,/CLOSURE END/
+What is *function*myf* syntactically? Can you fix it if needed?
+.play -edit closure02.go /CLOSURESTART/,/CLOSURE END/
+
+Actually, anonymous functions, function literals, and closures are the same things.
+
+* Anonymous Functions, Function Literals, Closures (2/3)
+.play -edit closure1.go /CLOSURESTART/,/CLOSURE END/
+.play -edit closure2.go /CLOSURESTART/,/CLOSURE END/
+
+* Anonymous Functions, Function Literals, Closures (3/3)
+.play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
+.play -edit closure4.go /CLOSURESTART/,/CLOSURE END/
+
+* Closure Games
+.play -edit closure5.go /CLOSURESTART/,/CLOSURE END/
+
 * Simple Map Function (1/2)
 
 .code hof/map.go
 
 * Simple Map Function (2/2)
 
-.play -edit map_use.go /func main/,/END/
+.play -edit map_use.go
 
 
 * Simple Filter Function (1/2)
@@ -47,131 +77,128 @@ Rob Pike, _Simplicity_is_Complicated_
 
 * Simple Filter Function (2/2)
 
-.play -edit filter_use.go /func main/,/END/
+.play -edit filter_use.go
 
 * Currying Function
 
-.play -edit currying.go /func main/,/END/
+.play -edit currying.go
 
 * Fold Function Approach
 
-.play -edit fold_approach.go /START/,/END/
+.play -edit fold_approach.go
 
 * Fold Function With Monads (1/2)
 
 Monad laws (simplified):
 
 - neutral element
-	f(n, y) = x
-
 - associative function
-	f(f(x, y), z) = f(x, f(y, z))
 
-.code hof/fold.go /type ListFoldMonad/,/END/
+.code hof/fold.go
 
 * Fold Function With Monads (2/2)
 
-.play -edit monad.go /func main/,/END/
+.play -edit monad.go
 
 Why should the function be associative?
 
 * Simple High-Order Function As Reference Method
 
-	func (list *ListOfInt) RefMap(f listMapFunc) {
-		for i := 0; i < len(*list); i++ {
-			(*list)[i] = f((*list)[i])
-		}
-	}
+func (list *ListOfInt) RefMap(f listMapFunc) {
+for i := 0; i < len(*list); i++ {
+(*list)[i] = f((*list)[i])
+}
+}
 
-.play -edit ref_map_use.go /func main/,/END/
+.play -edit ref_map_use.go
 
 * Parallel High-Order Function As Reference Method (1/2)
 Helper function
 
-	func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
-		for i := from; i < to; i++ {
-			(*list)[i] = f((*list)[i])
-		}
-		c <- true
-	}
+func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
+for i := from; i < to; i++ {
+(*list)[i] = f((*list)[i])
+}
+c <- true
+}
 
 Exported function
 
-	func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
-		var from, to int
-		c := make(chan bool)
-		batchSize := int(math.Ceil(float64(len(*list)) / float64(cores)))
-		for i := 0; i < cores; i++ {
-			to = int(math.Min(float64(from+batchSize), float64(len(*list))))
-			go list.chanRefMap(f, from, to, c)
-			from = to
-		}
-		for i:=0; i<cores; i++ { <-c }
-	}
+func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
+var from, to int
+c := make(chan bool)
+batchSize := int(math.Ceil(float64(len(*list)) / float64(cores)))
+for i := 0; i < cores; i++ {
+to = int(math.Min(float64(from+batchSize), float64(len(*list))))
+go list.chanRefMap(f, from, to, c)
+from = to
+}
+for i:=0; i<cores; i++ { <-c }
+}
 
 * Parallel High-Order Function As Reference Method (2/2)
 
-.play -edit par_ref_map_use.go /func main/,/END/
+.play -edit par_ref_map_use.go
 
 
 * Parallel High-Order Function With Internal Reference Method (1/2)
 
 Using chanRefMap as helper function on an internal copy
 
-	func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
+func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
 
-		// Create internal copy
-		out := make(ListOfInt, len(list))
-		copy(out, list)
+// Create internal copy
+out := make(ListOfInt, len(list))
+copy(out, list)
 
-		c := make(chan bool)
-		var from, to int
-		batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
-		for i := 0; i < cores; i++ {
-			to = int(math.Min(float64(from+batchSize), float64(len(out))))
-			go (&out).chanRefMap(f, from, to, c)
-			from = to
-		}
-		for i := 0; i < cores; i++ {
-			<-c
-		}
-		return out
-	}
+c := make(chan bool)
+var from, to int
+batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
+for i := 0; i < cores; i++ {
+to = int(math.Min(float64(from+batchSize), float64(len(out))))
+go (&out).chanRefMap(f, from, to, c)
+from = to
+}
+for i := 0; i < cores; i++ {
+<-c
+}
+return out
+}
 
 * Parallel High-Order Function With Internal Reference Method (2/2)
 
-.play -edit pmap_use.go /func main/,/END/
+.play -edit pmap_use.go
 
 * Lazy Lists Defined by Function (1/2)
 
-	type FloatMonad struct {
-		NeutralElement float64
-		AssocFunc      func(float64) float64
-	}
-	type LazyListOfFloat struct {
-		Monad FloatMonad
-		floats []float64
-		last float64
-	}
-	func(list *LazyListOfFloat) Next() float64 {
-		if list.floats == nil {
-			list.last = list.Monad.NeutralElement
-		} else {
-			list.last = list.Monad.AssocFunc(list.last)
-		}
-		list.floats = append(list.floats, list.last)
-		return list.last
-	}
-	func(list *LazyListOfFloat) Get(ord int) float64 {
-		for i:=len(list.floats);  i<ord; i++ {
-			list.Next()
-		}
-		return list.floats[ord-1]
-	}
+type FloatMonad struct {
+NeutralElement float64
+AssocFunc      func(float64) float64
+}
+type LazyListOfFloat struct {
+Monad FloatMonad
+floats []float64
+last float64
+}
+func(list *LazyListOfFloat) Next() float64 {
+if list.floats == nil {
+list.last = list.Monad.NeutralElement
+} else {
+list.last = list.Monad.AssocFunc(list.last)
+}
+list.floats = append(list.floats, list.last)
+return list.last
+}
+func(list *LazyListOfFloat) Get(ord int) float64 {
+for i:=len(list.floats);  i<ord; i++ {
+list.Next()
+}
+return list.floats[ord-1]
+}
 
 * Lazy Lists Defined by Function (2/2)
 
-.play -edit lazy_list_use.go /func main/,/END/
+.play -edit lazy_list_use.go
 
 * Links
 dotGo 2015 - Francesc Campoy Flores - Functional Go?
