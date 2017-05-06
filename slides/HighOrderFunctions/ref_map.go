@@ -3,9 +3,17 @@ package main
 import (
 	"fmt"
 	"time"
-
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
+
+type ListOfInt []int
+
+type listMapFunc func(int) int
+
+func (list *ListOfInt) RefMap(f listMapFunc) {
+	for i := 0; i < len(*list); i++ {
+		(*list)[i] = f((*list)[i])
+	}
+}
 
 func main() {
 	tenTimes := func(x int) int {

@@ -2,9 +2,21 @@ package main
 
 import (
 	"fmt"
-
-	. "github.com/stefanhans/go-present/slides/HighOrderFunctions/hof"
 )
+
+// START OMIT
+type ListOfInt []int
+
+type listMapFunc func(int) int
+
+func (list ListOfInt) Map(f listMapFunc) ListOfInt {
+	var out ListOfInt
+	for _, i := range list {
+		out = append(out, f(i))
+	}
+	return out
+}
+// END OMIT
 
 func main() {
 	var list = ListOfInt{-2, -1, 0, 2, 2, 3}

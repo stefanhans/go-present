@@ -1,6 +1,15 @@
-package hof
+package main
 
-import "math"
+import (
+	"fmt"
+	"runtime"
+	"time"
+	"math"
+)
+
+type ListOfInt []int
+
+type listMapFunc func(int) int
 
 func (list *ListOfInt) RefMap(f listMapFunc) {
 	for i := 0; i < len(*list); i++ {
@@ -27,18 +36,20 @@ func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
 	for i := 0; i < cores; i++ { <-c }
 }
 
-func (list ListOfInt) PMap(f listMapFunc, cores int) ListOfInt {
-	out := make(ListOfInt, len(list))
-	copy(out, list)
-
-	c := make(chan bool)
-	var from, to int
-	batchSize := int(math.Ceil(float64(len(out)) / float64(cores)))
-	for i := 0; i < cores; i++ {
-		to = int(math.Min(float64(from+batchSize), float64(len(out))))
-		go (&out).chanRefMap(f, from, to, c)
-		from = to
+func main() {
+	tenTimes := func(x int) int {
+		time.Sleep(time.Duration(1 * time.Millisecond))
+		return x * 10
 	}
-	for i := 0; i < cores; i++ { <-c }
-	return out
+	var list ListOfInt
+	for i := 0; i < 10; i++ {
+		list = append(list, i)
+	}
+	start := time.Now()
+	fmt.Printf("%v.ParRefMap(tenTimes, %v) ", list, runtime.NumCPU())
+	list.ParRefMap(tenTimes, runtime.NumCPU())
+	fmt.Printf("yields %v\n", list)
+	fmt.Print(time.Since(start))
 }
+
+// END OMIT
