@@ -1,5 +1,5 @@
 Higher-Order Functions in Go
-9 Apr 2017
+9 May 2017
 Tags: go functional
 
 Stefan Hans
@@ -11,6 +11,7 @@ https://github.com/stefanhans/golang-contexting
 
 - functions as first-class citizens, i.e. as types
 - anonymous functions, function literals, and closures
+- tail recursion
 - functional and pure functional programming
 - state
 - monads
@@ -20,7 +21,7 @@ https://github.com/stefanhans/golang-contexting
 
 * Higher-Order Functions in Go
 
-Go does not supports higher-order functions like map, filter or fold
+The Go Programming Language does not contain higher-order functions like map, filter or fold.
 
 .image images/gopher-talks.png
 
@@ -31,16 +32,21 @@ Rob Pike, _Simplicity_is_Complicated_
 
 * Generics in Go
 
-Go does not support generics - no sufficient compiler approach found yet
-
-.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
+The Go Programming Language does not support generics. No sufficient compiler approach was found yet.
 
 .image images/project.png
 
+.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
+
+* Tail Recursion
+
+The Go Programming Language is *not* optimized for tail recursion.
+
+.image images/pkg.png
+
 * Anonymous Functions, Function Literals, Closures (1/3)
-- anonymous functions have no name
-- a function literal is a notation of a function type
-- closures are functions which can see their environment, i.e. next outer scope
+Anonymous functions have no name.
+A function literal is a notation of a function type.
 
 What is this? Does it compile? How could you extend it?
 .play -edit closure00.go /CLOSURESTART/,/CLOSURE END/
@@ -49,11 +55,15 @@ Does that compile? If not, why?
 What is *function*myf* syntactically? Can you fix it if needed?
 .play -edit closure02.go /CLOSURESTART/,/CLOSURE END/
 
-Actually, anonymous functions, function literals, and closures are the same things.
-
 * Anonymous Functions, Function Literals, Closures (2/3)
+Closures are functions which can see their environment, i.e. next outer scope.
+
 .play -edit closure1.go /CLOSURESTART/,/CLOSURE END/
+
+Scope, function arguments and goroutines
 .play -edit closure2.go /CLOSURESTART/,/CLOSURE END/
+
+Actually, anonymous functions, function literals, and closures are the same things.
 
 * Anonymous Functions, Function Literals, Closures (3/3)
 .play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
@@ -77,25 +87,30 @@ Actually, anonymous functions, function literals, and closures are the same thin
 
 * Simple Filter Function (2/2)
 
-.play -edit filter_use.go /func main/,/END/
+.play -edit filter_use.go /func main/,/^}/
 
 * Currying Function
 
-.play -edit currying.go /func main/,/END/
+.play -edit currying.go /func main/,/^}/
 
 * Fold Function Approach
 
 .play -edit fold_approach.go /START/,/END/
 
-* Fold Function With Monads (1/2)
+* Monads (simplified)
 
-Monad laws (simplified):
+A data type with a function following two rules being those:
 
 - neutral element
-	f(n, y) = x
+f(n, y) = x
 
 - associative function
-	f(f(x, y), z) = f(x, f(y, z))
+f(f(x, y), z) = f(x, f(y, z))
+
+Associativity is not commutativity. The string concatenation and the product of square matrices are examples.
+
+
+* Fold Function With Monads (1/2)
 
 .code hof/fold.go /type ListFoldMonad/,/END/
 
@@ -150,6 +165,15 @@ Using chanRefMap as helper function on an internal copy
 * Lazy Lists Defined by Function (3/3)
 
 .play -edit lazy_list_use.go /func main/,/^}/
+
+* Discussion: High-Order Functions in Distributed Systems
+
+.image images/project.png
+
+- RPC
+- Map/Reduce Model
+- Monads
+- ...
 
 * Links
 dotGo 2015 - Francesc Campoy Flores - Functional Go?
