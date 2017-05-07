@@ -97,7 +97,7 @@ Reference pointer makes no sense as pass-by-reference parameters in Go
 A data type with a function following two rules being those:
 
 - neutral element
-	f(n, y) = x
+	f(n, x) = x
 
 - associative function
 	f(f(x, y), z) = f(x, f(y, z))
