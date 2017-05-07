@@ -1,5 +1,5 @@
 Higher-Order Functions in Go
-9 May 2017
+12 May 2017
 Tags: go functional
 
 Stefan Hans
@@ -68,6 +68,8 @@ Actually, anonymous functions, function literals, and closures are the same thin
 * Simple Map Function (1/2)
 
 .code map.go /START/,/END/
+
+Reference pointer makes no sense as pass-by-reference parameters in Go
 
 * Simple Map Function (2/2)
 

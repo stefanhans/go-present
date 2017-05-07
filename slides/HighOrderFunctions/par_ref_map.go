@@ -11,25 +11,25 @@ type ListOfInt []int
 
 type listMapFunc func(int) int
 
-func (list *ListOfInt) RefMap(f listMapFunc) {
-	for i := 0; i < len(*list); i++ {
-		(*list)[i] = f((*list)[i])
+func (list ListOfInt) RefMap(f listMapFunc) {
+	for i := 0; i < len(list); i++ {
+		list[i] = f(list[i])
 	}
 }
 
-func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
+func (list ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
 	for i := from; i < to; i++ {
-		(*list)[i] = f((*list)[i])
+		(list)[i] = f((list)[i])
 	}
 	c<-true
 }
 
-func (list *ListOfInt) ParRefMap(f listMapFunc, cores int) {
+func (list ListOfInt) ParRefMap(f listMapFunc, cores int) {
 	var from, to int
 	c := make(chan bool)
-	batchSize := int(math.Ceil(float64(len(*list)) / float64(cores)))
+	batchSize := int(math.Ceil(float64(len(list)) / float64(cores)))
 	for i := 0; i < cores; i++ {
-		to = int(math.Min(float64(from+batchSize), float64(len(*list))))
+		to = int(math.Min(float64(from+batchSize), float64(len(list))))
 		go list.chanRefMap(f, from, to, c)
 		from = to
 	}

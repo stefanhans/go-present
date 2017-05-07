@@ -9,9 +9,9 @@ type ListOfInt []int
 
 type listMapFunc func(int) int
 
-func (list *ListOfInt) RefMap(f listMapFunc) {
-	for i := 0; i < len(*list); i++ {
-		(*list)[i] = f((*list)[i])
+func (list ListOfInt) RefMap(f listMapFunc) {
+	for i := 0; i < len(list); i++ {
+		list[i] = f(list[i])
 	}
 }
 

@@ -19,9 +19,9 @@ func (list ListOfInt) Map(f listMapFunc) ListOfInt {
 	return out
 }
 
-func (list *ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
+func (list ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
 	for i := from; i < to; i++ {
-		(*list)[i] = f((*list)[i])
+		list[i] = f(list[i])
 	}
 	c<-true
 }
