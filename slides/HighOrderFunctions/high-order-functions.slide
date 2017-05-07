@@ -44,33 +44,26 @@ The Go Programming Language is *not* optimized for tail recursion.
 
 .image images/pkg.png
 
-* Anonymous Functions, Function Literals, Closures (1/3)
+* Anonymous Functions, Function Literals, Closures (1/2)
 Anonymous functions have no name.
 A function literal is a notation of a function type.
 
 What is this? Does it compile? How could you extend it?
-.play -edit closure00.go /CLOSURESTART/,/CLOSURE END/
+.play -edit closure1_1.go /CLOSURESTART/,/CLOSURE END/
 Does that compile? If not, why?
-.play -edit closure01.go /CLOSURESTART/,/CLOSURE END/
+.play -edit closure1_2.go /CLOSURESTART/,/CLOSURE END/
 What is *function*myf* syntactically? Can you fix it if needed?
-.play -edit closure02.go /CLOSURESTART/,/CLOSURE END/
+.play -edit closure1_3.go /CLOSURESTART/,/CLOSURE END/
 
-* Anonymous Functions, Function Literals, Closures (2/3)
+* Anonymous Functions, Function Literals, Closures (2/2)
 Closures are functions which can see their environment, i.e. next outer scope.
 
-.play -edit closure1.go /CLOSURESTART/,/CLOSURE END/
-
-Scope, function arguments and goroutines
 .play -edit closure2.go /CLOSURESTART/,/CLOSURE END/
 
-Actually, anonymous functions, function literals, and closures are the same things.
-
-* Anonymous Functions, Function Literals, Closures (3/3)
+Scope, function arguments and goroutines
 .play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
-.play -edit closure4.go /CLOSURESTART/,/CLOSURE END/
 
-* Closure Games
-.play -edit closure5.go /CLOSURESTART/,/CLOSURE END/
+Actually, anonymous functions, function literals, and closures are the same things.
 
 * Simple Map Function (1/2)
 

@@ -6,13 +6,9 @@ import (
 
 func main() {
 
+	str := "Yes"
+
 	// CLOSURESTART OMIT
-	for j := 0; j < 5; j++ {
-		func() {
-			fmt.Println("Make a guess! ", j)
-		}()
-		j++
-	}
-	fmt.Println("Make a guess! ", j)
+	func() { fmt.Println("Can a closures see the outside? ", str) }()
 	// CLOSURE END OMIT
 }
