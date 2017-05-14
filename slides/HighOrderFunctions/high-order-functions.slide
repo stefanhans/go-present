@@ -5,7 +5,7 @@ Tags: go functional
 Stefan Hans
 Go Rookie and Native Speaker Wannabe
 contact@stefan-hans.de
-https://github.com/stefanhans/golang-contexting
+https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
@@ -200,4 +200,4 @@ dotGo 2015 - Francesc Campoy Flores - Functional Go?
 A concurrent prime sieve (The Go Playground)
 .link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
 Go Concurrency Patterns: Pipelines and cancellation
-.https://blog.golang.org/pipelines
+.link https://blog.golang.org/pipelines
