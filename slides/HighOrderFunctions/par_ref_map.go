@@ -17,20 +17,20 @@ func (list ListOfInt) RefMap(f listMapFunc) {
 	}
 }
 
-func (list ListOfInt) chanRefMap(f listMapFunc, from, to int, c chan<- bool) {
+func (list ListOfInt) chanMap(f listMapFunc, from, to int, c chan<- bool) {
 	for i := from; i < to; i++ {
 		(list)[i] = f((list)[i])
 	}
 	c<-true
 }
 
-func (list ListOfInt) ParRefMap(f listMapFunc, cores int) {
+func (list ListOfInt) ParMap(f listMapFunc, cores int) {
 	var from, to int
 	c := make(chan bool)
 	batchSize := int(math.Ceil(float64(len(list)) / float64(cores)))
 	for i := 0; i < cores; i++ {
 		to = int(math.Min(float64(from+batchSize), float64(len(list))))
-		go list.chanRefMap(f, from, to, c)
+		go list.chanMap(f, from, to, c)
 		from = to
 	}
 	for i := 0; i < cores; i++ { <-c }
@@ -46,8 +46,8 @@ func main() {
 		list = append(list, i)
 	}
 	start := time.Now()
-	fmt.Printf("%v.ParRefMap(tenTimes, %v) ", list, runtime.NumCPU())
-	list.ParRefMap(tenTimes, runtime.NumCPU())
+	fmt.Printf("%v.ParMap(tenTimes, %v) ", list, runtime.NumCPU())
+	list.ParMap(tenTimes, runtime.NumCPU())
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))
 }

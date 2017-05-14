@@ -9,7 +9,7 @@ type ListOfInt []int
 
 type listMapFunc func(int) int
 
-func (list ListOfInt) RefMap(f listMapFunc) {
+func (list ListOfInt) Map(f listMapFunc) {
 	for i := 0; i < len(list); i++ {
 		list[i] = f(list[i])
 	}
@@ -23,8 +23,8 @@ func main() {
 	var list ListOfInt
 	for i := 0; i < 10; i++ { list = append(list, i) }
 	start := time.Now()
-	fmt.Printf("%v.RefMap(tenTimes) ", list)
-	list.RefMap(tenTimes)
+	fmt.Printf("%v.Map(tenTimes) ", list)
+	list.Map(tenTimes)
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))
 }

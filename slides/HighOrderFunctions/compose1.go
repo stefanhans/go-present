@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-func Compose(f, g func(x float64) float64) func(x float64) float64 {
-	return func(x float64) float64 {
-		return f(g(x))
+func ComposeString(f, g func(str string) string) func(str string) string {
+	return func(str string) string {
+		return f(g(str))
 	}
 }
 
 func main() {
-	fmt.Println(Compose(math.Sqrt, func(x float64) float64 { return x*x })(4.0))
+	fmt.Println(ComposeString(
+		func(str string) string { return str+" hello" },
+		func(str string) string { return str+" Peter" })("my friend"))
 }

@@ -36,6 +36,10 @@ The Go Programming Language does *not* support generics. No sufficient compiler 
 
 .image images/project.png
 
+_"The_generic_dilemma_is_this:_do_you_want_slow_programmers,_slow_compilers_and_bloated_binaries,_or_slow_execution_times?"_
+
+Russ Cox, _The_Generic_Dilemma_
+
 .link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
 
 * Tail Recursion
@@ -71,10 +75,11 @@ Actually, anonymous functions, function literals, and closures are the same thin
 
 .play -edit compose1.go /func main/,/^}/
 
+This composition evaluates its functions from right to left.
 
 * Function Composition (2/2)
 
-.code -edit compose2.go /func MultiCompose/,/^}/
+.code -edit compose2.go /COMPOSE START/,/COMPOSE END/
 
 .play -edit compose2.go /func main/,/^}/
 
@@ -84,7 +89,10 @@ Variadic functions allow an "endless composition" of functions.
 
 .code map.go /START/,/END/
 
-Reference pointer makes no sense as pass-by-reference parameters in Go
+Reference pointer of slices makes no sense as pass-by-reference parameters
+because slices are handled as pass-by-reference parameters automatically.
+
+.link https://dave.cheney.net/2017/04/29/there-is-no-pass-by-reference-in-go There is no pass-by-reference in Go (article by Dave Cheney)
 
 * Simple Map Function (2/2)
 
@@ -132,18 +140,18 @@ Why should the function be associative?
 
 * Simple High-Order Function As Reference Method
 
-.code pmap.go /RefMap/,/^}/
+.code ref_map.go /Map/,/^}/
 
 .play -edit ref_map.go /func main/,/^}/
 
 * Parallel High-Order Function As Reference Method (1/2)
 Helper function
 
-.code par_ref_map.go /chanRefMap/,/^}/
+.code par_ref_map.go /chanMap/,/^}/
 
 Exported function
 
-.code par_ref_map.go /ParRefMap/,/^}/
+.code par_ref_map.go /ParMap/,/^}/
 
 * Parallel High-Order Function As Reference Method (2/2)
 
@@ -152,9 +160,9 @@ Exported function
 
 * Parallel High-Order Function With Internal Reference Method (1/2)
 
-Using chanRefMap as helper function on an internal copy
+Using chanMap as helper function on an internal copy
 
-.code pmap.go /PMap/,/^}/
+.code pmap.go /ParMap/,/^}/
 
 * Parallel High-Order Function With Internal Reference Method (2/2)
 
@@ -191,3 +199,5 @@ dotGo 2015 - Francesc Campoy Flores - Functional Go?
 .link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s
 A concurrent prime sieve (The Go Playground)
 .link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
+Go Concurrency Patterns: Pipelines and cancellation
+.https://blog.golang.org/pipelines

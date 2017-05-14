@@ -2,17 +2,15 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
-func Compose(f, g func(x float64) float64) func(x float64) float64 {
-	return func(x float64) float64 {
-		return f(g(x))
-	}
+// COMPOSE START OMIT
+func Compose(f, g func(x int) int) func(x int) int {
+	return func(x int) int { return f(g(x)) }
 }
 
-func MultiCompose(funcs ...func(x float64) float64) func(x float64) float64 {
-	return func(x float64) float64 {
+func MultiCompose(funcs ...func(x int) int) func(x int) int {
+	return func(x int) int {
 		fout := funcs[0]
 		for _, f := range funcs[1:] {
 			fout = Compose(fout, f)
@@ -20,7 +18,11 @@ func MultiCompose(funcs ...func(x float64) float64) func(x float64) float64 {
 		return fout(x)
 	}
 }
+// COMPOSE END OMIT
 
 func main() {
-	fmt.Println(MultiCompose(math.Sqrt, func(x float64) float64 { return x*x }, math.Sqrt)(4))
+	fmt.Println(MultiCompose(
+		func(x int) int { return x+1 },
+		func(x int) int { return x*x },
+		func(x int) int { return x+3 })(4))
 }
