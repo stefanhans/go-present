@@ -1,5 +1,5 @@
 Higher-Order Functions in Go
-12 May 2017
+1 June 2017
 Tags: go functional
 
 Stefan Hans
@@ -11,9 +11,9 @@ https://github.com/stefanhans/golang-contexting
 
 - functions as first-class citizens, i.e. as types
 - anonymous functions, function literals, and closures
-- tail recursion
 - functional and pure functional programming
 - state
+- tail recursion
 - monads
 - abstract data types defined by functions (Hindley–Milner)
 
@@ -21,7 +21,7 @@ https://github.com/stefanhans/golang-contexting
 
 * Higher-Order Functions in Go
 
-The Go Programming Language does not contain higher-order functions like map, filter or fold.
+The Go Programming Language does *not* contain higher-order functions like map, filter or fold.
 
 .image images/gopher-talks.png
 
@@ -32,7 +32,7 @@ Rob Pike, _Simplicity_is_Complicated_
 
 * Generics in Go
 
-The Go Programming Language does not support generics. No sufficient compiler approach was found yet.
+The Go Programming Language does *not* support generics. No sufficient compiler approach was found yet.
 
 .image images/project.png
 
@@ -64,6 +64,21 @@ Scope, function arguments and goroutines
 .play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
 
 Actually, anonymous functions, function literals, and closures are the same things.
+
+* Function Composition (1/2)
+
+.code -edit compose1.go /func Compose/,/^}/
+
+.play -edit compose1.go /func main/,/^}/
+
+
+* Function Composition (2/2)
+
+.code -edit compose2.go /func MultiCompose/,/^}/
+
+.play -edit compose2.go /func main/,/^}/
+
+Variadic functions allow an "endless composition" of functions.
 
 * Simple Map Function (1/2)
 
