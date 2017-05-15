@@ -69,6 +69,14 @@ Scope, function arguments and goroutines
 
 Actually, anonymous functions, function literals, and closures are the same things.
 
+* Function as Receiver Type
+
+.code operate.go /OPERATOR START/,/OPERATOR END/
+
+.play -edit operate.go /func main/,/^}/
+
+A famous example is the Handler interface implementation HandlerFunc in the net/http package.
+
 * Function Composition (1/2)
 
 .code -edit compose1.go /func Compose/,/^}/
