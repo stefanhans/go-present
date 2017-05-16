@@ -11,9 +11,11 @@ https://github.com/stefanhans/go-present/
 
 - functions as first-class citizens, i.e. as types
 - anonymous functions, function literals, and closures
+- function as receiver type and function composition
+- higher-order functions
 - functional and pure functional programming
-- state
-- tail recursion
+- mutable and immutable state
+- recursion and tail recursion
 - monads
 - abstract data types defined by functions (Hindley–Milner)
 
@@ -21,7 +23,7 @@ https://github.com/stefanhans/go-present/
 
 * Higher-Order Functions in Go
 
-The Go Programming Language does *not* contain higher-order functions like map, filter or fold.
+*Neither* the Go Programming Language *nor* the Standard Library contains higher-order functions like map, filter or fold.
 
 .image images/gopher-talks.png
 
@@ -34,19 +36,21 @@ Rob Pike, _Simplicity_is_Complicated_
 
 The Go Programming Language does *not* support generics. No sufficient compiler approach was found yet.
 
-.image images/project.png
-
 _"The_generic_dilemma_is_this:_do_you_want_slow_programmers,_slow_compilers_and_bloated_binaries,_or_slow_execution_times?"_
 
 Russ Cox, _The_Generic_Dilemma_
 
+.image images/project.png
+
 .link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
 
-* Tail Recursion
+* Tail Recursion in Go
 
 The Go Programming Language is *not* optimized for tail recursion.
 
 .image images/pkg.png
+
+.link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s dotGo 2015 - Francesc Campoy Flores - Functional Go?
 
 * Anonymous Functions, Function Literals, Closures (1/2)
 Anonymous functions have no name.
@@ -75,7 +79,8 @@ Actually, anonymous functions, function literals, and closures are the same thin
 
 .play -edit operate.go /func main/,/^}/
 
-A famous example is the Handler interface implementation HandlerFunc in the net/http package.
+If you need a wrapper around an exchangeable function, a function as receiver type with a method as wrapper can do the job. Defining an interface containing the method, makes the wrapper functionality exchangeable as well.
+A famous example is the *Handler* interface implementation *HandlerFunc* with the *ServeHTTP* method in the *net/http* package.
 
 * Function Composition (1/2)
 
@@ -96,6 +101,8 @@ Variadic functions allow an "endless composition" of functions.
 * Simple Map Function (1/2)
 
 .code map.go /START/,/END/
+
+Is this functional or pure funtional? Is it mutable or immutable?
 
 Reference pointer of slices makes no sense as pass-by-reference parameters
 because slices are handled as pass-by-reference parameters automatically.
@@ -146,13 +153,13 @@ Associativity is not commutativity. The string concatenation and the product of 
 
 Why should the function be associative?
 
-* Simple High-Order Function As Reference Method
+* Simple High-Order Function With Mutable State
 
 .code ref_map.go /Map/,/^}/
 
 .play -edit ref_map.go /func main/,/^}/
 
-* Parallel High-Order Function As Reference Method (1/2)
+* Parallel High-Order Function With Mutable State (1/2)
 Helper function
 
 .code par_ref_map.go /chanMap/,/^}/
@@ -161,18 +168,18 @@ Exported function
 
 .code par_ref_map.go /ParMap/,/^}/
 
-* Parallel High-Order Function As Reference Method (2/2)
+* Parallel High-Order Function With Mutable State (2/2)
 
 .play -edit par_ref_map.go /func main/,/^}/
 
 
-* Parallel High-Order Function With Internal Reference Method (1/2)
+* Parallel High-Order Function With Immutable State (1/2)
 
 Using chanMap as helper function on an internal copy
 
 .code pmap.go /ParMap/,/^}/
 
-* Parallel High-Order Function With Internal Reference Method (2/2)
+* Parallel High-Order Function With Immutable State (2/2)
 
 .play -edit pmap.go /func main/,/^}/
 
@@ -196,16 +203,14 @@ Using chanMap as helper function on an internal copy
 
 .image images/project.png
 
-- RPC
 - Map/Reduce Model
 - Monads
 - Pipelines
+- RPC
 - ...
 
 * Links
-dotGo 2015 - Francesc Campoy Flores - Functional Go?
-.link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s
-A concurrent prime sieve (The Go Playground)
+A concurrent prime sieve
 .link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
 Go Concurrency Patterns: Pipelines and cancellation
 .link https://blog.golang.org/pipelines

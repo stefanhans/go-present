@@ -24,6 +24,7 @@ func main() {
 	tenTimes := func(x int) int { return x * 10 }
 
 	fmt.Printf("List %v: Map(tenTimes) yields %v\n", list, list.Map(tenTimes))
+	fmt.Printf("and list%v is immutable\n", list)
 }
 
 // END OMIT
