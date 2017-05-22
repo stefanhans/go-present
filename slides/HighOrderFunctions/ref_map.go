@@ -16,8 +16,7 @@ func (list ListOfInt) Map(f listMapFunc) {
 }
 
 func main() {
-	tenTimes := func(x int) int {
-		time.Sleep(time.Duration(1 * time.Millisecond))
+	tenTimes := func(x int) int { time.Sleep(time.Duration(1 * time.Millisecond))
 		return x * 10
 	}
 	var list ListOfInt

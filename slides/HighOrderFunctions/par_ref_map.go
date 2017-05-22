@@ -17,23 +17,24 @@ func (list ListOfInt) RefMap(f listMapFunc) {
 	}
 }
 
-func (list ListOfInt) chanMap(f listMapFunc, from, to int, c chan<- bool) {
+func (list ListOfInt) chanMap(f listMapFunc, from, to int, end chan<- bool) {
 	for i := from; i < to; i++ {
 		(list)[i] = f((list)[i])
 	}
-	c<-true
+	end <-true
 }
 
 func (list ListOfInt) ParMap(f listMapFunc, cores int) {
 	var from, to int
-	c := make(chan bool)
+	end := make(chan bool)
 	batchSize := int(math.Ceil(float64(len(list)) / float64(cores)))
 	for i := 0; i < cores; i++ {
 		to = int(math.Min(float64(from+batchSize), float64(len(list))))
-		go list.chanMap(f, from, to, c)
+		go list.chanMap(f, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { <-c }
+	for i := 0; i < cores; i++ { <-end
+	}
 }
 
 func main() {

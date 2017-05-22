@@ -132,7 +132,7 @@ because slices are handled as pass-by-reference parameters automatically.
 
 * Monads (simplified)
 
-A data type with a function following two rules being those:
+A data type wrapped around a function following two rules:
 
 - neutral element
 	f(n, x) = x
@@ -185,7 +185,7 @@ Using chanMap as helper function on an internal copy
 
 * Lazy Lists Defined by Function (1/3)
 
-.code lazy_list.go /FloatMonad/,/^}/
+.code lazy_list.go /FloatDef/,/^}/
 
 .code lazy_list.go /LazyListOfFloat/,/^}/
 
