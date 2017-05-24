@@ -11,11 +11,13 @@ https://github.com/stefanhans/go-present/
 
 - functions as first-class citizens, i.e. as types
 - anonymous functions, function literals, and closures
+- function as receiver type and function composition
 - higher-order functions
 - functional and pure functional programming
 - mutable and immutable state
 - recursion and tail recursion
-- monads (neutral element)
+- monads
+- abstract data types defined by functions (Hindley–Milner)
 
 .image images/academic_gopher.png
 
@@ -71,11 +73,36 @@ Scope, function arguments and goroutines
 
 Actually, anonymous functions, function literals, and closures are the same things.
 
+* Function as Receiver Type
+
+.code operate.go /OPERATOR START/,/OPERATOR END/
+
+.play -edit operate.go /func main/,/^}/
+
+If you need a wrapper around an exchangeable function, a function as receiver type with a method as wrapper can do the job. Defining an interface containing the method, makes the wrapper functionality exchangeable as well.
+A famous example is the *Handler* interface implementation *HandlerFunc* with the *ServeHTTP* method in the *net/http* package.
+
+* Function Composition (1/2)
+
+.code -edit compose1.go /func Compose/,/^}/
+
+.play -edit compose1.go /func main/,/^}/
+
+This composition evaluates its functions from right to left.
+
+* Function Composition (2/2)
+
+.code -edit compose2.go /COMPOSE START/,/COMPOSE END/
+
+.play -edit compose2.go /func main/,/^}/
+
+Variadic functions allow an "endless composition" of functions.
+
 * Simple Map Function (1/2)
 
 .code map.go /START/,/END/
 
-Is this functional or pure functional? Is it mutable or immutable?
+Is this functional or pure funtional? Is it mutable or immutable?
 
 Reference pointer of slices makes no sense as pass-by-reference parameters
 because slices are handled as pass-by-reference parameters automatically.
@@ -126,24 +153,64 @@ Associativity is not commutativity. The string concatenation and the product of 
 
 Why should the function be associative?
 
-* To be continued...
+* Simple High-Order Function With Mutable State
 
-*Advanced*High-Order*Functions*
+.code ref_map.go /Map/,/^}/
 
-- monads (associative function)
-- parallel algorithm
-- advanced high-order functions
-- function as receiver type
-- function composition
-- recursion and tail recursion
-- abstract data types defined by functions (Hindley–Milner)
-- lazy lists
+.play -edit ref_map.go /func main/,/^}/
 
-*Functional*Streamings*
+* Parallel High-Order Function With Mutable State (1/2)
+Helper function
 
-- pipelines
-- fan in and fan out
-- channels as sieves
-- channels building high-order functions
+.code par_ref_map.go /chanMap/,/^}/
+
+Exported function
+
+.code par_ref_map.go /ParMap/,/^}/
+
+* Parallel High-Order Function With Mutable State (2/2)
+
+.play -edit par_ref_map.go /func main/,/^}/
+
+
+* Parallel High-Order Function With Immutable State (1/2)
+
+Using chanMap as helper function on an internal copy
+
+.code pmap.go /ParMap/,/^}/
+
+* Parallel High-Order Function With Immutable State (2/2)
+
+.play -edit pmap.go /func main/,/^}/
+
+* Lazy Lists Defined by Function (1/3)
+
+.code lazy_list.go /FloatDef/,/^}/
+
+.code lazy_list.go /LazyListOfFloat/,/^}/
+
+* Lazy Lists Defined by Function (2/3)
+
+.code lazy_list.go /Next/,/^}/
+
+.code lazy_list.go /Get/,/^}/
+
+* Lazy Lists Defined by Function (3/3)
+
+.play -edit lazy_list.go /func main/,/^}/
+
+* Discussion: High-Order Functions in Distributed Systems
 
 .image images/project.png
+
+- Map/Reduce Model
+- Monads
+- Pipelines
+- RPC
+- ...
+
+* Links
+A concurrent prime sieve
+.link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
+Go Concurrency Patterns: Pipelines and cancellation
+.link https://blog.golang.org/pipelines
