@@ -139,6 +139,10 @@ Why should the function be associative?
 - abstract data types defined by functions (Hindley–Milner)
 - lazy lists
 
+.image images/academic_gopher.png
+
+* To be continued...
+
 *Functional*Streamings*
 
 - pipelines
