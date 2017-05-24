@@ -146,7 +146,8 @@ Why should the function be associative?
 *Functional*Streamings*
 
 - pipelines
-- fan in and fan out
+- fan-in and fan-out
+- cancellation
 - channels as sieves
 - channels building high-order functions
 
