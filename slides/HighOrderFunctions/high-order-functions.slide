@@ -9,13 +9,13 @@ https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
-- functions as first-class citizens, i.e. as types
+- functions as first-class types
 - anonymous functions, function literals, and closures
 - higher-order functions
 - functional and pure functional programming
 - mutable and immutable state
 - recursion and tail recursion
-- monads (neutral element)
+- monads
 
 .image images/academic_gopher.png
 
