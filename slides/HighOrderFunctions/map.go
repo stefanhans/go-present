@@ -18,6 +18,8 @@ func (list ListOfInt) Map(f listMapFunc) ListOfInt {
 }
 // END OMIT
 
+
+// MUTABLE MAP START OMIT
 func main() {
 	var list = ListOfInt{-2, -1, 0, 2, 2, 3}
 
@@ -26,5 +28,14 @@ func main() {
 	fmt.Printf("List %v: Map(tenTimes) yields %v\n", list, list.Map(tenTimes))
 	fmt.Printf("and list%v is immutable\n", list)
 }
+
+func (list ListOfInt) MutableMap(f listMapFunc) ListOfInt {
+	for n, i := range list {
+		list[n] = f(i)
+	}
+	return list
+}
+
+// MUTABLE MAP END OMIT
 
 // END OMIT

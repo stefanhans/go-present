@@ -12,8 +12,8 @@ https://github.com/stefanhans/go-present/
 - functions as first-class types
 - anonymous functions, function literals, and closures
 - higher-order functions
+- state or mutability and immutability
 - functional and pure functional programming
-- mutable and immutable state
 - recursion and tail recursion
 - monads
 
@@ -69,22 +69,21 @@ Closures are functions which can see their environment, i.e. next outer scope.
 Scope, function arguments and goroutines
 .play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
 
-Actually, anonymous functions, function literals, and closures are the same things.
-
 * Simple Map Function (1/2)
 
 .code map.go /START/,/END/
 
 Is this functional or pure functional? Is it mutable or immutable?
 
+* Simple Map Function (2/2)
+
+#.play -edit map.go /func main/,/^}/
+.play -edit map.go /MUTABLE MAP START/,/MUTABLE MAP END/
+
 Reference pointer of slices makes no sense as pass-by-reference parameters
 because slices are handled as pass-by-reference parameters automatically.
 
 .link https://dave.cheney.net/2017/04/29/there-is-no-pass-by-reference-in-go There is no pass-by-reference in Go (article by Dave Cheney)
-
-* Simple Map Function (2/2)
-
-.play -edit map.go /func main/,/^}/
 
 
 * Simple Filter Function (1/2)
@@ -130,12 +129,10 @@ Why should the function be associative?
 
 *Advanced*High-Order*Functions*
 
-- monads (associative function)
 - parallel algorithm
 - advanced high-order functions
 - function as receiver type
 - function composition
-- recursion and tail recursion
 - abstract data types defined by functions (Hindley–Milner)
 - lazy lists
 
@@ -146,7 +143,7 @@ Why should the function be associative?
 *Functional*Streamings*
 
 - pipelines
-- fan-in and fan-out
+- fan-in and fan-out pattern
 - cancellation
 - channels as sieves
 - channels building high-order functions
