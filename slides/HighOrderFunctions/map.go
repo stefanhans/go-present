@@ -25,15 +25,17 @@ func main() {
 
 	tenTimes := func(x int) int { return x * 10 }
 
-	fmt.Printf("List %v: Map(tenTimes) yields %v\n", list, list.Map(tenTimes))
-	fmt.Printf("and list%v is immutable\n", list)
+	fmt.Printf("list%v: Map(tenTimes) returns list%v\n", list, list.Map(tenTimes))
+
+	fmt.Printf("list%v.AnotherMap(tenTimes) changed to ", list)
+	list.AnotherMap(tenTimes)
+	fmt.Printf("to list%v\n", list)
 }
 
-func (list ListOfInt) MutableMap(f listMapFunc) ListOfInt {
+func (list ListOfInt) AnotherMap(f listMapFunc) {
 	for n, i := range list {
 		list[n] = f(i)
 	}
-	return list
 }
 
 // MUTABLE MAP END OMIT
