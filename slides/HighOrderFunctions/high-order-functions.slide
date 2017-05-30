@@ -9,7 +9,7 @@ https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
-- functions as first-class types
+- functions are first-class types
 - anonymous functions, function literals, and closures
 - higher-order functions
 - state or mutability and immutability
@@ -51,10 +51,8 @@ The Go Programming Language is *not* optimized for tail recursion.
 .link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s dotGo 2015 - Francesc Campoy Flores - Functional Go?
 
 * Anonymous Functions, Function Literals, Closures (1/2)
-Anonymous functions have no name.
-A function literal is a notation of a function type.
 
-What is this? Does it compile? How could you extend it?
+What is this? Does it compile? How could you extend it minimalistically?
 .play -edit closure1_1.go /CLOSURESTART/,/CLOSURE END/
 Does that compile? If not, why?
 .play -edit closure1_2.go /CLOSURESTART/,/CLOSURE END/
@@ -62,8 +60,9 @@ What is *function*myf* syntactically? Can you fix it if needed?
 .play -edit closure1_3.go /CLOSURESTART/,/CLOSURE END/
 
 * Anonymous Functions, Function Literals, Closures (2/2)
-Closures are functions which can see their environment, i.e. next outer scope.
+_"Function_literals_are_closures:_they_may_refer_to_variables_defined_in_a_surrounding_function."_  - The Go Programming Language Specification
 
+What is probably the surrounding function here?
 .play -edit closure2.go /CLOSURESTART/,/CLOSURE END/
 
 Scope, function arguments and goroutines
@@ -104,7 +103,7 @@ because slices are handled as pass-by-reference parameters automatically.
 
 * Monads (simplified)
 
-A data type wrapped around a function following two rules:
+A data type wrapped around a function and an element following two rules:
 
 - neutral element
 	f(n, x) = x
@@ -130,8 +129,8 @@ Why should the function be associative?
 *Advanced*High-Order*Functions*
 
 - parallel algorithm
-- advanced high-order functions
-- function as receiver type
+- advanced higher-order functions
+- functions as receiver types
 - function composition
 - abstract data types defined by functions (Hindley–Milner)
 - lazy lists

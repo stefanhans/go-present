@@ -10,7 +10,7 @@ func main() {
 
 	// CLOSURESTART OMIT
 	func() {
-		fmt.Println("Can a closures see the outside? ", str)
+		fmt.Println("Can a closure see the outside? ", str)
 	}()
 	// CLOSURE END OMIT
 }
