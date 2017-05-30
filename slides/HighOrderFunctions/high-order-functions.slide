@@ -148,3 +148,13 @@ Why should the function be associative?
 - channels building high-order functions
 
 .image images/project.png
+
+* To be continued...
+
+*Functional*Programming*in*Distributed*Systems*
+
+- Map/Reduce Model
+- gRPC
+- Protocol Buffers
+
+.image images/gopher-talks.png
