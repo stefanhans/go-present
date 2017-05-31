@@ -93,7 +93,7 @@ because slices are handled as pass-by-reference parameters automatically.
 
 .play -edit filter.go /func main/,/^}/
 
-* Currying Function
+* Higher-Order Function Chain
 
 .play -edit currying.go /func main/,/^}/
 
