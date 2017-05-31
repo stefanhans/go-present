@@ -33,9 +33,9 @@ func main() {
 	fmt.Printf("list%v: Map(tenTimes) returns list%v but still list%v\n",
 		list, list.Map(tenTimes), list)
 
-	fmt.Printf("list%v.AnotherMap(tenTimes) changed to ", list)
+	fmt.Printf("list%v.AnotherMap(tenTimes) has changed to ", list)
 	list.AnotherMap(tenTimes)
-	fmt.Printf("to list%v\n", list)
+	fmt.Printf("list%v\n", list)
 }
 // MUTABLE MAP END OMIT
 

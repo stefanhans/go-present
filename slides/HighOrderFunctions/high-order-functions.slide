@@ -76,7 +76,6 @@ Is this functional or pure functional? Is it mutable or immutable?
 
 * Simple Map Function (2/2)
 
-#.play -edit map.go /func main/,/^}/
 .play -edit map.go /MUTABLE MAP START/,/MUTABLE MAP END/
 
 Reference pointer of slices makes no sense as pass-by-reference parameters
