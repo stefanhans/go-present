@@ -1,0 +1,117 @@
+Higher-Order Functions in Go
+1 June 2017
+Tags: go functional
+
+Stefan Hans
+Go Rookie and Native Speaker Wannabe
+contact@stefan-hans.de
+https://github.com/stefanhans/go-present/
+
+* A Little Theory at First
+
+- functions are first-class types
+- anonymous functions, function literals, and closures
+- higher-order functions
+- state or mutability and immutability
+- functional and pure functional programming
+- recursion and tail recursion
+- monads
+
+.image images/academic_gopher.png
+
+* Higher-Order Functions in Go
+
+*Neither* the Go Programming Language *nor* the Standard Library contains higher-order functions like map, filter or fold.
+
+.image images/gopher-talks.png
+
+_"If_a_language_has_too_many_features,_you_waste_time_choosing_which_ones_to_use._
+_Then_implement,_refine,_possibly_rethink_and_redo."_
+
+Rob Pike, _Simplicity_is_Complicated_
+
+* Generics in Go
+
+The Go Programming Language does *not* support generics. No sufficient compiler approach was found yet.
+
+_"The_generic_dilemma_is_this:_do_you_want_slow_programmers,_slow_compilers_and_bloated_binaries,_or_slow_execution_times?"_
+
+Russ Cox, _The_Generic_Dilemma_
+
+.image images/project.png
+
+.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
+
+* Tail Recursion in Go
+
+The Go Programming Language is *not* optimized for tail recursion.
+
+.image images/pkg.png
+
+.link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s dotGo 2015 - Francesc Campoy Flores - Functional Go?
+
+* Anonymous Functions, Function Literals, Closures
+
+What is this? Does it compile? How could you extend it minimalistically?
+.play -edit closure1_1.go /CLOSURESTART/,/CLOSURE END/
+Does that compile? If not, why?
+.play -edit closure1_2.go /CLOSURESTART/,/CLOSURE END/
+What is *function*myf* syntactically? Can you fix it if needed?
+.play -edit closure1_3.go /CLOSURESTART/,/CLOSURE END/
+
+_"Function_literals_are_closures:_they_may_refer_to_variables_defined_in_a_surrounding_function."_  - The Go Programming Language Specification
+
+What is probably the surrounding function here?
+.play -edit closure2.go /CLOSURESTART/,/CLOSURE END/
+
+Scope, function arguments and goroutines
+.play -edit closure3.go /CLOSURESTART/,/CLOSURE END/
+
+* Simple Map Function
+
+.code map.go /START/,/END/
+
+Is this functional or pure functional? Is it mutable or immutable?
+
+.play -edit map.go /MUTABLE MAP START/,/MUTABLE MAP END/
+
+Reference pointer of slices makes no sense as pass-by-reference parameters
+because slices are handled as pass-by-reference parameters automatically.
+
+.link https://dave.cheney.net/2017/04/29/there-is-no-pass-by-reference-in-go There is no pass-by-reference in Go (article by Dave Cheney)
+
+
+* Simple Filter Function
+
+.code filter.go /START/,/END/
+
+.play -edit filter.go /func main/,/^}/
+
+* Higher-Order Function Chain
+
+.play -edit currying.go /func main/,/^}/
+
+* Fold Function Approach
+
+.play -edit fold_approach.go /START/,/END/
+
+* Monads (simplified)
+
+A data type wrapped around a function and an element following two rules:
+
+- neutral element
+	f(n, x) = x
+
+- associative function
+	f(f(x, y), z) = f(x, f(y, z))
+
+Associativity is not commutativity. The string concatenation and the product of square matrices are examples.
+
+
+* Fold Function With Monads
+
+.code monad.go /START/,/END/
+
+.play -edit monad.go /func main/,/^}/
+
+Why should the function be associative?
