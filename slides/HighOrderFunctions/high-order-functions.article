@@ -1,4 +1,5 @@
 Higher-Order Functions in Go
+
 1 June 2017
 Tags: go functional
 
@@ -10,12 +11,35 @@ https://github.com/stefanhans/go-present/
 * A Little Theory at First
 
 - functions are first-class types
+
+This statement is at the core of functional programming. That means functions are like other types and can be variable values, named types, function arguments, return values or elements of data structures like structs, maps, arrays, slices, they can be receiver types, channel types and so on.
+
 - anonymous functions, function literals, and closures
+
+What do they have in common? What is the difference between them?
+Roughly speaking they are pointing at different aspects of the same thing.
+Anonymous functions have no name, a function literal is the notation of a function, and closures highlights the scope of a function which is wider as you may expect.
+
 - higher-order functions
+
+These functions are dealing with functions as arguments applied to a data structure. Well-known examples are map, filter or fold which we will implement in the course of the talk. If you think about higher-order functions, you find their analogy with SQL.
+
 - state or mutability and immutability
+
+If a function has access to a variable which is in its outer scope, the function possibly has a state, means mutability of the function or its data. In other words, the function can change the state or act differently according to the state but do not have to. Mathematical functions have no state and the same input yields always the exact same output. In distributed systems, especially in reactive systems, this is a large advantage. In general, computer science functions do not have this pureness. But pure functional languages like Haskell does.
+
 - functional and pure functional programming
+
+From a wider perspective, there are two major trends in computer science right from the start. One is more practical and bottom up trying to answer the question "what can we do with what we have?", and the other more theoretical and top down trying to answer the question "what do we need to get all done?". Nowadays it seems that both trends meet each other at the functional paradigm. The theory with the pure functional notion meets the practice with its kind of functional programming and we as developers have to be aware of what we doing in that concern.
+
 - recursion and tail recursion
+
+Recursion simply means a function calling itself and tail recursion means a function calling itself at the very end with no data left to remember until the called function returns. The consequences of these data left can be a stack overflow.
+
 - monads
+
+From the category theory comes the term of "monads" which is mainly a struct with a function and an element obeying some laws. This will be explained later in more detail.
+
 
 .image images/academic_gopher.png
 
