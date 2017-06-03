@@ -10,6 +10,8 @@ https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
+.image images/academic_gopher.png
+
 - functions are first-class types
 
 This statement is at the core of functional programming. That means functions are like other types and can be variable values, named types, function arguments, return values or elements of data structures like structs, maps, arrays, slices, they can be receiver types, channel types and so on.
@@ -39,9 +41,6 @@ Recursion simply means a function calling itself and tail recursion means a func
 - monads
 
 From the category theory comes the term of "monads" which is mainly a struct with a function and an element obeying some laws.
-
-
-.image images/academic_gopher.png
 
 * Higher-Order Functions in Go
 
