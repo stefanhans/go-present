@@ -16,13 +16,13 @@ This statement is at the core of functional programming. That means functions ar
 
 - anonymous functions, function literals, and closures
 
-What do they have in common? What is the difference between them?
+What do the three terms have in common? What is the difference between them?
 Roughly speaking they are pointing at different aspects of the same thing.
 Anonymous functions have no name, a function literal is the notation of a function, and closures highlights the scope of a function which is wider as you may expect.
 
 - higher-order functions
 
-These functions are dealing with functions as arguments applied to a data structure. Well-known examples are map, filter or fold which we will implement in the course of the talk. If you think about higher-order functions, you find their analogy with SQL.
+These functions are dealing with functions as arguments applied to a data structure. Well-known examples are map, filter or fold which we will implement in the course of the article. If you think about higher-order functions, you find their analogy with SQL.
 
 - state or mutability and immutability
 
@@ -38,7 +38,7 @@ Recursion simply means a function calling itself and tail recursion means a func
 
 - monads
 
-From the category theory comes the term of "monads" which is mainly a struct with a function and an element obeying some laws. This will be explained later in more detail.
+From the category theory comes the term of "monads" which is mainly a struct with a function and an element obeying some laws.
 
 
 .image images/academic_gopher.png
@@ -138,4 +138,6 @@ Associativity is not commutativity. The string concatenation and the product of 
 
 .play -edit monad.go /func main/,/^}/
 
-Why should the function be associative?
+Why should the function be associative? Something about parallelism?
+
+.image images/run.png
