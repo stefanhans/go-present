@@ -1,0 +1,18 @@
+Functional Streams in Go
+1 August 2017
+Tags: go functional streams
+
+Stefan Hans
+Go Rookie and Native Speaker Wannabe
+contact@stefan-hans.de
+https://github.com/stefanhans/go-present/
+
+* A Little Theory at First
+
+- pipelines
+- fan-in and fan-out pattern
+- cancellation
+- channels as sieves
+- channels building high-order functions
+
+.image images/academic_gopher.png
