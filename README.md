@@ -13,6 +13,6 @@
 
 ## Articles
 
-- **[Higher-Order Functions](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/HighOrderFunctions/high-order-functions.article)** `Rookie's introduction into functional programming with Go`
+- **[Higher-Order Functions](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/HighOrderFunctions/high-order-functions.article)** `Rookie's introduction into functional programming with Go` (layout problem with code background)
 
 
