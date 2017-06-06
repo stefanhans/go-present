@@ -1,6 +1,6 @@
 # go-present
 
-![academic-gopher](https://github.com/stefanhans/go-present/blob/master/slides/HighOrderFunctions/images/academic_gopher.png?raw=true) Repository for slides and articles about Go
+![academic-gopher](https://github.com/stefanhans/go-present/blob/master/slides/HighOrderFunctions/images/academic_gopher.png?raw=true) Repository for slides and articles about Go![gopher-talks](https://github.com/stefanhans/go-present/blob/master/slides/HighOrderFunctions/images/gopher-talks.png?raw=true)
 
 ## Slides
 
