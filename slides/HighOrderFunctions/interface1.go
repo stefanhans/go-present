@@ -44,13 +44,11 @@ func main() {
 
 
 	var list = ListOfInt{-2, -1, 2, 2, 3}
+	monad := IntAggregate{0, 0,func(x, y MonadType) MonadType { return x.(int) + y.(int) }}
+	fmt.Printf("List %v: Fold(monad) yields %v\n", list, list.Fold(monad))
 
 	var listFloat = ListOfFloat{-2.5, -1.0, 2, 2, 3}
-
-	monad := IntAggregate{0, 0,func(x, y MonadType) MonadType { return x.(int) + y.(int) }}
 	monadFloat := IntAggregate{0.0, 0.0,func(x, y MonadType) MonadType { return x.(float64) + y.(float64) }}
-
-	fmt.Printf("List %v: Fold(monad) yields %v\n", list, list.Fold(monad))
 	fmt.Printf("List %v: Fold(monad) yields %v\n", listFloat, listFloat.Fold(monadFloat))
 }
 
