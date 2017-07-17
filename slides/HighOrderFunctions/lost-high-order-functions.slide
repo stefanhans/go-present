@@ -1,4 +1,6 @@
-Advanced Higher-Order Functions in Go
+"Removed" Higher-Order Functions
+The Removed Slides of Former Talks
+
 28 August 2017
 Tags: go functional
 
@@ -9,11 +11,14 @@ https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
-- functional progrmming and Go
+- functions as first-class citizens, i.e. as types
+- anonymous functions, function literals, and closures
+- function as receiver type and function composition
+- higher-order functions
+- functional and pure functional programming
+- mutable and immutable state
+- recursion and tail recursion
 - monads
-- immutable state
-- parallelism
-- structs implementing interfaces
 - abstract data types defined by functions (Hindley–Milner)
 
 .image images/academic_gopher.png
@@ -48,6 +53,63 @@ The Go Programming Language is *not* optimized for tail recursion.
 .image images/pkg.png
 
 .link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s dotGo 2015 - Francesc Campoy Flores - Functional Go?
+
+* Function as Receiver Type
+
+.code operate.go /OPERATOR START/,/OPERATOR END/
+
+.play -edit operate.go /func main/,/^}/
+
+If you need a wrapper around an exchangeable function, a function as receiver type with a method as wrapper can do the job. Defining an interface containing the method, makes the wrapper functionality exchangeable as well.
+A famous example is the *Handler* interface implementation *HandlerFunc* with the *ServeHTTP* method in the *net/http* package.
+
+* Function Composition (1/2)
+
+.code -edit compose1.go /func Compose/,/^}/
+
+.play -edit compose1.go /func main/,/^}/
+
+This composition evaluates its functions from right to left.
+
+* Function Composition (2/2)
+
+.code -edit compose2.go /COMPOSE START/,/COMPOSE END/
+
+.play -edit compose2.go /func main/,/^}/
+
+Variadic functions allow an "endless composition" of functions.
+
+* Simple Map Function (1/2)
+
+.code map.go /START/,/END/
+
+Is this functional or pure funtional? Is it mutable or immutable?
+
+Reference pointer of slices makes no sense as pass-by-reference parameters
+because slices are handled as pass-by-reference parameters automatically.
+
+.link https://dave.cheney.net/2017/04/29/there-is-no-pass-by-reference-in-go There is no pass-by-reference in Go (article by Dave Cheney)
+
+* Simple Map Function (2/2)
+
+.play -edit map.go /func main/,/^}/
+
+
+* Simple Filter Function (1/2)
+
+.code filter.go /START/,/END/
+
+* Simple Filter Function (2/2)
+
+.play -edit filter.go /func main/,/^}/
+
+* Currying Function
+
+.play -edit currying.go /func main/,/^}/
+
+* Fold Function Approach
+
+.play -edit fold_approach.go /START/,/END/
 
 * Monads (simplified)
 
@@ -101,32 +163,6 @@ Using chanMap as helper function on an internal copy
 * Parallel High-Order Function With Immutable State (2/2)
 
 .play -edit pmap.go /func main/,/^}/
-
-* Simple Zip Function
-
-
-.code zip.go /START/,/END/
-
-.play -edit zip.go /func main/,/^}/
-
-
-
-* Aspects of Higher-Order Functions
-
-Dimensions
-
-- Input and output data structures
-- Function arguments and return values
-
-Execution
-
-- Parallelism
-- State
-
-Aspects related to parallelism
-
-- Monad
-- Join function
 
 * Lazy Lists Defined by Function (1/3)
 
