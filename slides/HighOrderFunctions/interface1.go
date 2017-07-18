@@ -4,52 +4,36 @@ import (
 	"fmt"
 )
 
-type Aggregate interface {
-	GetMonadType() MonadType
-	GetNeutralElement() MonadType
-	GetAssocFunc() (func(...MonadType) MonadType)
-}
-
-type ListOfInt []int
-type ListOfFloat []float64
-
+// START OMIT
 type MonadType interface{}
 
-type IntAggregate struct {
-	Type MonadType
+type Monad struct {
 	NeutralElement MonadType
 	AssocFunc      func(MonadType, MonadType) MonadType
 }
 
+type ListForMonad []MonadType
 
-// START OMIT
-func (list ListOfInt) Fold(monad IntAggregate) MonadType {
+func (list ListForMonad) Fold(monad Monad) MonadType {
 	out := monad.NeutralElement
 	for _, i := range list {
 		out = monad.AssocFunc(out, i)
 	}
 	return out
 }
-func (list ListOfFloat) Fold(monad IntAggregate) MonadType {
-	out := monad.NeutralElement
-	for _, i := range list {
-		out = monad.AssocFunc(out, i)
-	}
-	return out
-}
-
 // END OMIT
+
 
 func main() {
 
 
-	var list = ListOfInt{-2, -1, 2, 2, 3}
-	monad := IntAggregate{0, 0,func(x, y MonadType) MonadType { return x.(int) + y.(int) }}
-	fmt.Printf("List %v: Fold(monad) yields %v\n", list, list.Fold(monad))
+	var listInt = ListForMonad{-2, -1, 2, 3, 5}
+	monadInt := Monad{0, func(x, y MonadType) MonadType { return x.(int) + y.(int) }}
+	fmt.Printf("List %v: Fold(listMonad) yields %v\n", listInt, listInt.Fold(monadInt))
 
-	var listFloat = ListOfFloat{-2.5, -1.0, 2, 2, 3}
-	monadFloat := IntAggregate{0.0, 0.0,func(x, y MonadType) MonadType { return x.(float64) + y.(float64) }}
-	fmt.Printf("List %v: Fold(monad) yields %v\n", listFloat, listFloat.Fold(monadFloat))
+	/*
+	var listFloat = ListForMonad{-2.5, -1.0, 2, 2, 3}
+	monadFloat := Monad{0.0, func(x, y MonadType) MonadType { return x.(float64) + y.(float64) }}
+	fmt.Printf("List %v: Fold(monadFloat) yields %v\n", listFloat, listFloat.Fold(monadFloat))
+	*/
 }
-
-// END OMIT
