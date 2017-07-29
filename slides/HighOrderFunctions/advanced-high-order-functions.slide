@@ -78,23 +78,30 @@ Using chanMap as helper function on an internal copy
 
 .play -edit zip.go /func main/,/^}/
 
-* Monads and Interfaces (1/2)
+* Monads and Interfaces (1/3)
 
 Slice of empty interfaces as generic list type
 
-.code interface.go /START_IF/,/END_IF/
+.code staticEmptyInterfaceListFold.go /START_IF/,/END_IF/
 
 Monad struct for handling empty interfaces
 
-.code interface.go /START_IMPL/,/END_IMPL/
+.code staticEmptyInterfaceListFold.go /START_IMPL/,/END_IMPL/
 
 Generic Fold function
 
-.code interface.go /START_FOLD/,/END_FOLD/
+.code staticEmptyInterfaceListFold.go /START_FOLD/,/END_FOLD/
 
-* Monads and Interfaces (1/2)
+* Monads and Interfaces (2/3)
 
-.play interface.go /func main/,/^}/
+.play -edit staticEmptyInterfaceListFold.go /func main/,/^}/
+
+* Monads and Interfaces (3/3)
+
+.code dynamicEmptyInterfaceListFold.go /START_FOLD/,/END_FOLD/
+
+.play -edit dynamicEmptyInterfaceListFold.go /func main/,/^}/
+
 
 * Aspects of Higher-Order Functions
 
