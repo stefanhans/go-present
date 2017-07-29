@@ -9,45 +9,14 @@ https://github.com/stefanhans/go-present/
 
 * A Little Theory at First
 
-- functional programming in Go
 - monads
 - immutable state
 - parallelism
-- structs implementing interfaces
+- monads of empty interfaces
+- aspects of higher-order functions
 - abstract data types defined by functions (Hindley–Milner)
 
 .image images/academic_gopher.png
-
-* Higher-Order Functions in Go
-
-*Neither* the Go Programming Language *nor* the Standard Library contains higher-order functions like map, filter or fold.
-
-.image images/gopher-talks.png
-
-_"If_a_language_has_too_many_features,_you_waste_time_choosing_which_ones_to_use._
-_Then_implement,_refine,_possibly_rethink_and_redo."_
-
-Rob Pike, _Simplicity_is_Complicated_
-
-* Generics in Go
-
-The Go Programming Language does *not* support generics. No sufficient compiler approach was found yet.
-
-_"The_generic_dilemma_is_this:_do_you_want_slow_programmers,_slow_compilers_and_bloated_binaries,_or_slow_execution_times?"_
-
-Russ Cox, _The_Generic_Dilemma_
-
-.image images/project.png
-
-.link https://docs.google.com/document/d/1V03LUfjSADDooDMhe-_K59EgpTEm3V8uvQRuNMAEnjg/edit Go generate: A Proposal
-
-* Tail Recursion in Go
-
-The Go Programming Language is *not* optimized for tail recursion.
-
-.image images/pkg.png
-
-.link https://www.youtube.com/watch?v=ouyHp2nJl0I&t=118s dotGo 2015 - Francesc Campoy Flores - Functional Go?
 
 * Monads (simplified)
 
@@ -109,7 +78,23 @@ Using chanMap as helper function on an internal copy
 
 .play -edit zip.go /func main/,/^}/
 
+* Monads and Interfaces (1/2)
 
+Slice of empty interfaces as generic list type
+
+.code interface.go /START_IF/,/END_IF/
+
+Monad struct for handling empty interfaces
+
+.code interface.go /START_IMPL/,/END_IMPL/
+
+Generic Fold function
+
+.code interface.go /START_FOLD/,/END_FOLD/
+
+* Monads and Interfaces (1/2)
+
+.play interface.go /func main/,/^}/
 
 * Aspects of Higher-Order Functions
 
@@ -143,19 +128,3 @@ Aspects related to parallelism
 * Lazy Lists Defined by Function (3/3)
 
 .play -edit lazy_list.go /func main/,/^}/
-
-* Discussion: High-Order Functions in Distributed Systems
-
-.image images/project.png
-
-- Map/Reduce Model
-- Monads
-- Pipelines
-- RPC
-- ...
-
-* Links
-A concurrent prime sieve
-.link https://play.golang.org/p/9U22NfrXeq https://play.golang.org/p/9U22NfrXeq
-Go Concurrency Patterns: Pipelines and cancellation
-.link https://blog.golang.org/pipelines
