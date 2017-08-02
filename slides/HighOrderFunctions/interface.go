@@ -34,7 +34,7 @@ func (list List) Fold(monad Monad) interface{} {
 
 func main() {
 
-	var list = List{-2.5, -1, 2.0, 2, 3.0, "100"}
+	var list = List{-2.5, -1, 2.0, 2, 3.0, "100", "werd"}
 	monadFloat := Monad{0.0, func(m, n interface{}) interface{} {
 		return m.(float64) + n.(float64)
 	}, func(v interface{}) interface{} {
