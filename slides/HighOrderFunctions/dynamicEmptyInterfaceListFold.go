@@ -8,7 +8,7 @@ type List []interface{}
 
 type Monad struct {
 	NeutralElement interface{}
-	AssocFunc      func(...interface{}) interface{}
+	AssocFunc      func(interface{}, interface{}) interface{}
 }
 
 // START_FOLD OMIT
@@ -30,10 +30,10 @@ func (list List) Fold(monad Monad) interface{} {
 // END_FOLD OMIT
 
 func main() {
-	var listFloat = List{-2.5, -1, 2.0, 2, 3.0}
-	monadFloat := Monad{0.0, func(monad ...interface{}) interface{} {
-		return monad[0].(float64) + monad[1].(float64)
+	var list = List{-2.5, -1, 2.0, 2, 3.0}
+	monad := Monad{0.0, func(x, y interface{}) interface{} {
+		return x.(float64) + y.(float64)
 	}}
-	fmt.Printf("List %v . Fold(monadFloat) yields %v\n",
-		listFloat, listFloat.Fold(monadFloat))
+	fmt.Printf("List %v . Fold(monad) yields %v\n",
+		list, list.Fold(monad))
 }
