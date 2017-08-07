@@ -4,9 +4,9 @@ import (
 	"fmt"
 )
 
+// START OMIT
 type ListOfInt []int
 
-// START OMIT
 type IntMonad struct {
 	NeutralElement int
 	AssocFunc      func(int, int) int

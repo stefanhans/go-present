@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// START OMIT
 type ListOfInt []int
 
 type listMapFunc func(int) int
@@ -14,6 +15,7 @@ func (list ListOfInt) Map(f listMapFunc) {
 		list[i] = f(list[i])
 	}
 }
+// END OMIT
 
 func main() {
 	tenTimes := func(x int) int { time.Sleep(time.Duration(1 * time.Millisecond))

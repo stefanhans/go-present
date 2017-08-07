@@ -38,8 +38,7 @@ func (list ListOfInt) ParMap(f listMapFunc, cores int) ListOfInt {
 		go (&out).chanMap(f, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { <-end
-	}
+	for i := 0; i < cores; i++ { <-end }
 	return out
 }
 
