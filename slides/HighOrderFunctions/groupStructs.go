@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// START OMIT
+// DEF_START OMIT
 type Person struct {
 	Name string
 	Age  int
@@ -26,43 +26,27 @@ func (list ListOfPerson) GroupBy(f PersonGroupFunc) MapGroupByPerson {
 	}
 	return out
 }
-
-// END OMIT
+// DEF_END OMIT
 
 func main() {
-	var list = ListOfPerson{
-		Person{
-			Name: "Peter",
-			Age:  18,
-			Male: true,
-		},
-		Person{
-			Name: "Petra",
-			Age:  21,
-			Male: false,
-		},
-		Person{
-			Name: "Karl",
-			Age:  21,
-			Male: true,
-		},
-		Person{
-			Name: "Gustav",
-			Age:  21,
-			Male: true,
-		},
-		Person{
-			Name: "Sabine",
-			Age:  22,
-			Male: false,
-		},
-		Person{
-			Name: "Sabine",
-			Age:  22,
-			Male: false,
-		}}
-	fmt.Printf("list: %v\n", list)
 
+	// STRUCT_START OMIT
+	list := ListOfPerson{
+		Person{ Name: "Peter",   Age:  18, Male: true,  },
+		Person{ Name: "Petra",   Age:  21, Male: false, },
+		Person{ Name: "Karl",    Age:  21, Male: true,  },
+		Person{ Name: "Gustav",  Age:  21, Male: true,  },
+		Person{ Name: "Sabine",  Age:  22, Male: false, },
+		Person{ Name: "Sabine",  Age:  22, Male: false, },
+		Person{ Name: "Stefan",  Age:  24, Male: true,  },
+		Person{ Name: "Jochen",  Age:  25, Male: true,  },
+		Person{ Name: "Eva",     Age:  21, Male: false, },
+	}
+	// STRUCT_END OMIT
+
+	//fmt.Printf("list: %v\n", list)
+
+	// RUN_START OMIT
 	countByMale := func(p Person) (interface{}, int) {
 		return p.Male, 1
 	}
@@ -86,4 +70,6 @@ func main() {
 	}
 	countByNameMap := list.GroupBy(countByName)
 	fmt.Printf("list.GroupBy(countByName): %v\n", countByNameMap)
+
+	// RUN_END OMIT
 }

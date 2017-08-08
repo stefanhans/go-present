@@ -49,17 +49,18 @@ https://github.com/stefanhans/go-present/
 
 .play -edit adv_chain.go /func main/,/^}/
 
-We can create simple higher-order functions doing mapping and filtering and chain them together.
+We can create simple higher-order functions with immutable states chaining them together.
 Let's have a look now at mutability and immutability, respectively, and at parallelism applied to a simple mapping function.
 
-* Map As A Simple High-Order Function With Mutable State
+* Serial Map Function With Mutable State
 
 .code ref_map.go /START/,/END/
 
 .play -edit ref_map.go /func main/,/^}/
 
 
-* Parallel High-Order Function With Mutable State (1/2)
+* Parallel Map Function With Mutable State (1/2)
+
 Internal helper function
 
 .code par_ref_map.go /chanMap/,/^}/
@@ -68,18 +69,18 @@ Exported function
 
 .code par_ref_map.go /ParMap/,/^}/
 
-* Parallel High-Order Function With Mutable State (2/2)
+* Parallel Map Function With Mutable State (2/2)
 
 .play -edit par_ref_map.go /func main/,/^}/
 
 
-* Parallel High-Order Function With Immutable State (1/2)
+* Parallel Map Function With Immutable State (1/2)
 
 Using chanMap as helper function on an internal copy
 
 .code pmap.go /ParMap/,/^}/
 
-* Parallel High-Order Function With Immutable State (2/2)
+* Parallel Map Function With Immutable State (2/2)
 
 .play -edit pmap.go /func main/,/^}/
 
@@ -145,6 +146,21 @@ Generic Fold function
 .code dynamicEmptyInterfaceListFold.go /START_FOLD/,/END_FOLD/
 
 .play -edit dynamicEmptyInterfaceListFold.go /func main/,/^}/
+
+
+* Group Structs By Functions (1/3)
+
+.code groupStructs.go /DEF_START/,/DEF_END/
+
+
+* Group Structs By Functions (2/3)
+
+.code groupStructs.go /STRUCT_START/,/STRUCT_END/
+
+
+* Group Structs By Functions (3/3)
+
+.play -edit groupStructs.go /RUN_START/,/RUN_END/
 
 
 * Aspects of Higher-Order Functions
