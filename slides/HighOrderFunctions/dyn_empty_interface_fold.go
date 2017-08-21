@@ -30,10 +30,10 @@ func (list List) Fold(monad Monad) interface{} {
 // END_FOLD OMIT
 
 func main() {
-	var list = List{-2.5, -1, 2.0, 2, 3.0}
+	list := List{-2.5, -1, 2, 2, 3}
 	monad := Monad{0.0, func(x, y interface{}) interface{} {
 		return x.(float64) + y.(float64)
 	}}
-	fmt.Printf("List %v . Fold(monad) yields %v\n",
+	fmt.Printf("list%v.Fold(monad) yields %v\n",
 		list, list.Fold(monad))
 }

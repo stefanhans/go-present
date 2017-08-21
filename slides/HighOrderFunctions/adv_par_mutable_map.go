@@ -44,7 +44,7 @@ func main() {
 	for i := 0; i < 10; i++ { list = append(list, i) }
 
 	start := time.Now()
-	fmt.Printf("%v.ParMap(tenTimes, %v) ", list, runtime.NumCPU())
+	fmt.Printf("list%v.ParMap(tenTimes, %v) ", list, runtime.NumCPU())
 	list.ParMap(tenTimes, runtime.NumCPU())
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))

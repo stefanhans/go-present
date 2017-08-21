@@ -17,19 +17,20 @@ https://github.com/stefanhans/go-present/
 - visioning a strategy towards a business model around Go experts
 - talks on Go related topics is a part of this strategy
 
-.image images/academic_gopher.png
+.image images/gopher-talks.png
 
 
 * Higher-Order Functions With Data Structures
 
-- map and filter - simple higher-order functions
+- map, filter, and fold as simple higher-order functions
 - mutable and immutable data structures
-- parallel executions
+- parallel execution by goroutines
 - monads - a function type may be not enough
 - zip and groupBy - more complex transformations
 - monads and the empty interface - kind of generics in Go
 
 .image images/academic_gopher.png
+
 
 * Simple Map Function
 
@@ -78,6 +79,7 @@ Exported function
 
 .code adv_par_mutable_map.go /ParMap/,/^}/
 
+
 * Parallel Map Function With Mutable State (2/2)
 
 .play -edit adv_par_mutable_map.go /func main/,/^}/
@@ -89,9 +91,11 @@ Using chanMap as helper function on an internal copy
 
 .code adv_par_immutable_map.go /ParMap/,/^}/
 
+
 * Parallel Map Function With Immutable State (2/2)
 
 .play -edit adv_par_immutable_map.go /func main/,/^}/
+
 
 * Monads (simplified)
 
@@ -108,11 +112,11 @@ Associativity is not commutativity. The string concatenation and the product of 
 
 * Fold Function With Monads (1/2)
 
-.code monad.go /START/,/END/
+.code adv_monad.go /START/,/END/
 
 * Fold Function With Monads (2/2)
 
-.play -edit monad.go /func main/,/^}/
+.play -edit adv_monad.go /func main/,/^}/
 
 Why should the function be associative?
 
@@ -122,7 +126,6 @@ Why should the function be associative?
 .code zip.go /START/,/END/
 
 .play -edit zip.go /func main/,/^}/
-
 
 
 * Simple GroupBy Function
@@ -136,40 +139,54 @@ Why should the function be associative?
 
 Slice of empty interfaces as generic list
 
-.code staticEmptyInterfaceListFold.go /START_IF/,/END_IF/
+.code stat_empty_interface_fold.go /START_IF/,/END_IF/
 
 Monad struct for handling empty interfaces
 
-.code staticEmptyInterfaceListFold.go /START_IMPL/,/END_IMPL/
+.code stat_empty_interface_fold.go /START_IMPL/,/END_IMPL/
 
 Generic Fold function
 
-.code staticEmptyInterfaceListFold.go /START_FOLD/,/END_FOLD/
+.code stat_empty_interface_fold.go /START_FOLD/,/END_FOLD/
+
 
 * Monads and Interfaces (2/3)
 
-.play -edit staticEmptyInterfaceListFold.go /func main/,/^}/
+.play -edit stat_empty_interface_fold.go /func main/,/^}/
+
+All list elements and the parameters of the function signature has to be of the same type exactly.
+
+This can be enhanced by type assertion and conversion within the Fold function.
+
 
 * Monads and Interfaces (3/3)
 
-.code dynamicEmptyInterfaceListFold.go /START_FOLD/,/END_FOLD/
+.code dyn_empty_interface_fold.go /START_FOLD/,/END_FOLD/
 
-.play -edit dynamicEmptyInterfaceListFold.go /func main/,/^}/
+.play -edit dyn_empty_interface_fold.go /func main/,/^}/
 
 
 * Group Structs By Functions (1/3)
 
-.code groupStructs.go /DEF_START/,/DEF_END/
+.code group_structs.go /DEF_START/,/DEF_END/
 
 
 * Group Structs By Functions (2/3)
 
-.code groupStructs.go /STRUCT_START/,/STRUCT_END/
+.code group_structs.go /STRUCT_START/,/STRUCT_END/
 
 
 * Group Structs By Functions (3/3)
 
-.play -edit groupStructs.go /RUN_START/,/RUN_END/
+.play -edit group_structs.go /RUN_START/,/RUN_END/
+
+
+* Parallel GroupBy Structs By Functions (1/2)
+
+
+
+* Parallel GroupBy Structs By Functions (2/2)
+
 
 
 * Aspects of Higher-Order Functions

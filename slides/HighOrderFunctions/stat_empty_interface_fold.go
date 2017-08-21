@@ -6,7 +6,6 @@ import (
 
 // START_IF OMIT
 type List []interface{}
-
 // END_IF OMIT
 
 // START_IMPL OMIT
@@ -14,7 +13,6 @@ type Monad struct {
 	NeutralElement interface{}
 	AssocFunc      func(interface{}, interface{}) interface{}
 }
-
 // END_IMPL OMIT
 
 // START_FOLD OMIT
@@ -25,28 +23,32 @@ func (list List) Fold(monad Monad) interface{} {
 	}
 	return out
 }
-
 // END_FOLD OMIT
 
 func main() {
-	var listInt = List{-2, -1, 2, 3, 5}
+	listInt := List{-2, -1, 2, 3, 5}
 	monadInt := Monad{1, func(x, y interface{}) interface{} {
 		return x.(int) * y.(int)
 	}}
-	fmt.Printf("List %v . Fold(listMonad) yields %v\n",
+	fmt.Printf("listInt%v.Fold(monadInt) yields %v\n",
 		listInt, listInt.Fold(monadInt))
 
-	var listFloat = List{-2.5, -1.0, 2.0, 2.0, 3.0}
+	listFloat := List{-2.5, -1.0, 2.0, 2.0, 3.0}
 	monadFloat := Monad{0.0, func(x, y interface{}) interface{} {
 		return x.(float64) + y.(float64)
 	}}
-	fmt.Printf("List %v . Fold(monadFloat) yields %v\n",
+	fmt.Printf("listFloat%v.Fold(monadFloat) yields %v\n",
 		listFloat, listFloat.Fold(monadFloat))
+}
 
-	var listComplex = List{-2.5 + 3i, 1.5 + 2i}
+/*
+
+
+	listComplex := List{-2.5 + 3i, 1.5 + 2i}
 	monadComplex := Monad{0 + 0i, func(x, y interface{}) interface{} {
 		return x.(complex128) + y.(complex128)
 	}}
-	fmt.Printf("List %v . Fold(monadComplex) yields %v\n",
+	fmt.Printf("listComplex%v.Fold(monadComplex) yields %v\n",
 		listComplex, listComplex.Fold(monadComplex))
-}
+
+ */

@@ -25,7 +25,7 @@ func main() {
 	for i := 0; i < 10; i++ { list = append(list, i) }
 
 	start := time.Now()
-	fmt.Printf("%v.Map(tenTimes) ", list)
+	fmt.Printf("list%v.Map(tenTimes) ", list)
 	list.Map(tenTimes)
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))

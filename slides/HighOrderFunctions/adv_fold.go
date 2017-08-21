@@ -18,6 +18,6 @@ func main() {
 	list := ListOfInt{-2, -1, 2, 2, 3}
 	sum := func(x, y int) int { return x + y }
 
-	fmt.Printf("list%v: Fold(sum) yields %v\n",
+	fmt.Printf("list%v.Fold(sum) yields %v\n",
 		list, list.Fold(sum))
 }

@@ -22,6 +22,6 @@ func main() {
 	list := ListOfInt{-2, -1, 0, 2, 2, 3}
 	isEven := func(x int) bool { return x%2 == 0 }
 
-	fmt.Printf("list%v: Filter(isEven) yields %v\n",
+	fmt.Printf("list%v.Filter(isEven) yields %v\n",
 		list, list.Filter(isEven))
 }
