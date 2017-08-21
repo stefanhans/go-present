@@ -48,7 +48,7 @@ func main() {
 
 	fmt.Printf("list%v.Filter(isEven).Map(tenTimes) yields %v\n", list,
 		list.
-		Filter(isEven).
+			Filter(isEven).
 			Map(tenTimes))
 }
 

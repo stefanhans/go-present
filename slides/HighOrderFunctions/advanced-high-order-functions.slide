@@ -12,10 +12,10 @@ https://github.com/stefanhans/go-present/
 
 - research and development on cutting-edge technology for over two years now
 - doing Go programmming since February 2017
-- found Go at the center of my way forward facing the changes of digitization yet to come
+- Go at the center of my way forward facing the changes of digitization yet to come
 - expecting increasing demand for Go expertises in programming and ecosystem
 - visioning a strategy towards a business model around Go experts
-- talks about Go related topics is a part of this strategy
+- talks on Go related topics is a part of this strategy
 
 .image images/academic_gopher.png
 
@@ -56,40 +56,42 @@ https://github.com/stefanhans/go-present/
 
 .play -edit adv_chain.go /func main/,/^}/
 
-We can create simple higher-order functions with immutable states chaining them together.
-Let's have a look now at mutability and immutability, respectively, and at parallelism applied to a simple mapping function.
+We can create now simple higher-order functions with immutable states and chain them together.
+
+.image images/project.png
+
 
 * Serial Map Function With Mutable State
 
-.code ref_map.go /START/,/END/
+.code adv_mutable_map.go /START/,/END/
 
-.play -edit ref_map.go /func main/,/^}/
+.play -edit adv_mutable_map.go /func main/,/^}/
 
 
 * Parallel Map Function With Mutable State (1/2)
 
 Internal helper function
 
-.code par_ref_map.go /chanMap/,/^}/
+.code adv_par_mutable_map.go /chanMap/,/^}/
 
 Exported function
 
-.code par_ref_map.go /ParMap/,/^}/
+.code adv_par_mutable_map.go /ParMap/,/^}/
 
 * Parallel Map Function With Mutable State (2/2)
 
-.play -edit par_ref_map.go /func main/,/^}/
+.play -edit adv_par_mutable_map.go /func main/,/^}/
 
 
 * Parallel Map Function With Immutable State (1/2)
 
 Using chanMap as helper function on an internal copy
 
-.code pmap.go /ParMap/,/^}/
+.code adv_par_immutable_map.go /ParMap/,/^}/
 
 * Parallel Map Function With Immutable State (2/2)
 
-.play -edit pmap.go /func main/,/^}/
+.play -edit adv_par_immutable_map.go /func main/,/^}/
 
 * Monads (simplified)
 

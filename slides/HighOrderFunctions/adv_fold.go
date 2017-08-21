@@ -3,11 +3,9 @@ package main
 import "fmt"
 
 // START OMIT
-type List []int
+type ListOfInt []int
 
-type ListFoldFunc func(int, int) int
-
-func (list List) Fold(f ListFoldFunc) int {
+func (list ListOfInt) Fold(f func(int, int) int) int {
 	var out int
 	for _, i := range list {
 		out = f(out, i)
@@ -17,9 +15,9 @@ func (list List) Fold(f ListFoldFunc) int {
 // END OMIT
 
 func main() {
-	list := List{-2, -1, 2, 2, 3}
+	list := ListOfInt{-2, -1, 2, 2, 3}
 	sum := func(x, y int) int { return x + y }
 
-	fmt.Printf("List %v: Fold(sum) yields %v\n",
+	fmt.Printf("list%v: Fold(sum) yields %v\n",
 		list, list.Fold(sum))
 }
