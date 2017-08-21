@@ -181,43 +181,50 @@ This can be enhanced by type assertion and conversion within the Fold function.
 .play -edit group_structs.go /RUN_START/,/RUN_END/
 
 
-* Parallel GroupBy Structs By Functions (1/2)
-
-
-
-* Parallel GroupBy Structs By Functions (2/2)
-
-
-
 * Aspects of Higher-Order Functions
 
-Dimensions
+dimensions
 
-- Input and output data structures
-- Function arguments and return values
+- input and output data structures
+- function arguments and return values
 
-Execution
+execution
 
-- Parallelism
-- State
+- parallelism
+- state
 
-Aspects related to parallelism
+monads
 
-- Monad
-- Join function
+.image images/academic_gopher.png
 
-* Lazy Lists Defined by Function (1/3)
 
-.code lazy_list.go /FloatDef/,/^}/
+* Nice for playing around, but...
 
-.code lazy_list.go /LazyListOfFloat/,/^}/
+- why not implementing the needed functionality straight away?
 
-* Lazy Lists Defined by Function (2/3)
+- why not using a database?
 
-.code lazy_list.go /Next/,/^}/
+- what about data streams?
 
-.code lazy_list.go /Get/,/^}/
+.image images/project.png
 
-* Lazy Lists Defined by Function (3/3)
 
-.play -edit lazy_list.go /func main/,/^}/
+* Forecast
+
+Let's see how we can use higher-order functions combined with Go's concurrency idioms. What about pipelines, fan-in, fan-out, and cancellations?
+
+Planned Talk
+
+- Principles of Functional Streaming
+
+Ideas for Talks
+
+- Functional Streaming in Distributed Systems
+
+- Reactive Systems with Functional Streaming
+
+- Functional Streaming and Machine Learning
+
+.image images/pkg.png
+
+

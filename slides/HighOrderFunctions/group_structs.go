@@ -28,23 +28,6 @@ func (list ListOfPerson) GroupBy(f PersonsGroupByFunc) PersonsGroupByMap {
 }
 // DEF_END OMIT
 
-func (m1 PersonsGroupByMap) JoinMap(m2 PersonsGroupByMap) PersonsGroupByMap {
-	out := make(map[interface{}]int)
-	for k, v := range m1 {
-		out[k] = v
-	}
-
-	for k, v2 := range m2 {
-		if v, ok := out[k]; ok {
-			out[k] = v + v2
-		} else {
-			out[k] = v2
-		}
-		return out
-	}
-	return out
-}
-
 func main() {
 
 	// STRUCT_START OMIT
