@@ -61,9 +61,14 @@ func (cin Edge) TenTimes() Edge {
 	return cout
 }
 
-func Sink(s Edge) {
-	for n := range s {
-		fmt.Printf("%v\n", n)
+func (s Edge) Sink(limit int) {
+	if limit <= 0 {
+		for n := range s {
+			fmt.Printf("%v\n", n)
+		}
+	}
+	for i:=0; i<limit; i++ {
+		fmt.Printf("%v\n", <-s)
 	}
 }
 
@@ -78,7 +83,7 @@ func main() {
 	}
 
 	//fmt.Printf("%v\n", TenTimes(sourceChan.TakeAll(20)))
-	Sink(sourceChan.TakeAll(20).TenTimes())
+	sourceChan.TakeAll(20).TenTimes().Sink(10)
 
 	//go Sink(TenTimes(sourceChan.TakeAll(20)))
 
