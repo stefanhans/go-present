@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -49,6 +50,8 @@ func (producer *Node) Produce() {
 			case <-producer.cdone:
 				fmt.Printf("\nProduce() returns\n")
 				return
+			case producer.f = <-producer.cf:
+				fmt.Printf("\nnew produce function arrived\n")
 			default:
 				producer.cout <- producer.f(1.0)
 			}
@@ -89,16 +92,34 @@ func main() {
 	})
 
 	producer.
-		Connect(tentimes).
+	Connect(tentimes).
 		Connect(tentimes).
 		Connect(NewNode(func(fin float64) float64 { return fin / 3 })).
 		Connect(NewNode(func(fin float64) float64 { return fin * 3 })).
 		Consume()
-
 	fmt.Printf("all connected\n")
-
 	time.Sleep(time.Second)
 
-	producer.cdone <- true
+	producer.cf <- func(fin float64) float64 {
+		return 2.0
+	}
+	time.Sleep(time.Second)
 
+	rand.Seed(time.Now().UnixNano())
+	producer.cf <- func(fin float64) float64 {
+		return rand.Float64()
+	}
+	time.Sleep(time.Second)
+
+	floats := [7]float64{0.0, 3.0, 4.0, 5.0, 7.0, 8.0, 0.0}
+	i := 0
+	producer.cf <- func(fin float64) float64 {
+		if i < len(floats) {
+			j := i
+			i++
+			return floats[j]
+		}
+		producer.cdone <- true
+		return 0.0
+	}
 }

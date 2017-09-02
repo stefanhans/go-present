@@ -16,3 +16,19 @@ https://github.com/stefanhans/go-present/
 - channels building high-order functions
 
 .image images/academic_gopher.png
+
+* Short Examples
+
+- primesieve
+- chinese wisper
+
+
+* Some Practical Tips
+
+- use race option
+- do not forget make
+- use select
+
+.image images/project.png
+
+
