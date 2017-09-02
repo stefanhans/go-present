@@ -97,9 +97,7 @@ func main() {
 	}
 	//fmt.Printf("%v\n", TenTimes(sourceChan.TakeAll(20)))
 	//producer.TakeAll(0).TenTimes().Sink(10)
-	go consumer.f(producer.TakeAll(100).TenTimes())
-
-	time.Sleep(time.Second)
+	consumer.f(producer.Take(100).TenTimes())
 
 
 }

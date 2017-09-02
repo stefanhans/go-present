@@ -33,7 +33,7 @@ type Node struct {
 func (sc Producer) Next() {
 	i, ok := sc.f(sc.n)
 	if !ok {
-		fmt.Printf("close(sc.c)\n")
+		fmt.Printf("Next(): !ok => close(sc.c)\n")
 		close(sc.c)
 		return
 	}
@@ -44,8 +44,8 @@ func (scin *Producer) Take(n int) Edge {
 	go func() {
 		for i := 0; i < n; i++ {
 			scin.Next()
-			fmt.Printf("i: %v\n", i)
 		}
+		close(scin.c)
 	}()
 	return scin.c
 }
@@ -68,6 +68,18 @@ func (cin Edge) TenTimes() Edge {
 	go func() {
 		for {
 			cout <- myF(<-cin)
+		}
+	}()
+
+	return cout
+}
+
+func (cin Edge) Connect(n *Node) Edge {
+	cout := make(chan float64)
+
+	go func() {
+		for {
+			cout <- n.f(<-cin)
 		}
 	}()
 
@@ -102,11 +114,22 @@ func main() {
 			fmt.Printf("%v by Consumer\n", n)
 		}
 	}
-	//fmt.Printf("%v\n", TenTimes(sourceChan.TakeAll(20)))
-	//producer.TakeAll(0).TenTimes().Sink(10)
-	go consumer.f(producer.TakeAll(100).TenTimes())
+
+	node := Node{}
+	node.f = func(fin float64) float64 {
+		return fin*1
+	}
+
+	//fmt.Printf("consumer.f(producer.Take(10))\n")
+	//consumer.f(producer.Take(10))
+
+	go consumer.f(producer.TakeAll(500).Connect(&node))
 
 	time.Sleep(time.Second)
 
+	node.f = func(fin float64) float64 {
+		return fin*10
+	}
 
+	time.Sleep(time.Second)
 }
