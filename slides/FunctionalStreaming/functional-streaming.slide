@@ -28,6 +28,7 @@ https://github.com/stefanhans/go-present/
 - use race option
 - do not forget make
 - use select
+- avoid loops
 
 .image images/project.png
 
