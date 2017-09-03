@@ -13,6 +13,7 @@ type Node struct {
 	f     func(float64) float64
 	cf    chan func(float64) float64
 	cdone chan bool
+	fanouts []Edge
 }
 
 func NewNode(f func(float64) float64) Node {
@@ -32,6 +33,9 @@ func (node *Node) Start(cin Edge) {
 			select {
 			case x := <-node.cin:
 				node.cout <- node.f(x)
+				if len(node.fanouts) == 1 {
+					node.fanouts[0] <- node.f(x)
+				}
 			case node.f = <-node.cf:
 				fmt.Printf("\nnew function arrived\n")
 			case <-node.cdone:
@@ -64,6 +68,14 @@ func (sourceNode *Node) Connect(node Node) *Node {
 	return &node
 }
 
+func (sourceNode *Node) FanOut(node Node) *Node {
+	node.Start(sourceNode.cout)
+	node.fanouts = append(node.fanouts, node.cout)
+	fmt.Printf("node started\n")
+	return &node
+}
+
+
 func (consumer *Node) Consume() {
 	go func() {
 		for {
@@ -85,22 +97,36 @@ func main() {
 	fmt.Printf("producer started\n")
 
 	consumer := NewNode(func(fin float64) float64 {
-		fmt.Printf("cs%v ", fin)
+		fmt.Printf("-cs%v- ", fin)
 		time.Sleep(time.Millisecond * 100)
 		return 0.0
 	})
 
+	tentimes := NewNode(func(fin float64) float64 {
+		return fin * 10
+	})
+
 	producer.
+		Connect(tentimes).
 		Connect(consumer).
 		Consume()
 	fmt.Printf("all connected and consumer started\n")
 	time.Sleep(time.Second)
 
-	consumer.cf <- func(fin float64) float64 {
-		fmt.Printf("%v (with delay) ", fin)
-		time.Sleep(time.Millisecond * 100)
+
+	consumer2 := NewNode(func(fin float64) float64 {
+		fmt.Printf("'cs%v (nc)' ", fin)
+		time.Sleep(time.Millisecond * 10)
 		return 0.0
-	}
+	})
+
+	twotimes := NewNode(func(fin float64) float64 {
+		return fin * 2
+	})
+
+	producer.FanOut(twotimes).
+		Connect(consumer2).
+		Consume()
 
 	time.Sleep(time.Second)
 
