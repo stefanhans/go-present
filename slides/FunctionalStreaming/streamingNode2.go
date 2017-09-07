@@ -134,7 +134,7 @@ func main() {
 	}()*/
 
 	// ?????????????? play around
-	node1.Between(node2, node5)
+	node2.Between(node3, node5)
 
 	go func() {
 		for {

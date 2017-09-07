@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
+	"strconv"
 )
 
 type Node struct {
@@ -85,40 +86,41 @@ func (node *Node) Connect(nextNode *Node) *Node {
 
 func main() {
 	node1 := NewNode()
+	delay := NewNode()
 	node2 := NewNode()
 	node3 := NewNode()
 
+	var strings []string = make([]string, 0)
+	for i:=0; i<100; i++ {
+		strings = append(strings, strconv.Itoa(i))
+	}
+	n := 0
 	node1.cf <- func(str string) string {
+		fmt.Printf(" n: %v", n)
+		if n<len(strings) {
+			n++
+		}
+		return strings[n-1]
+	}
+
+	delay.cf<- func(str string) string {
 		time.Sleep(time.Millisecond * 100)
-		return "1"
+		return str
 	}
 
 	node2.cf <- func(str string) string {
-		time.Sleep(time.Millisecond * 100)
 		return str + " 2"
 	}
 
 	node3.cf <- func(str string) string {
-		time.Sleep(time.Millisecond * 100)
 		return str + " 3"
 	}
 
-	node1.Produce().Connect(node2).Connect(node3)
+	node1.Produce().Connect(delay).Connect(node2).Connect(node3)
 
 	go func() {
 		for {
 			fmt.Printf("NODE 3: %v\n", <-node3.out)
 		}
 	}()
-
-
-	nodeA := NewNode()
-
-	nodeA.cf <- func(str string) string {
-		time.Sleep(time.Millisecond * 100)
-		return "A"
-	}
-	nodeA.Produce().Connect(node2)
-
-	time.Sleep(time.Millisecond * 300)
 }
