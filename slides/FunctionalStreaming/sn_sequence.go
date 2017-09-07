@@ -106,12 +106,7 @@ func main() {
 	}
 
 	node2.cf <- func(str string) string {
-		if i, err := strconv.Atoi(str); err == nil {
-			if i%2 == 0 {
-				return strconv.Itoa(i)
-			}
-		}
-		return ""
+		return str + " 2"
 	}
 
 	node3.cf <- func(str string) string {

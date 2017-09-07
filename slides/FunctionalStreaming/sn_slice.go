@@ -91,12 +91,11 @@ func main() {
 	node3 := NewNode()
 
 	var strings []string = make([]string, 0)
-	for i:=0; i<100; i++ {
+	for i:=0; i<10; i++ {
 		strings = append(strings, strconv.Itoa(i))
 	}
 	n := 0
 	node1.cf <- func(str string) string {
-		fmt.Printf(" n: %v", n)
 		if n<len(strings) {
 			n++
 		}
