@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"time"
 	"strconv"
+	"time"
 )
 
 type Node struct {
@@ -72,7 +72,7 @@ func (node *Node) Produce() *Node {
 		for {
 			select {
 			default:
-				node.in<- ""
+				node.in <- ""
 			}
 		}
 	}()
@@ -84,14 +84,93 @@ func (node *Node) Connect(nextNode *Node) *Node {
 	return nextNode
 }
 
+func (node *Node) ConnectFilter(nextNode *Filter) *Filter {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+func (node *Filter) Connect(nextNode *Node) *Node {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+func (node *Filter) ConnectFilter(nextNode *Filter) *Filter {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+type Filter struct {
+	in    chan string
+	cin   chan chan string
+	out   chan string
+	cout  chan chan string
+	f     func(string) bool
+	cf    chan func(string) bool
+	open  bool
+	copen chan bool
+}
+
+func NewFilter() *Filter {
+	node := Filter{}
+	node.in = make(chan string)
+	node.cin = make(chan chan string)
+	node.out = make(chan string)
+	node.cout = make(chan chan string)
+	node.cf = make(chan func(string) bool)
+	node.f = func(str string) bool {
+		return true
+	}
+	node.copen = make(chan bool)
+	node.Start()
+	return &node
+}
+
+func (node *Filter) Start() {
+	if node.open {
+		return
+	}
+	go func() {
+		fmt.Printf("node starting...\n")
+		for {
+			select {
+			case flin := <-node.in:
+				if node.f(flin) {
+					node.out <- flin
+				}
+			case node.in = <-node.cin:
+			case node.out = <-node.cout:
+			case node.f = <-node.cf:
+
+			case node.open = <-node.copen:
+				if node.open {
+					node.Start()
+				} else {
+					fmt.Printf("node out closing...\n")
+					return
+				}
+			}
+		}
+	}()
+	node.open = true
+}
+
+func (node *Filter) Stop() {
+	if !node.open {
+		return
+	}
+	node.copen <- false
+	return
+}
+
 func main() {
 	node1 := NewNode()
 	delay := NewNode()
-	node2 := NewNode()
+	filter1 := NewFilter()
+	filter2 := NewFilter()
 	node3 := NewNode()
 
 	var strings []string = make([]string, 0)
-	for i:=0; i<10; i++ {
+	for i := 0; i < 10; i++ {
 		strings = append(strings, strconv.Itoa(i))
 	}
 	n := 0
@@ -100,25 +179,34 @@ func main() {
 		return strconv.Itoa(n)
 	}
 
-	delay.cf<- func(str string) string {
+	delay.cf <- func(str string) string {
 		time.Sleep(time.Millisecond * 100)
 		return str
 	}
 
-	node2.cf <- func(str string) string {
+	filter1.cf <- func(str string) bool {
 		if i, err := strconv.Atoi(str); err == nil {
 			if i%2 == 0 {
-				return strconv.Itoa(i)
+				return true
 			}
 		}
-		return ""
+		return false
+	}
+
+	filter2.cf <- func(str string) bool {
+		if i, err := strconv.Atoi(str); err == nil {
+			if i < 5 {
+				return true
+			}
+		}
+		return false
 	}
 
 	node3.cf <- func(str string) string {
 		return str + " 3"
 	}
 
-	node1.Produce().Connect(delay).Connect(node2).Connect(node3)
+	node1.Produce().Connect(delay).ConnectFilter(filter1).ConnectFilter(filter2).Connect(node3)
 
 	go func() {
 		for {
