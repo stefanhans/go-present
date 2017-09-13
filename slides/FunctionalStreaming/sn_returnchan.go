@@ -10,6 +10,8 @@ type Node struct {
 	cin   chan chan string
 	out   chan string
 	cout  chan chan string
+	err   chan string
+	cerr  chan chan string
 	f     func(string) string
 	cf    chan func(string) string
 	open  bool
@@ -22,6 +24,8 @@ func NewNode() *Node {
 	node.cin = make(chan chan string)
 	node.out = make(chan string)
 	node.cout = make(chan chan string)
+	node.err = make(chan string)
+	node.cerr = make(chan chan string)
 	node.cf = make(chan func(string) string)
 	node.f = func(str string) string {
 		return str
