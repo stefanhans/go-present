@@ -7,7 +7,7 @@ import (
 // START OMIT
 type ListOfInt []int
 
-func (list ListOfInt) Group(f func(int, int) int) map[int]int {
+func (list ListOfInt) GroupBy(f func(int, int) int) map[int]int {
 	out := make(map[int]int)
 	for _, i := range list {
 		out[i] = f(i, out[i])
@@ -21,5 +21,5 @@ func main() {
 	count := func(i int, old int) int {
 		return old+1
 	}
-	fmt.Printf("list%v.Group(count) yields %v\n", list, list.Group(count))
+	fmt.Printf("list%v.GroupBy(count) yields %v\n", list, list.GroupBy(count))
 }
