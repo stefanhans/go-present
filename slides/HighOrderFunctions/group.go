@@ -5,24 +5,21 @@ import (
 )
 
 // START OMIT
-type ListOfString []string
+type ListOfInt []int
 
-type stringGroupFunc func(s string) (string, int)
-
-func (list ListOfString) Group(f func(str string) (string, int)) map[string]int {
-	out := make(map[string]int)
-	for _, s := range list {
-		s, n := f(s)
-		out[s] = out[s]+n
+func (list ListOfInt) Group(f func(int, int) int) map[int]int {
+	out := make(map[int]int)
+	for _, i := range list {
+		out[i] = f(i, out[i])
 	}
 	return out
 }
 // END OMIT
 
 func main() {
-	list := ListOfString{"and", "but", "or", "or", "but", "or"}
-	count := func(s string) (string, int) {
-		return s, 1
+	list := ListOfInt{1, 1, 2, 3, 3, 4, 4}
+	count := func(i int, old int) int {
+		return old+1
 	}
 	fmt.Printf("list%v.Group(count) yields %v\n", list, list.Group(count))
 }

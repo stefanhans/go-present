@@ -40,6 +40,14 @@ func (list ListOfInt) Fold(f ListFoldFunc) int {
 	return out
 }
 
+func (list ListOfInt) Fold(f func(int, int) int) int {
+	var out int
+	for _, i := range list {
+		out = f(out, i)
+	}
+	return out
+}
+
 func main() {
 	var list = ListOfInt{-2, -1, 0, 2, 2, 3}
 

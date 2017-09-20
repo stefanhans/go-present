@@ -1,5 +1,5 @@
 Advanced Higher-Order Functions in Go
-28 August 2017
+28 September 2017
 Tags: go functional
 
 Stefan Hans
@@ -48,9 +48,7 @@ https://github.com/stefanhans/go-present/
 
 * Simple Fold Function
 
-.code adv_fold.go /START/,/END/
-
-.play -edit adv_fold.go /func main/,/^}/
+.play -edit adv_fold.go /START/,/END/
 
 
 * Higher-Order Function Chain
@@ -119,6 +117,8 @@ Associativity is not commutativity. The string concatenation and the product of 
 .play -edit adv_monad.go /func main/,/^}/
 
 Why should the function be associative?
+
+Exercise: Implement a Fold function with parallel execution using monads.
 
 
 * Simple Zip Function
