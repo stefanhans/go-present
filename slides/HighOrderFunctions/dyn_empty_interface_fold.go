@@ -12,7 +12,7 @@ type Monad struct {
 }
 
 // START_FOLD OMIT
-func (list List) Fold(monad Monad) interface{} {
+func (list List) FoldToFloat(monad Monad) interface{} {
 	out := monad.NeutralElement
 	if i, ok := out.(int); ok {
 		out = float64(i)
@@ -20,9 +20,6 @@ func (list List) Fold(monad Monad) interface{} {
 	for _, v := range list {
 		if i, ok := v.(int); ok {
 			out = monad.AssocFunc(out, float64(i)).(float64)
-		}
-		if f, ok := v.(float64); ok {
-			out = monad.AssocFunc(out, f)
 		}
 	}
 	return out
@@ -34,6 +31,6 @@ func main() {
 	monad := Monad{0.0, func(x, y interface{}) interface{} {
 		return x.(float64) + y.(float64)
 	}}
-	fmt.Printf("list%v.Fold(monad) yields %v\n",
-		list, list.Fold(monad))
+	fmt.Printf("list%v.FoldToFloat(monad) yields %v\n",
+		list, list.FoldToFloat(monad))
 }

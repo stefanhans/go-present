@@ -29,17 +29,6 @@ func (list ListOfInt) Filter(f ListFilterFunc) ListOfInt {
 	return out
 }
 
-
-type ListFoldFunc func(int, int) int
-
-func (list ListOfInt) Fold(f ListFoldFunc) int {
-	var out int
-	for _, i := range list {
-		out = f(out, i)
-	}
-	return out
-}
-
 func (list ListOfInt) Fold(f func(int, int) int) int {
 	var out int
 	for _, i := range list {
