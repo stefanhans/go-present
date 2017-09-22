@@ -20,8 +20,7 @@ func main() {
 		time.Sleep(time.Duration(1 * time.Millisecond))
 		return x * 10
 	}
-
-	list := ListOfInt{}
+	var list ListOfInt
 	for i := 0; i < 10; i++ { list = append(list, i) }
 
 	start := time.Now()
@@ -30,5 +29,3 @@ func main() {
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))
 }
-
-// END OMIT

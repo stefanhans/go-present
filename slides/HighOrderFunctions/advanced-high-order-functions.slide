@@ -36,6 +36,9 @@ https://github.com/stefanhans/go-present/
 
 .code adv_map.go /START/,/END/
 
+* Simple Map Function
+
+.code adv_map.go /START/,/END/
 .play -edit adv_map.go /func main/,/^}/
 
 
@@ -43,38 +46,58 @@ https://github.com/stefanhans/go-present/
 
 .code adv_filter.go /START/,/END/
 
+* Simple Filter Function
+
+.code adv_filter.go /START/,/END/
 .play -edit adv_filter.go /func main/,/^}/
 
 
 * Simple Fold Function
 
-.play -edit adv_fold.go /START/,/END/
+.code adv_fold.go /START/,/END/
+We can use simple higher-order functions to aggregate all values.
+
+* Simple Fold Function
+
+.code adv_fold.go /START/,/END/
+.play -edit adv_fold.go /func main/,/^}/
+
+We use simple higher-order functions to aggregate all values. But it has a bug!
+We will find a solution when we introduce the monad.
 
 
 * Higher-Order Function Chain
 
-.play -edit adv_chain.go /func main/,/^}/
-
 We can create now simple higher-order functions with immutable states and chain them together.
 
+* Higher-Order Function Chain
+
+We can create now simple higher-order functions with immutable states and chain them together.
+.play -edit adv_chain.go /func main/,/^}/
 .image images/project.png
 
+* Serial Map Function With Mutable State
+
+Let's do something with mutable state now.
+.code adv_mutable_map.go /START/,/END/
 
 * Serial Map Function With Mutable State
 
 .code adv_mutable_map.go /START/,/END/
-
 .play -edit adv_mutable_map.go /func main/,/^}/
 
 
 * Parallel Map Function With Mutable State (1/2)
 
 Internal helper function
+.code adv_par_mutable_map.go /chanMap/,/^}/
 
+* Parallel Map Function With Mutable State (1/2)
+
+Internal helper function
 .code adv_par_mutable_map.go /chanMap/,/^}/
 
 Exported function
-
 .code adv_par_mutable_map.go /ParMap/,/^}/
 
 
@@ -108,15 +131,20 @@ A data type wrapped around a function following two rules:
 Associativity is not commutativity. The string concatenation and the product of square matrices are examples.
 
 
-* Fold Function With Monads (1/2)
+* Fold Function With Monads
 
 .code adv_monad.go /START/,/END/
 
-* Fold Function With Monads (2/2)
+* Fold Function With Monads
 
+.code adv_monad.go /START/,/END/
 .play -edit adv_monad.go /func main/,/^}/
 
-Why should the function be associative?
+* Fold Function With Monads
+
+We remember why monads need a neutral elemt.
+
+But why should the function be associative?
 
 Exercise: Implement a Fold function with parallel execution using monads.
 
@@ -125,6 +153,9 @@ Exercise: Implement a Fold function with parallel execution using monads.
 
 .code zip.go /START/,/END/
 
+* Simple Zip Function
+
+.code zip.go /START/,/END/
 .play -edit zip.go /func main/,/^}/
 
 
@@ -132,6 +163,9 @@ Exercise: Implement a Fold function with parallel execution using monads.
 
 .code group.go /START/,/END/
 
+* Simple GroupBy Function (1/2)
+
+.code group.go /START/,/END/
 .play -edit group.go /func main/,/^}/
 
 
