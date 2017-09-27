@@ -35,6 +35,7 @@ https://github.com/stefanhans/go-present/
 * Simple Map Function
 
 .code adv_map.go /START/,/END/
+Now we can use functions to map values of a given datastructure into a new one.
 
 * Simple Map Function
 
@@ -45,6 +46,7 @@ https://github.com/stefanhans/go-present/
 * Simple Filter Function
 
 .code adv_filter.go /START/,/END/
+Now we can use functions to filter values of a given datastructure into a new one.
 
 * Simple Filter Function
 
@@ -54,32 +56,26 @@ https://github.com/stefanhans/go-present/
 
 * Simple Fold Function
 
-.code adv_fold.go /START/,/END/
-We can use simple higher-order functions to aggregate all values.
+.code adv_fold.go /START/,/HALF/
+Now we can use functions to aggregate all values of a given datastructure.
 
 * Simple Fold Function
 
-.code adv_fold.go /START/,/END/
-.play -edit adv_fold.go /func main/,/^}/
-
-We use simple higher-order functions to aggregate all values. But it has a bug!
-We will find a solution when we introduce the monad.
+.play -edit adv_fold.go /START/,/END/
+Looks good but it has a bug! Any ideas?
 
 
 * Higher-Order Function Chain
 
-We can create now simple higher-order functions with immutable states and chain them together.
-
-* Higher-Order Function Chain
-
-We can create now simple higher-order functions with immutable states and chain them together.
 .play -edit adv_chain.go /func main/,/^}/
+We can now chain these higher-order functions together.
 .image images/project.png
+
 
 * Serial Map Function With Mutable State
 
-Let's do something with mutable state now.
 .code adv_mutable_map.go /START/,/END/
+Let's change the state now and implement a higher-order map function with mutable state.
 
 * Serial Map Function With Mutable State
 
@@ -91,6 +87,7 @@ Let's do something with mutable state now.
 
 Internal helper function
 .code adv_par_mutable_map.go /chanMap/,/^}/
+How to change the former function for parallel execution?
 
 * Parallel Map Function With Mutable State (1/2)
 
@@ -142,9 +139,11 @@ Associativity is not commutativity. The string concatenation and the product of 
 
 * Fold Function With Monads
 
-We remember why monads need a neutral elemt.
+We know now why monads need a neutral elemt.
 
 But why should the function be associative?
+
+.image images/project.png
 
 Exercise: Implement a Fold function with parallel execution using monads.
 
@@ -152,7 +151,6 @@ Exercise: Implement a Fold function with parallel execution using monads.
 * Simple Zip Function
 
 .code zip.go /START/,/END/
-
 * Simple Zip Function
 
 .code zip.go /START/,/END/

@@ -12,7 +12,7 @@ func (list ListOfInt) Fold(f func(int, int) int) int {
 	}
 	return out
 }
-// END OMIT
+// HALF OMIT
 
 func main() {
 	list := ListOfInt{-2, -1, 2, 2, 3}
