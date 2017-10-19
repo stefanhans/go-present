@@ -34,67 +34,81 @@ https://github.com/stefanhans/go-present/
 
 * Simple Map Function
 
+We can use functions to map values of a given datastructure into a new one.
 .code adv_map.go /START/,/END/
-Now we can use functions to map values of a given datastructure into a new one.
 
 * Simple Map Function
 
+We can use functions to map values of a given datastructure into a new one.
 .code adv_map.go /START/,/END/
 .play -edit adv_map.go /func main/,/^}/
 
 
 * Simple Filter Function
 
+We can use functions to filter values of a given datastructure into a new one.
 .code adv_filter.go /START/,/END/
-Now we can use functions to filter values of a given datastructure into a new one.
 
 * Simple Filter Function
 
+We can use functions to filter values of a given datastructure into a new one.
 .code adv_filter.go /START/,/END/
 .play -edit adv_filter.go /func main/,/^}/
 
 
 * Simple Fold Function
 
+We can use functions to aggregate all values of a given datastructure.
 .code adv_fold.go /START/,/HALF/
-Now we can use functions to aggregate all values of a given datastructure.
 
 * Simple Fold Function
 
+We can use functions to aggregate all values of a given datastructure.
 .play -edit adv_fold.go /START/,/END/
 Looks good but it has a bug! Any ideas?
+
+* Simple Fold Function
+
+We can use functions to aggregate all values of a given datastructure.
+.play -edit adv_fold_HL.go /START/,/END/
+Change "sum" to "product"! Does that yield appropriately? Can you fix it accordingly?
 
 
 * Higher-Order Function Chain
 
+We can chain all these higher-order functions together.
 .play -edit adv_chain.go /func main/,/^}/
-We can now chain these higher-order functions together.
+
+Append a Fold function!
+
+
+* Mutable/Immutable State And Serial/Parallel Execution
 .image images/project.png
 
 
 * Serial Map Function With Mutable State
 
-.code adv_mutable_map.go /START/,/END/
 Let's change the state now and implement a higher-order map function with mutable state.
+.code adv_mutable_map.go /START/,/END/
 
 * Serial Map Function With Mutable State
 
+Let's change the state now and implement a higher-order map function with mutable state.
 .code adv_mutable_map.go /START/,/END/
 .play -edit adv_mutable_map.go /func main/,/^}/
 
 
 * Parallel Map Function With Mutable State (1/2)
 
-Internal helper function
+Extend the map function and use it as internal helper...
 .code adv_par_mutable_map.go /chanMap/,/^}/
-How to change the former function for parallel execution?
 
 * Parallel Map Function With Mutable State (1/2)
 
-Internal helper function
+Extend the map function and use it as internal helper...
 .code adv_par_mutable_map.go /chanMap/,/^}/
 
-Exported function
+for an exported function
 .code adv_par_mutable_map.go /ParMap/,/^}/
 
 
@@ -113,6 +127,10 @@ Using chanMap as helper function on an internal copy
 * Parallel Map Function With Immutable State (2/2)
 
 .play -edit adv_par_immutable_map.go /func main/,/^}/
+
+
+* 
+.image images/project.png
 
 
 * Monads (simplified)
@@ -174,13 +192,17 @@ Exercise: Implement a GroupBy function with a struct as receiver.
 e.g.
 
 	type Account struct {
-	Name string
-	Amount float64
+	    Name string
+	    Amount float64
 	}
 
 	type ListOfAccount []Account
 
 	func (list ListOfAccount) GroupBy...
+
+
+*
+.image images/project.png
 
 
 * Monads and Interfaces (1/3)
