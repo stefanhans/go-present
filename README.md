@@ -10,6 +10,9 @@
 - **[Advanced Higher-Order Functions](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/HighOrderFunctions/advanced-high-order-functions.slide#1)** `Rookie's introduction into functional programming with Go (II)` (draft)
 
 
+- **[Functional Streaming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/FunctionalStreaming/functional-streaming.slide#1)** `Rookie's introduction into functional streaming with Go (I)` (draft)
+
+
 
 ## Articles
 
