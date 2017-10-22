@@ -94,6 +94,38 @@ Helper function to show output
 .play -edit sn_connector.go /START_7/,/END_7/
 
 
+* Filter Streams (1/4)
+
+.code sn_filter.go /START_1/,/END_1/
+.code sn_filter.go /START_2/,/END_2/
+
+
+* Filter Streams (2/4)
+
+.code sn_filter.go /START_3/,/END_3/
+
+
+* Filter Streams (3/4)
+
+Connects nodes and filters in all combinations
+.code sn_filter.go /START_4/,/END_4/
+
+* Filter Streams (4/4)
+
+.play -edit sn_filter.go /START_5/,/END_5/
+
+
+* Forecast
+
+Ideas for Talks
+
+- Functional Streaming in Distributed Systems
+
+- Reactive Systems with Functional Streaming
+
+- Functional Streaming and Machine Learning
+
+.image images/pkg.png
 
 
 
