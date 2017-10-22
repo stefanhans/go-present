@@ -107,4 +107,6 @@ func main() {
 			fmt.Printf("NODE 3: %v\n", <-node3.out)
 		}
 	}()
+
+
 }
