@@ -7,8 +7,10 @@ Go Rookie and Native Speaker Wannabe
 contact@stefan-hans.de
 https://github.com/stefanhans/go-present/
 
-* A Little Theory at First
+* Agenda
 
+- developing the core node of functional streaming
+- adding filter, distributor, fan-in, and fan-out
 - pipelines
 - fan-in and fan-out pattern
 - cancellation
@@ -31,5 +33,67 @@ https://github.com/stefanhans/go-present/
 - avoid loops
 
 .image images/project.png
+
+* Proto-Node of Functional Streams (1/3)
+
+.code sn_producer.go /START_1/,/END_1/
+.code sn_producer.go /START_2/,/END_2/
+
+
+* Proto-Node of Functional Streams (2/3)
+
+.code sn_producer.go /START_3/,/END_3/
+
+
+* Proto-Node of Functional Streams (3/3)
+
+.play -edit sn_producer.go /START_4/,/END_4/
+
+
+* Introducing Functions (1/3)
+
+.code sn_functor.go /START_1/,/END_1/
+.code sn_functor.go /START_2/,/END_2/
+
+
+* Introducing Functions (2/3)
+
+.code sn_functor.go /START_3/,/END_3/
+
+
+* Introducing Functions (3/3)
+
+.play -edit sn_functor.go /START_4/,/END_4/
+
+
+* Building Streams (1/4)
+
+.code sn_connector.go /START_1/,/END_1/
+.code sn_connector.go /START_2/,/END_2/
+
+
+* Building Streams (2/4)
+
+.code sn_connector.go /START_3/,/END_3/
+
+Helper function to trigger input
+.code sn_connector.go /START_4/,/END_4/
+
+
+* Building Streams (3/4)
+
+Connects the output of a node with the input of another
+.code sn_connector.go /START_5/,/END_5/
+
+Helper function to show output
+.code sn_connector.go /START_6/,/END_6/
+
+
+* Building Streams (4/4)
+
+.play -edit sn_connector.go /START_7/,/END_7/
+
+
+
 
 
