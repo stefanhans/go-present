@@ -165,6 +165,35 @@ Helper function to show output
 .play -edit sn_tee.go /func main/,/^}/
 
 
+* Publish Streams (1/4)
+
+.code functionalstreams/publisher_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
+.code functionalstreams/publisher_of_int.go /START_1/,/END_1/
+
+
+* Publish Streams (2/4)
+
+.code functionalstreams/publisher_of_int.go /START_2/,/END_2/
+
+
+* Publish Streams (3/4)
+
+.code functionalstreams/publisher_of_int.go /START_3/,/END_3/
+.code functionalstreams/publisher_of_int.go /START_4/,/END_4/
+
+* Publish Streams (4/4)
+
+.play -edit sn_publisher.go /START_6/,/END_6/
+
+
+* Collect Streams (1/2)
+
+.code sn_collector.go /START_1/,/END_1/
+
+* Collect Streams (2/2)
+
+.play -edit sn_collector.go /START_2/,/END_2/
+
 
 * Forecast
 
