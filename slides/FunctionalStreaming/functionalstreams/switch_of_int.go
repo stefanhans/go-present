@@ -115,6 +115,23 @@ func (node *SwitchOfInt) ConnectSwitchToFalse(nextNode *SwitchOfInt) *SwitchOfIn
 }
 
 
+// START_SWITCH OMIT
+// node(f) -> node
+func (node *NodeOfInt) Switch(fswitch func(int) bool) (NodeA, NodeB *NodeOfInt) {
+	switcher := NewSwitchOfInt()
+	switcher.Cf <- fswitch
+	node.ConnectSwitch(switcher)
+
+	nodeA := NewNodeOfInt()
+	nodeB := NewNodeOfInt()
+	switcher.ConnectToTrue(nodeA)
+	switcher.ConnectToFalse(nodeB)
+
+	return nodeA, nodeB
+}
+// END_SWITCH OMIT
+
+
 // START_FILTER OMIT
 // node(f) -> node
 func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {

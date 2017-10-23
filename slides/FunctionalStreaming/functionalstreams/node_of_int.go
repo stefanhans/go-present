@@ -22,7 +22,7 @@ func (node *NodeOfInt) Start() {
 		for { select {
 		case node.in = <-node.cin:		// HL
 		case node.out = <-node.cout:	// HL
-		case fl := <-node.in: node.out <- node.f(fl)
+		case in := <-node.in: node.out <- node.f(in)
 		case node.f = <-node.Cf:
 		case <-node.close: return
 		}} }()
@@ -34,7 +34,7 @@ func NewNodeOfInt() *NodeOfInt {
 	node := NodeOfInt{}
 	node.in = make(chan int)
 	node.out = make(chan int)
-	node.f = func(fl int) int { return fl }
+	node.f = func(in int) int { return in }
 	node.cin = make(chan chan int)			// HL
 	node.cout = make(chan chan int) 		// HL
 	node.Cf = make(chan func(int) int)
@@ -70,10 +70,22 @@ func (node *NodeOfInt) Consume() {
 	go func() {
 		for {
 			select {
-			case fl := <-node.out: 				// HL
-				fmt.Printf("%v ", fl)		// HL
+			case in := <-node.out: 				// HL
+				fmt.Printf("%v ", in)		// HL
 			}
 		}
 	}()
 }
 // END_6 OMIT
+
+// START_CALC OMIT
+// node(f) -> node
+func (node *NodeOfInt) Calculate(calc func(int) int) *NodeOfInt {
+	nextNode := NewNodeOfInt()
+	nextNode.Cf <- calc
+
+	node.Connect(nextNode)
+	return nextNode
+}
+// END_CALC OMIT
+

@@ -6,7 +6,6 @@ import (
 	. "github.com/stefanhans/go-present/slides/FunctionalStreaming/functionalstreams"
 )
 
-// START_6 OMIT
 func main() {
 	node_1 := NewNodeOfInt()
 	var i int
@@ -16,7 +15,7 @@ func main() {
 		return in + i
 	}
 
-	switcher := NewSwitchOfInt()                  					// HL
+	switcher := NewSwitchOfInt()                  				// HL
 	switcher.Cf <- func(in int) bool { return (in%2 == 0) } 	// HL
 
 	node_2 := NewNodeOfInt()
@@ -28,7 +27,6 @@ func main() {
 	switcher.ConnectToFalse(node_3).Consume() 									// HL
 	time.Sleep(time.Second)
 }
-// END_6 OMIT
 
 /*
 

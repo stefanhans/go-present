@@ -6,7 +6,6 @@ import (
 	. "github.com/stefanhans/go-present/slides/FunctionalStreaming/functionalstreams"
 )
 
-// START_6 OMIT
 func main() {
 	node_1 := NewNodeOfInt()
 	var i int
@@ -16,8 +15,14 @@ func main() {
 		return in + i
 	}
 
-	node_1.Produce().Filter(func(in int) bool { return in%2 == 1 }).Consume() // HL
-	time.Sleep(time.Second)
+	tee := NewTeeOfInt()
+	node_a := NewNodeOfInt()
+	node_b := NewNodeOfInt()
+	node_b.Cf <- func(in int) int { return in * -2 }
 
+	node_1.Produce().ConnectTee(tee).ConnectNodes(node_a, node_b)
+	node_a.Consume()
+	node_b.Consume()
+	time.Sleep(time.Second)
 }
-// END_6 OMIT
+
