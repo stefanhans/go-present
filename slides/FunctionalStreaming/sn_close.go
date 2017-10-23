@@ -16,11 +16,14 @@ func main() {
 		return in + i
 	}
 
+	switcher := NewSwitchOfInt()                  				// HL
+	switcher.Cf <- func(in int) bool { return (in%2 == 0) } 	// HL
+
 	node_2 := NewNodeOfInt()
 	node_2.Cf <- func(in int) int { return in * 10 }
 
-	node_1.Produce().Connect(node_2).Filter(func(in int) bool { return in >= 100 }).Consume()
+	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Consume() 	// HL
+	switcher.CloseFalse() 														// HL
 	time.Sleep(time.Second)
-
 }
 // END_6 OMIT
