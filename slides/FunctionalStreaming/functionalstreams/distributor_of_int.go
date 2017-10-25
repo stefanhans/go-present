@@ -26,5 +26,23 @@ func (publisher *PublisherOfInt) DistributeToAll() {
 		}
 	}
 }
-
 // END_TOALL OMIT
+
+// START_FILTER OMIT
+func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
+	publisher := NewPublisherOfInt()
+	node.ConnectPublisher(publisher)
+	nextNode := NewNodeOfInt()
+	publisher.SubscribePublisher("t", nextNode)
+
+	publisher.cf <- func(in int) {
+		if filter(in) {
+			for _, cout := range publisher.out_map {
+				go func(cout chan int, in int) { cout <- in }(cout, in)
+				break
+			}
+		}
+	}
+	return nextNode
+}
+// END_FILTER OMIT

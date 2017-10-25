@@ -1,5 +1,6 @@
 Functional Streaming in Go
-1 November 2017
+Functions and Go's CSP Model Controlling Data Streams
+1 Nov 2017
 Tags: go functional streams
 
 Stefan Hans
@@ -50,7 +51,7 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 
 .code functionalstreams/node_of_int.go /START_3/,/END_3/
 Helper function to trigger input
-.code functionalstreams/util_of_int.go /START_1/,/END_1/
+.code functionalstreams/util_of_int.go /START_3/,/END_3/
 
 
 * Building Streams (3/4)
@@ -114,59 +115,30 @@ Collecting streams is easy
 .play -edit sn_tee.go /func main/,/^}/
 
 
-
-
-* Stream Switcher (1/4)
-
-.code functionalstreams/switch_of_int.go /START_1/,/END_1/
-.code functionalstreams/switch_of_int.go /START_2/,/END_2/
-
-
-* Stream Switcher (2/4)
-
-.code functionalstreams/switch_of_int.go /START_3/,/END_3/
-.code functionalstreams/switch_of_int.go /START_4/,/END_4/
-
-
-* Stream Switcher (3/4)
-
-.code functionalstreams/switch_of_int.go /START_5/,/END_5/
-
-
-* Stream Switcher (4/4)
-
-.play -edit sn_switcher.go /func main/,/^}/
-
-
-* Stream Switcher (5/4)
-
-.code functionalstreams/switch_of_int.go /START_SWITCH/,/END_SWITCH/
-
-
-* Stream Switcher (6/4)
-
-.play -edit sn_switch.go /func main/,/^}/
-
-
-
-* Filter Streams (1/2)
-
-.code functionalstreams/switch_of_int.go /START_CLOSE/,/END_CLOSE/
-
-
-* Filter Streams (2/2)
-
-.play -edit sn_close.go /func main/,/^}/
-
-
 * Anonymous Filter (1/2)
 
-.code functionalstreams/switch_of_int.go /START_FILTER/,/END_FILTER/
+.code functionalstreams/distributor_of_int.go /START_FILTER/,/END_FILTER/
 
 
 * Anonymous Filter (2/2)
 
 .play -edit sn_filter.go /func main/,/^}/
+
+
+* Stream Switcher (1/4)
+
+node_2, node_3 := node_1.Produce().Switch(func(in int) bool { return (in%2 == 0) })
+
+* Stream All (2/4)
+
+roundRobin
+
+
+* Stream Switcher (3/4)
+
+to all
+
+(connectTo true, connectTo false)
 
 
 * Some Practical Tips

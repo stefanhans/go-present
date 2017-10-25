@@ -11,7 +11,6 @@ func main() {
 	node_1 := NewNodeOfInt()
 	var i int
 	node_1.SetFunc(func(in int) int {
-		time.Sleep(time.Millisecond * 50)
 		i++
 		return in + i
 	})
@@ -22,7 +21,7 @@ func main() {
 	node_2 := NewNodeOfInt()
 	node_2.SetFunc(func(in int) int { return in * 10 })
 
-	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Print() 	// HL
+	node_1.ProduceAtMs(50).ConnectSwitch(switcher).ConnectToTrue(node_2).Print() 	// HL
 	switcher.CloseFalse() 														// HL
 	time.Sleep(time.Second)
 }

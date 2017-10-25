@@ -11,11 +11,10 @@ func main() {
 
 	var i int
 	node_1.SetFunc(func(in int) int {
-		time.Sleep(time.Millisecond * 50)
 		i++
 		return in+i
 	})
 
-	node_1.Produce().Calculate(func(in int) int { return in * 3 }).Print() // HL
+	node_1.ProduceAtMs(50).Calculate(func(in int) int { return in * 3 }).Print() // HL
 	time.Sleep(time.Second)
 }

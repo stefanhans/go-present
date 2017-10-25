@@ -1,6 +1,9 @@
 package functionalstreams
 
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 // START_1 OMIT
 func (node *NodeOfInt) Produce() *NodeOfInt {
@@ -21,3 +24,15 @@ func (node *NodeOfInt) Print() {
 		}}}()
 }
 // END_2 OMIT
+
+
+// START_3 OMIT
+func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
+	go func() {
+		for {
+			select { default: node.in <- 0 }	// HL
+			time.Sleep(time.Millisecond * n)	// HL
+		}}()
+	return node
+}
+// END_3 OMIT

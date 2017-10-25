@@ -12,14 +12,12 @@ func main() {
 
 	var i int // HL
 	node_1.SetFunc(func(in int) int {	// HL
-		time.Sleep(time.Millisecond * 50)	// HL
-		i++								    // HL
-		return in+i							// HL
+		i++; return in+i				// HL
 	}) // HL
 
 	node_2.SetFunc(func(in int) int { return in * 2 }) // HL
 
-	node_1.Produce().Connect(node_2).Print() // HL
+	node_1.ProduceAtMs(50).Connect(node_2).Print() // HL
 
 	time.Sleep(time.Second)
 }
