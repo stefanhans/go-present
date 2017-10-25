@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"time"
 
 	. "github.com/stefanhans/go-present/slides/FunctionalStreaming/functionalstreams"
@@ -18,6 +17,7 @@ func main() {
 
 	// START_6 OMIT
 	publisher := NewPublisherOfInt()
+	publisher.DistributeRoundRobin()
 	subscriber_1 := NewNodeOfInt()
 	subscriber_2 := NewNodeOfInt()
 	subscriber_3 := NewNodeOfInt()
@@ -28,9 +28,5 @@ func main() {
 	subscriber_1.Consume()
 	subscriber_2.Calculate(func(i int) int { return i * 10 }).Consume()
 	subscriber_3.Calculate(func(i int) int { return i * 100 }).Consume()
-	time.Sleep(time.Second)
-	fmt.Println()
-	publisher.UnsubscribePublisher("2nd")
-	time.Sleep(time.Second)
-	// END_6 OMIT
+	//time.Sleep(time.Second)
 }

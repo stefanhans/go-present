@@ -9,7 +9,7 @@ type SwitchOfInt struct {
 	cin        chan chan int
 	cout_true  chan chan int 		// HL
 	cout_false chan chan int 		// HL
-	Cf         chan func(int) bool
+	cf         chan func(int) bool
 	close      chan bool
 }
 // END_1 OMIT
@@ -20,10 +20,10 @@ func (switcher *SwitchOfInt) Start() {
 	case switcher.in = <-switcher.cin:
 	case switcher.out_true = <-switcher.cout_true: 		// HL
 	case switcher.out_false = <-switcher.cout_false: 	// HL
-	case fl := <-switcher.in: 							// HL
-		if switcher.f(fl) { switcher.out_true <- fl 	// HL
-		} else { switcher.out_false <- fl } 			// HL
-	case switcher.f = <-switcher.Cf:
+	case in := <-switcher.in: 							// HL
+		if switcher.f(in) { switcher.out_true <- in 	// HL
+		} else { switcher.out_false <- in } 			// HL
+	case switcher.f = <-switcher.cf:
 	case <-switcher.close: return
 	}}}()
 }
@@ -35,11 +35,11 @@ func NewSwitchOfInt() *SwitchOfInt {
 	switcher.in = make(chan int)
 	switcher.out_true = make(chan int)  				// HL
 	switcher.out_false = make(chan int) 				// HL
-	switcher.f = func(fl int) bool { return true }
+	switcher.f = func(in int) bool { return true }
 	switcher.cin = make(chan chan int)
 	switcher.cout_true = make(chan chan int)  			// HL
 	switcher.cout_false = make(chan chan int) 			// HL
-	switcher.Cf = make(chan func(int) bool)
+	switcher.cf = make(chan func(int) bool)
 	switcher.close = make(chan bool)
 	switcher.Start()
 	return &switcher
@@ -119,7 +119,7 @@ func (node *SwitchOfInt) ConnectSwitchToFalse(nextNode *SwitchOfInt) *SwitchOfIn
 // node(f) -> node
 func (node *NodeOfInt) Switch(fswitch func(int) bool) (NodeA, NodeB *NodeOfInt) {
 	switcher := NewSwitchOfInt()
-	switcher.Cf <- fswitch
+	switcher.cf <- fswitch
 	node.ConnectSwitch(switcher)
 
 	nodeA := NewNodeOfInt()
@@ -136,7 +136,7 @@ func (node *NodeOfInt) Switch(fswitch func(int) bool) (NodeA, NodeB *NodeOfInt) 
 // node(f) -> node
 func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 	switcher := NewSwitchOfInt()
-	switcher.Cf <- filter
+	switcher.cf <- filter
 
 	node.ConnectSwitch(switcher)
 
@@ -148,4 +148,8 @@ func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 	return nextNode
 }
 // END_FILTER OMIT
+
+func (node *SwitchOfInt) SetFunc(f func(int) bool) {
+	node.cf <- f
+}
 

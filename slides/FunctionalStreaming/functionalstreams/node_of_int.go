@@ -11,7 +11,7 @@ type NodeOfInt struct {
 	f     func(int) int
 	cin   chan chan int		// HL
 	cout  chan chan int		// HL
-	Cf    chan func(int) int
+	cf    chan func(int) int // HL
 	close chan bool
 }
 // END_1 OMIT
@@ -20,10 +20,10 @@ type NodeOfInt struct {
 func (node *NodeOfInt) Start() {
 	go func() {
 		for { select {
+		case in := <-node.in: node.out <- node.f(in) // HL
 		case node.in = <-node.cin:		// HL
 		case node.out = <-node.cout:	// HL
-		case in := <-node.in: node.out <- node.f(in)
-		case node.f = <-node.Cf:
+		case node.f = <-node.cf: // HL
 		case <-node.close: return
 		}} }()
 }
@@ -35,9 +35,9 @@ func NewNodeOfInt() *NodeOfInt {
 	node.in = make(chan int)
 	node.out = make(chan int)
 	node.f = func(in int) int { return in }
-	node.cin = make(chan chan int)			// HL
-	node.cout = make(chan chan int) 		// HL
-	node.Cf = make(chan func(int) int)
+	node.cin = make(chan chan int)
+	node.cout = make(chan chan int)
+	node.cf = make(chan func(int) int)
 	node.close = make(chan bool)
 	node.Start()
 	return &node
@@ -52,7 +52,7 @@ func (node *NodeOfInt) Stop() {
 func (node *NodeOfInt) Produce() *NodeOfInt {
 	go func() {
 		for {
-			select { default: node.in<- 0 }	// HL
+			select { default: node.in <- 0 }	// HL
 		}}()
 	return node
 }
@@ -68,21 +68,24 @@ func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 // START_6 OMIT
 func (node *NodeOfInt) Consume() {
 	go func() {
-		for {
-			select {
+		for { select {
 			case in := <-node.out: 				// HL
 				fmt.Printf("%v ", in)		// HL
-			}
-		}
-	}()
+	}}}()
 }
 // END_6 OMIT
+
+// START_SETFUNC OMIT
+func (node *NodeOfInt) SetFunc(f func(int) int) {
+	node.cf <- f
+}
+// END_SETFUNC OMIT
 
 // START_CALC OMIT
 // node(f) -> node
 func (node *NodeOfInt) Calculate(calc func(int) int) *NodeOfInt {
 	nextNode := NewNodeOfInt()
-	nextNode.Cf <- calc
+	nextNode.cf <- calc
 
 	node.Connect(nextNode)
 	return nextNode
