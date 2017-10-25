@@ -22,7 +22,7 @@ func main() {
 	node_2 := NewNodeOfInt()
 	node_2.SetFunc(func(in int) int { return in * 10 })
 
-	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Consume() 	// HL
+	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Print() 	// HL
 	switcher.CloseFalse() 														// HL
 	time.Sleep(time.Second)
 }

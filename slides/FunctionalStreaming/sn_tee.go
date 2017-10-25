@@ -16,8 +16,8 @@ func main() {
 	})
 
 	node_left, node_right := node.Tee()                               // HL
-	node_left.Consume()                                               // HL
-	node_right.Calculate(func(i int) int { return i * 10 }).Consume() // HL
+	node_left.Print()                                               // HL
+	node_right.Calculate(func(i int) int { return i * 10 }).Print() // HL
 
 	time.Sleep(time.Second)
 }

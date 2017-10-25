@@ -25,8 +25,8 @@ func main() {
 	publisher.SubscribePublisher("1st", subscriber_1)
 	publisher.SubscribePublisher("2nd", subscriber_2)
 	publisher.SubscribePublisher("3rd", subscriber_3)
-	subscriber_1.Consume()
-	subscriber_2.Calculate(func(i int) int { return i * 10 }).Consume()
-	subscriber_3.Calculate(func(i int) int { return i * 100 }).Consume()
+	subscriber_1.Print()
+	subscriber_2.Calculate(func(i int) int { return i * 10 }).Print()
+	subscriber_3.Calculate(func(i int) int { return i * 100 }).Print()
 	//time.Sleep(time.Second)
 }

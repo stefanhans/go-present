@@ -29,56 +29,15 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 
 * Agenda
 
-- developing the core node of functional streaming
-- switch, close, and filter
-- publish and subscribe
+- building streams
+- collect and publish (pub/sub)
+- filter and distribute
 - composite pattern for nodes
 - convert and assert data types
 - aggregations
 - registration and APIs
 
 .image images/academic_gopher.png
-
-* Some Practical Tips
-
-- use the race option
-	$ go run -race <go file>
-- do not forget make()
-- use select
-- use go routines to avoid blocking
-
-.image images/project.png
-
-* Proto-Node of Functional Streams (1/3)
-
-.code proto/sn_producer.go /START_1/,/END_1/
-.code proto/sn_producer.go /START_2/,/END_2/
-
-
-* Proto-Node of Functional Streams (2/3)
-
-.code proto/sn_producer.go /START_3/,/END_3/
-
-
-* Proto-Node of Functional Streams (3/3)
-
-.play -edit proto/sn_producer.go /START_4/,/END_4/
-
-
-* Introducing Functions (1/3)
-
-.code proto/sn_functor.go /START_1/,/END_1/
-.code proto/sn_functor.go /START_2/,/END_2/
-
-
-* Introducing Functions (2/3)
-
-.code proto/sn_functor.go /START_3/,/END_3/
-
-
-* Introducing Functions (3/3)
-
-.play -edit proto/sn_functor.go /START_4/,/END_4/
 
 
 * Building Streams (1/4)
@@ -91,7 +50,7 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 
 .code functionalstreams/node_of_int.go /START_3/,/END_3/
 Helper function to trigger input
-.code functionalstreams/node_of_int.go /START_4/,/END_4/
+.code functionalstreams/util_of_int.go /START_1/,/END_1/
 
 
 * Building Streams (3/4)
@@ -103,7 +62,7 @@ Exchange the function of a node
 .code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
 
 Helper function to show output
-.code functionalstreams/node_of_int.go /START_6/,/END_6/
+.code functionalstreams/util_of_int.go /START_2/,/END_2/
 
 
 * Building Streams (4/4)
@@ -115,6 +74,47 @@ Helper function to show output
 
 .code functionalstreams/node_of_int.go /START_CALC/,/END_CALC/
 .play -edit sn_calculate.go /func main/,/^}/
+
+
+* Collect Streams
+
+Collecting streams is easy
+.play -edit sn_collector.go /START_2/,/END_2/
+
+
+* Publish Streams (1/5)
+
+.code functionalstreams/publisher_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
+.code functionalstreams/publisher_of_int.go /START_1/,/END_1/
+
+
+* Publish Streams (2/5)
+
+.code functionalstreams/publisher_of_int.go /START_2/,/END_2/
+
+
+* Publish Streams (3/5)
+
+.code functionalstreams/publisher_of_int.go /START_3/,/END_3/
+
+
+* Publish Streams (4/5)
+.code functionalstreams/publisher_of_int.go /START_4/,/END_4/
+
+
+* Publish Streams (5/5)
+
+.play -edit sn_publisher.go /START_6/,/END_6/
+
+
+* Tee Streams (1/2)
+.code functionalstreams/publisher_of_int.go /START_TEE/,/END_TEE/
+
+* Tee Streams (2/2)
+.play -edit sn_tee.go /func main/,/^}/
+
+
+
 
 * Stream Switcher (1/4)
 
@@ -169,41 +169,15 @@ Helper function to show output
 .play -edit sn_filter.go /func main/,/^}/
 
 
-* Publish Streams (1/4)
+* Some Practical Tips
 
-.code functionalstreams/publisher_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
-.code functionalstreams/publisher_of_int.go /START_1/,/END_1/
+- use the race option
+	$ go run -race <go file>
+- do not forget make()
+- use select
+- use go routines to avoid blocking
 
-
-* Publish Streams (2/4)
-
-.code functionalstreams/publisher_of_int.go /START_2/,/END_2/
-
-
-* Publish Streams (3/4)
-
-.code functionalstreams/publisher_of_int.go /START_3/,/END_3/
-.code functionalstreams/publisher_of_int.go /START_4/,/END_4/
-
-* Publish Streams (4/4)
-
-.play -edit sn_publisher.go /START_6/,/END_6/
-
-
-* Tee Streams (1/2)
-.code functionalstreams/publisher_of_int.go /START_TEE/,/END_TEE/
-
-* Tee Streams (2/2)
-.play -edit sn_tee.go /func main/,/^}/
-
-
-* Collect Streams (1/2)
-
-.code sn_collector.go /START_1/,/END_1/
-
-* Collect Streams (2/2)
-
-.play -edit sn_collector.go /START_2/,/END_2/
+.image images/project.png
 
 
 * Forecast

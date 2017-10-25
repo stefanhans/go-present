@@ -23,8 +23,8 @@ func main() {
 	node_3 := NewNodeOfInt()
 	node_3.SetFunc(func(in int) int { return in * 2 })
 
-	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Consume() 	// HL
-	switcher.ConnectToFalse(node_3).Consume() 									// HL
+	node_1.Produce().ConnectSwitch(switcher).ConnectToTrue(node_2).Print() 	// HL
+	switcher.ConnectToFalse(node_3).Print() 									// HL
 	time.Sleep(time.Second)
 }
 
@@ -32,8 +32,8 @@ func main() {
 
 	fmt.Println("\n")
 	switcher.ConnectNodes(node_2, node_3) // HL
-	node_2.Consume() // HL
-	node_3.Consume() // HL
+	node_2.Print() // HL
+	node_3.Print() // HL
 	time.Sleep(time.Second)
 
  */

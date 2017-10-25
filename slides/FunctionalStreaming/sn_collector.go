@@ -36,11 +36,11 @@ func main() {
 	// START_2 OMIT
 	node_out := NewNodeOfInt()
 
-	node_1.Produce().Connect(node_out)
-	node_2.Produce().Connect(node_out)
-	node_3.Produce().Connect(node_out)
+	node_1.Produce().Connect(node_out)	// 1, 2, 3, 4, ...
+	node_2.Produce().Connect(node_out)	// 10, 20, 30, 40, ...
+	node_3.Produce().Connect(node_out)	// 100, 200, 300, 400, ...
 
-	node_out.Consume()
+	node_out.Print()
 	time.Sleep(time.Second)
 	// END_2 OMIT
 }

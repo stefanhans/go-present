@@ -16,6 +16,6 @@ func main() {
 		return in+i
 	})
 
-	node_1.Produce().Calculate(func(in int) int { return in * 3 }).Consume() // HL
+	node_1.Produce().Calculate(func(in int) int { return in * 3 }).Print() // HL
 	time.Sleep(time.Second)
 }

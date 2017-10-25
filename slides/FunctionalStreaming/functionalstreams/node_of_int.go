@@ -1,9 +1,5 @@
 package functionalstreams
 
-import (
-	"fmt"
-)
-
 // START_1 OMIT
 type NodeOfInt struct {
 	in    chan int
@@ -48,32 +44,12 @@ func (node *NodeOfInt) Stop() {
 	node.close <- true
 }
 
-// START_4 OMIT
-func (node *NodeOfInt) Produce() *NodeOfInt {
-	go func() {
-		for {
-			select { default: node.in <- 0 }	// HL
-		}}()
-	return node
-}
-// END_4 OMIT
-
 // START_5 OMIT
 func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 	node.cout <- nextNode.in
 	return nextNode
 }
 // END_5 OMIT
-
-// START_6 OMIT
-func (node *NodeOfInt) Consume() {
-	go func() {
-		for { select {
-			case in := <-node.out: 				// HL
-				fmt.Printf("%v ", in)		// HL
-	}}}()
-}
-// END_6 OMIT
 
 // START_SETFUNC OMIT
 func (node *NodeOfInt) SetFunc(f func(int) int) {

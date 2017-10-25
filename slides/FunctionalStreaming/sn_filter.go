@@ -16,7 +16,7 @@ func main() {
 		return in + i
 	})
 
-	node_1.Produce().Filter(func(in int) bool { return in%2 == 1 }).Consume() // HL
+	node_1.Produce().Filter(func(in int) bool { return in%2 == 1 }).Print() // HL
 	time.Sleep(time.Second)
 
 }

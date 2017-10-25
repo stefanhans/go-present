@@ -19,7 +19,7 @@ func main() {
 	node_2.SetFunc(func(in int) int { return in * 10 })								// HL
 	node_3.SetFunc(func(in int) int { return in * 2 })										// HL
 
-	node_2.Consume() 	// HL
-	node_3.Consume() 	// HL
+	node_2.Print() 	// HL
+	node_3.Print() 	// HL
 	time.Sleep(time.Second)
 }

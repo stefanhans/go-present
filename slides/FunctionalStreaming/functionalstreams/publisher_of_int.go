@@ -16,10 +16,10 @@ type PublisherOfInt struct {
 	cout_map_subscribe   chan SubscriptionOfInt // HL
 	cout_map_unsubscribe chan string            // HL
 	out_index            []SubscriptionOfInt	// HL
-	f                    func(int)
-	cf                   chan func(int)
-	last_index			 int
-	clast_index			 chan int
+	f                    func(int)				// HL
+	cf                   chan func(int)			// HL
+	last_index           int
+	clast_index          chan int
 	close                chan bool
 }
 
@@ -31,14 +31,17 @@ func (publisher *PublisherOfInt) Start() {
 		for {
 			select {
 			case publisher.in = <-publisher.cin:
-			case in := <-publisher.in: // HL
-				publisher.f(in) // HL
+			case in := <-publisher.in: publisher.f(in) // HL
 			case subscribtion := <-publisher.cout_map_subscribe: // HL
 				publisher.out_map[subscribtion.name] = subscribtion.cint // HL
-				publisher.out_index = append(publisher.out_index, subscribtion)
+				publisher.out_index = append(publisher.out_index, subscribtion) // HL
 			case name := <-publisher.cout_map_unsubscribe: // HL
 				delete(publisher.out_map, name) // HL
-				// delete publisher.out_index
+				i := -1; _ = i
+				for n, subscription := range publisher.out_index {
+					if subscription.name == name { i = n }
+				}
+				publisher.out_index = append(publisher.out_index[:i], publisher.out_index[i+1:]...)
 			case publisher.f = <-publisher.cf:
 			case <-publisher.close:
 				return
