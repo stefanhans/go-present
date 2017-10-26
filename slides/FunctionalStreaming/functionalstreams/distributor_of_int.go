@@ -1,5 +1,20 @@
 package functionalstreams
 
+// START_TEE OMIT
+func (node *NodeOfInt) Tee() (*NodeOfInt, *NodeOfInt) {
+	publisher := NewPublisherOfInt()
+	node.ConnectPublisher(publisher)
+
+	nodeA := NewNodeOfInt()
+	nodeB := NewNodeOfInt()
+
+	publisher.SubscribePublisher("A", nodeA)
+	publisher.SubscribePublisher("B", nodeB)
+
+	return nodeA, nodeB
+}
+// END_TEE OMIT
+
 // START_RR OMIT
 func (publisher *PublisherOfInt) DistributeRoundRobin() {
 	publisher.cf <- func(in int) {
@@ -15,7 +30,6 @@ func (publisher *PublisherOfInt) DistributeRoundRobin() {
 		}
 	}
 }
-
 // END_RR OMIT
 
 // START_TOALL OMIT
@@ -37,12 +51,33 @@ func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 
 	publisher.cf <- func(in int) {
 		if filter(in) {
-			for _, cout := range publisher.out_map {
-				go func(cout chan int, in int) { cout <- in }(cout, in)
-				break
-			}
+			cout := publisher.out_map["t"]
+			cout <- in
 		}
 	}
 	return nextNode
 }
 // END_FILTER OMIT
+
+// START_SWITCH OMIT
+func (node *NodeOfInt) Switch(fswitch func(int) bool) (nodeTrue, nodeFalse *NodeOfInt) {
+	publisher := NewPublisherOfInt()
+	node.ConnectPublisher(publisher)
+
+	nextNodeTrue := NewNodeOfInt()
+	nextNodeFalse := NewNodeOfInt()
+	publisher.SubscribePublisher("t", nextNodeTrue)
+	publisher.SubscribePublisher("f", nextNodeFalse)
+
+	publisher.cf <- func(in int) {
+		if fswitch(in) {
+			coutTrue := publisher.out_map["t"]
+			coutTrue <- in
+		} else {
+			coutFalse := publisher.out_map["f"]
+			coutFalse <- in
+		}
+	}
+	return nextNodeTrue, nextNodeFalse
+}
+// END_SWITCH OMIT

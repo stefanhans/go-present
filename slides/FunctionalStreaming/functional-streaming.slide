@@ -11,31 +11,36 @@ https://github.com/stefanhans/go-present/
 
 * About Myself And Go
 
-- research and development on cutting-edge technology for over two years now
-- doing Go programmming since February 2017
+- doing my kind of 'research and development' of cutting-edge technology for over two years now
+- doing Go programming since February 2017
 - Go at the center of my way forward facing the changes of digitization yet to come
-- expecting increasing demand for Go expertises in programming and ecosystem
+- expecting increasing demand for Go expertise in programming and ecosystem
 - visioning a strategy towards a business model around Go experts
-- talks on Go related topics is a part of this strategy
+- talks on Go related topics are a part of this strategy
 
 .image images/gopher-talks.png
 
 
 * Functional Streaming?
 
-Systems handling data streams controlled by functions is a static model. If you take functions as first-class citizens being itself part of these data streams the system becomes more dynamic. Finally, if all parts of the structure can be transferred within the structure the system is maximally dynamic and flexible.
+Systems handling data streams controlled by functions is a static model. If you take functions as first-class citizens being itself part of these data streams the system becomes more dynamic.
+Finally, if all basic parts of the structure like nodes and edges can be transferred within the structure the system is maximally dynamic and flexible.
 
 In this concern, 'Functional Streaming' is build upon the simplest possible principles how to combine functional programming and the CSP model from Go.
 
 
 * Agenda
 
-- building streams
+- building streams with channels and functions
 - collect and publish (pub/sub)
-- filter and distribute
+- distribute between two
+- distribute between many
+- convert data types
 - composite pattern for nodes
-- convert and assert data types
 - aggregations
+
+Is that enough?
+
 - registration and APIs
 
 .image images/academic_gopher.png
@@ -73,6 +78,7 @@ Helper function to show output
 
 * Anonymous Nodes
 
+No need to change the function later? Encapsulate the node within a function.
 .code functionalstreams/node_of_int.go /START_CALC/,/END_CALC/
 .play -edit sn_calculate.go /func main/,/^}/
 
@@ -85,6 +91,7 @@ Collecting streams is easy
 
 * Publish Streams (1/5)
 
+Publishing streams is more sophisticated
 .code functionalstreams/publisher_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
 .code functionalstreams/publisher_of_int.go /START_1/,/END_1/
 
@@ -109,9 +116,11 @@ Collecting streams is easy
 
 
 * Tee Streams (1/2)
-.code functionalstreams/publisher_of_int.go /START_TEE/,/END_TEE/
+
+.code functionalstreams/distributor_of_int.go /START_TEE/,/END_TEE/
 
 * Tee Streams (2/2)
+
 .play -edit sn_tee.go /func main/,/^}/
 
 
@@ -125,20 +134,23 @@ Collecting streams is easy
 .play -edit sn_filter.go /func main/,/^}/
 
 
-* Stream Switcher (1/4)
+* Anonymous Switch (1/2)
 
-node_2, node_3 := node_1.Produce().Switch(func(in int) bool { return (in%2 == 0) })
+.code functionalstreams/distributor_of_int.go /START_SWITCH/,/END_SWITCH/
 
-* Stream All (2/4)
+* Anonymous Switch (2/2)
 
-roundRobin
+.play -edit sn_switch.go /func main/,/^}/
 
 
-* Stream Switcher (3/4)
+* Distribute to All or Round-Robin (1/2)
 
-to all
+.code functionalstreams/distributor_of_int.go /START_TOALL/,/END_TOALL/
+.code functionalstreams/distributor_of_int.go /START_RR/,/END_RR/
 
-(connectTo true, connectTo false)
+* Distribute to All or Round-Robin (2/2)
+
+.play -edit sn_round_robin.go /func main/,/^}/
 
 
 * Some Practical Tips

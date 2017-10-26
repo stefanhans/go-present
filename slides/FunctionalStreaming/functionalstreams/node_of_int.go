@@ -58,7 +58,6 @@ func (node *NodeOfInt) SetFunc(f func(int) int) {
 // END_SETFUNC OMIT
 
 // START_CALC OMIT
-// node(f) -> node
 func (node *NodeOfInt) Calculate(calc func(int) int) *NodeOfInt {
 	nextNode := NewNodeOfInt()
 	nextNode.cf <- calc

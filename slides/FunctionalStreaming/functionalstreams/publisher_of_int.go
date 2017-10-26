@@ -28,25 +28,27 @@ type PublisherOfInt struct {
 // START_2 OMIT
 func (publisher *PublisherOfInt) Start() {
 	go func() {
-		for {
-			select {
+		for { select {
 			case publisher.in = <-publisher.cin:
 			case in := <-publisher.in: publisher.f(in) // HL
+			case publisher.f = <-publisher.cf: // HL
+
 			case subscribtion := <-publisher.cout_map_subscribe: // HL
 				publisher.out_map[subscribtion.name] = subscribtion.cint // HL
 				publisher.out_index = append(publisher.out_index, subscribtion) // HL
+
 			case name := <-publisher.cout_map_unsubscribe: // HL
 				delete(publisher.out_map, name) // HL
-				i := -1; _ = i
-				for n, subscription := range publisher.out_index {
-					if subscription.name == name { i = n }
-				}
-				publisher.out_index = append(publisher.out_index[:i], publisher.out_index[i+1:]...)
-			case publisher.f = <-publisher.cf:
-			case <-publisher.close:
-				return
-			}
-		}
+				// delete from publisher.out_index accordingly // HL
+				// ...
+				i := -1; _ = i 	// OMIT
+				for n, subscription := range publisher.out_index { 	// OMIT
+					if subscription.name == name { i = n }} 	// OMIT
+				if i != -1 { 	// OMIT
+					publisher.out_index = append(publisher.out_index[:i], 	// OMIT
+						publisher.out_index[i+1:]...)} 	// OMIT
+			case <-publisher.close: return
+		}}
 	}()
 }
 
@@ -88,19 +90,3 @@ func (publisher *PublisherOfInt) UnsubscribePublisher(name string) {
 }
 
 // END_4 OMIT
-
-// START_TEE OMIT
-func (node *NodeOfInt) Tee() (*NodeOfInt, *NodeOfInt) {
-	publisher := NewPublisherOfInt()
-	node.Produce().ConnectPublisher(publisher)
-
-	nodeA := NewNodeOfInt()
-	nodeB := NewNodeOfInt()
-
-	publisher.SubscribePublisher("A", nodeA)
-	publisher.SubscribePublisher("B", nodeB)
-
-	return nodeA, nodeB
-}
-
-// END_TEE OMIT

@@ -11,9 +11,7 @@ func main() {
 	node_2 := NewNodeOfInt()
 
 	var i int // HL
-	node_1.SetFunc(func(in int) int {	// HL
-		i++; return in+i				// HL
-	}) // HL
+	node_1.SetFunc(func(in int) int { i++; return in + i }) // HL
 
 	node_2.SetFunc(func(in int) int { return in * 2 }) // HL
 
