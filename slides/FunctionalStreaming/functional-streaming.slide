@@ -35,9 +35,9 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 - collect and publish (pub/sub)
 - distribute between two
 - distribute between many
+- aggregate and buffer
 - convert data types
 - composite pattern for nodes
-- aggregations
 
 Is that enough?
 
@@ -85,9 +85,9 @@ No need to change the function later? Encapsulate the node within a function.
 
 * Collect Streams
 
-Collecting streams is easy
-.play -edit sn_collector.go /START_2/,/END_2/
-
+Collecting streams seems to be easy but it can lead to deadlocks
+.play -edit sn_collector.go /func main/,/^}/
+Increase the buffer of the out channels as a workaround.
 
 * Publish Streams (1/5)
 

@@ -17,6 +17,14 @@ func (node *NodeOfInt) Start() {
 	go func() {
 		for { select {
 		case in := <-node.in: node.out <- node.f(in) // HL
+
+		/*
+		case in := <-node.in:
+			go func(in int, f func(int) int) {
+				node.out <- f(in)
+			}(in, node.f) // HL
+		 */
+
 		case node.in = <-node.cin:		// HL
 		case node.out = <-node.cout:	// HL
 		case node.f = <-node.cf: // HL

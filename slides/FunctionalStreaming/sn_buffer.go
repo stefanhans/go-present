@@ -17,7 +17,7 @@ func main() {
 	node_out := NewNodeOfInt()
 
 	node_1.ProduceAtMs(200).Connect(node_out)
-	node_2.ProduceAtMs(200).Connect(node_out)
+	node_2.ProduceAtMs(100).Connect(node_out)
 	node_3.ProduceAtMs(200).Connect(node_out)
 
 	node_out.Print()
