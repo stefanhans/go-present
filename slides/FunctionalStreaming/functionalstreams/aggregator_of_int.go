@@ -33,6 +33,8 @@ func (aggregator *AggregatorOfInt) Start() {
 						aggregator.out <- aggregator.aggregator_map // HL
 				} // HL
 			case aggregator.flush = <-aggregator.cflush: // HL
+			case in := <-aggregator.out: // HL
+				fmt.Printf("%v ", in) // HL
 			case <-aggregator.close: return
 			}
 		}
@@ -47,7 +49,7 @@ func NewAggregatorOfInt() *AggregatorOfInt {
 	aggregator.in = make(chan int)
 	aggregator.cin = make(chan chan int)
 	aggregator.aggregator_map = make(map[int]int)                                                          // HL
-	aggregator.out = make(chan map[int]int)                                                                // HL
+	aggregator.out = make(chan map[int]int, 2)                                                                // HL
 	aggregator.cout = make(chan chan map[int]int)                                                          // HL
 	aggregator.aggregate = func(i int) { aggregator.aggregator_map[i] = aggregator.aggregator_map[i] + 1 } // HL
 	aggregator.caggregate = make(chan func(int))                                                           // HL

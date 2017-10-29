@@ -13,7 +13,7 @@ func main() {
 
 	aggregator := NewAggregatorOfInt()
 
-	node_in.ConnectAggregator(aggregator).Print()
+	node_in.ConnectAggregator(aggregator)
 	node_in.ProduceAtMs(200)
 
 	time.Sleep(time.Second)
