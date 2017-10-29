@@ -13,12 +13,15 @@ func main() {
 
 	buffer := NewBufferOfInt()
 
+	// START_BUFFUNC OMIT
 	node_in.ConnectBuffer(buffer).Connect(node_out).Print()
 	node_in.ProduceAtMs(200)
 
-	time.Sleep(time.Second) // Not buffering by default
-	buffer.Buffer()
-	time.Sleep(time.Second)
-	buffer.Flush()
-	time.Sleep(time.Second)
+	buffer.SetFunc(func(i int) bool {
+		return buffer.Len()%5 == 0
+	})
+	time.Sleep(time.Second * 10)
+	// END_BUFFUNC OMIT
+
+
 }

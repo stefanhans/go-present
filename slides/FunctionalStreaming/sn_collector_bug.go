@@ -16,15 +16,11 @@ func main() {
 
 	node_out := NewNodeOfInt()
 
-	node_1.Connect(node_out)
-	node_2.Connect(node_out)
-	node_3.Connect(node_out)
+	node_1.ProduceAtMs(200).Connect(node_out)
+	node_2.ProduceAtMs(200).Connect(node_out)
+	node_3.ProduceAtMs(200).Connect(node_out)
 
 	node_out.Print()
-
-	node_1.ProduceAtMs(200)
-	node_2.ProduceAtMs(200)
-	node_3.ProduceAtMs(200)
 
 	time.Sleep(time.Second)
 }

@@ -35,13 +35,13 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 - collect and publish (pub/sub)
 - distribute between two
 - distribute between many
-- aggregate and buffer
+- buffer, flush, and aggregate
 - convert data types
 - composite pattern for nodes
 
 Is that enough?
 
-- registration and APIs
+- meta channel, registration, and APIs
 
 .image images/academic_gopher.png
 
@@ -83,11 +83,17 @@ No need to change the function later? Encapsulate the node within a function.
 .play -edit sn_calculate.go /func main/,/^}/
 
 
-* Collect Streams
+* Collect Streams (1/2)
 
 Collecting streams seems to be easy but it can lead to deadlocks
+.play -edit sn_collector_bug.go /func main/,/^}/
+Increase the buffer of the out channels as a workaround or wait with sending until structure is established.
+
+
+* Collect Streams (2/2)
+
 .play -edit sn_collector.go /func main/,/^}/
-Increase the buffer of the out channels as a workaround.
+
 
 * Publish Streams (1/5)
 
@@ -151,6 +157,35 @@ Publishing streams is more sophisticated
 * Distribute to All or Round-Robin (2/2)
 
 .play -edit sn_round_robin.go /func main/,/^}/
+
+
+* Buffer and Flush (1/5)
+
+.code functionalstreams/buffer_of_int.go /START_1/,/END_1/
+.code functionalstreams/buffer_of_int.go /START_3/,/END_3/
+
+
+* Buffer and Flush (2/5)
+
+.code functionalstreams/buffer_of_int.go /START_2/,/END_2/
+
+
+* Buffer and Flush (3/5)
+Values will be buffered and flushed
+.code functionalstreams/buffer_of_int.go /START_BUFFER/,/END_BUFFER/
+.code functionalstreams/buffer_of_int.go /START_FLUSH/,/END_FLUSH/
+Set a control function using input, length, and capacity of the buffer
+.code functionalstreams/buffer_of_int.go /START_FUNC/,/END_FUNC/
+
+
+* Buffer and Flush (4/5)
+
+.play -edit sn_buffer.go /func main/,/^}/
+
+
+* Buffer and Flush (5/5)
+
+.play -edit sn_buffer_func.go /START_BUFFUNC/,/END_BUFFUNC/
 
 
 * Some Practical Tips

@@ -7,18 +7,14 @@ import (
 )
 
 func main() {
-	node_in, node_out := NewNodeOfInt(), NewNodeOfInt()
+	node_in := NewNodeOfInt()
 	var i int
 	node_in.SetFunc(func(in int) int { i++; return in + i })
 
-	buffer := NewBufferOfInt()
+	aggregator := NewAggregatorOfInt()
 
-	node_in.ConnectBuffer(buffer).Connect(node_out).Print()
+	node_in.ConnectAggregator(aggregator).Print()
 	node_in.ProduceAtMs(200)
 
-	time.Sleep(time.Second) // Not buffering by default
-	buffer.Buffer()
-	time.Sleep(time.Second)
-	buffer.Flush()
 	time.Sleep(time.Second)
 }

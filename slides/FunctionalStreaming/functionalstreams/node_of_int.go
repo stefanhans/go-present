@@ -67,3 +67,16 @@ func (node *NodeOfInt) Calculate(calc func(int) int) *NodeOfInt {
 }
 // END_CALC OMIT
 
+
+func (node *NodeOfInt) ConnectBuffer(nextNode *BufferOfInt) *BufferOfInt {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+
+func (node *NodeOfInt) ConnectAggregator(nextNode *AggregatorOfInt) *AggregatorOfInt {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+
