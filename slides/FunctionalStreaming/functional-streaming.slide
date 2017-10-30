@@ -204,7 +204,7 @@ Set a control function using input, length, and capacity of the buffer
 * Fold (3/3)
 
 .code functionalstreams/folder_of_int.go /START_RESULT/,/END_RESULT/
-.play -edit /sn_folder.go /func main/,/^}/
+.play -edit sn_folder.go /func main/,/^}/
 
 
 * Aggregate (1/3)

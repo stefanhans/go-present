@@ -11,7 +11,8 @@ func main() {
 	var i int
 	node_1.SetFunc(func(in int) int { i++; return in+i })
 
-	node_1.ProduceAtMs(50).Calculate(func(in int) int { return in * 3 }).Print() // HL
+	node_1.Calculate(func(in int) int { return in * 3 }).Print() // HL
+	node_1.ProduceAtMs(50) // HL
 
 	time.Sleep(time.Second)
 }
