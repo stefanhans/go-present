@@ -37,7 +37,7 @@ In this concern, 'Functional Streaming' is build upon the simplest possible prin
 - distribute between many
 - buffer and flush
 - fold and aggregate
-- convert data types
+- convert data types statically
 
 Is that enough?
 
@@ -222,6 +222,24 @@ Set a control function using input, length, and capacity of the buffer
 * Aggregate (3/3)
 
 .play -edit sn_aggregator.go /func main/,/^}/
+
+
+* Convert Statically (1/3)
+
+.code functionalstreams/converter_int_to_float.go /START_1/,/END_1/
+.code functionalstreams/converter_int_to_float.go /START_3/,/END_3/
+
+
+* Convert Statically (2/3)
+
+.code functionalstreams/converter_int_to_float.go /START_2/,/END_2/
+.code functionalstreams/node_of_int.go /START_CONNECTCONVERTER/,/END_CONNECTCONVERTER/
+.code functionalstreams/converter_int_to_float.go /START_CONNECT/,/END_CONNECT/
+
+
+* Convert Statically (3/3)
+
+.play -edit sn_converter_int_to_float.go /func main/,/^}/
 
 
 * Some Practical Tips

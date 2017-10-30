@@ -84,5 +84,9 @@ func (node *NodeOfInt) ConnectFolder(nextNode *FolderOfInt) *FolderOfInt {
 	return nextNode
 }
 
-
-
+// START_CONNECTCONVERTER OMIT
+func (node *NodeOfInt) ConnectConverterIntToFloat(nextNode *ConverterIntToFloat) *ConverterIntToFloat { // HL
+	node.cout <- nextNode.in
+	return nextNode
+}
+// END_CONNECTCONVERTER OMIT
