@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"time"
 
 	. "github.com/stefanhans/go-present/slides/FunctionalStreaming/functionalstreams"
@@ -8,13 +9,22 @@ import (
 
 func main() {
 	node_in := NewNodeOfInt()
-	var i int
-	node_in.SetFunc(func(in int) int { i++; return in + i })
 
-	aggregator := NewAggregatorOfInt()
+	aggr_map_1 := make(map[int]int)
+	aggr_func := func(i int, aggr_map *map[int]int) { (*aggr_map)[i] = (*aggr_map)[i] + 1 }
+	aggregator := NewAggregatorOfInt(&aggr_map_1, aggr_func)
 
 	node_in.ConnectAggregator(aggregator)
-	node_in.ProduceAtMs(200)
+	node_in.ProduceRandPositivAtMs(4, 10)
 
 	time.Sleep(time.Second)
+	fmt.Printf("%v\n", aggr_map_1)
+	time.Sleep(time.Second)
+
+	aggr_map_2 := make(map[int]int)
+	aggr_map_1 = (*aggregator.Reset(&aggr_map_2))
+	time.Sleep(time.Second)
+
+	fmt.Printf("%v\n", aggr_map_1)
+	fmt.Printf("%v\n", aggr_map_2)
 }

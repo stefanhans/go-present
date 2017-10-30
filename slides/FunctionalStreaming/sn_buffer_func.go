@@ -20,7 +20,7 @@ func main() {
 	buffer.SetFunc(func(i int) bool {
 		return buffer.Len()%5 == 0
 	})
-	time.Sleep(time.Second * 10)
+	time.Sleep(time.Second * 5)
 	// END_BUFFUNC OMIT
 
 

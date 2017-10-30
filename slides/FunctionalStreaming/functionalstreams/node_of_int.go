@@ -79,4 +79,10 @@ func (node *NodeOfInt) ConnectAggregator(nextNode *AggregatorOfInt) *AggregatorO
 	return nextNode
 }
 
+func (node *NodeOfInt) ConnectFolder(nextNode *FolderOfInt) *FolderOfInt {
+	node.cout <- nextNode.in
+	return nextNode
+}
+
+
 

@@ -2,6 +2,7 @@ package functionalstreams
 
 import (
 	"fmt"
+	"math/rand"
 	"time"
 )
 
@@ -36,3 +37,17 @@ func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 	return node
 }
 // END_3 OMIT
+
+
+
+// START_4 OMIT
+func (node *NodeOfInt) ProduceRandPositivAtMs(max int, ms time.Duration) *NodeOfInt {
+	rand.Seed(time.Now().UnixNano())
+	go func() {
+		for {
+			select { default: node.in <- rand.Intn(max)+1 }	// HL
+			time.Sleep(time.Millisecond * ms)	// HL
+		}}()
+	return node
+}
+// END_4 OMIT
