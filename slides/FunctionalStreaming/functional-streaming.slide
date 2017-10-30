@@ -75,12 +75,21 @@ Helper function to show output
 
 .play -edit sn_connect.go /func main/,/^}/
 
+Best to implement in the following order:
+
+	1st: finish node creation
+	2nd: finish stream configuration
+	3rd: start sending data
+	4th: change function via channel (optional)
+
 
 * Anonymous Nodes
 
 No need to change the function later? Encapsulate the node within a function.
 .code functionalstreams/node_of_int.go /START_CALC/,/END_CALC/
 .play -edit sn_calculate.go /func main/,/^}/
+
+The node which is following *node_1* is anonymous and not accessible
 
 
 * Collect Streams (1/2)

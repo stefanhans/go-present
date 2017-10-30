@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	node_1 := NewNodeOfInt()
+	node_1 := NewNodeOfInt() // node creation // HL
 	var i int
 	node_1.SetFunc(func(in int) int { i++; return in+i })
 
-	node_1.Calculate(func(in int) int { return in * 3 }).Print() // HL
-	node_1.ProduceAtMs(50) // HL
+	node_1.Calculate(func(in int) int { return in * 3 }).Print() // stream configuration // HL
+	node_1.ProduceAtMs(50) // sending data // HL
 
 	time.Sleep(time.Second)
 }

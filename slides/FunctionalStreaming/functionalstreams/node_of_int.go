@@ -3,25 +3,28 @@ package functionalstreams
 // START_1 OMIT
 type NodeOfInt struct {
 	in    chan int
-	out   chan int
+	cin   chan chan int
 	f     func(int) int
-	cin   chan chan int		// HL
-	cout  chan chan int		// HL
-	cf    chan func(int) int // HL
-	close chan bool
+	cf    chan func(int) int
+	out   chan int
+	cout  chan chan int
+	close chan bool // OMIT
 }
 // END_1 OMIT
 
 // START_2 OMIT
 func (node *NodeOfInt) Start() {
 	go func() {
-		for { select {
-		case in := <-node.in: node.out <- node.f(in) // HL
-		case node.in = <-node.cin:		// HL
-		case node.out = <-node.cout:	// HL
-		case node.f = <-node.cf: // HL
-		case <-node.close: return
-		}} }()
+		for {
+			select {
+				case in := <-node.in: node.out <- node.f(in)
+				case node.in = <-node.cin:
+				case node.f = <-node.cf:
+				case node.out = <-node.cout:
+				case <-node.close: return // OMIT
+			}
+		}
+	}()
 }
 // END_2 OMIT
 
@@ -29,12 +32,12 @@ func (node *NodeOfInt) Start() {
 func NewNodeOfInt() *NodeOfInt {
 	node := NodeOfInt{}
 	node.in = make(chan int)
-	node.out = make(chan int)
-	node.f = func(in int) int { return in }
 	node.cin = make(chan chan int)
-	node.cout = make(chan chan int)
+	node.f = func(in int) int { return in }
 	node.cf = make(chan func(int) int)
-	node.close = make(chan bool)
+	node.out = make(chan int)
+	node.cout = make(chan chan int)
+	node.close = make(chan bool) // OMIT
 	node.Start()
 	return &node
 }
