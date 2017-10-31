@@ -1,0 +1,110 @@
+Advanced Functional Streaming in Go
+Functions and Go's CSP Model Controlling Data Streams
+15 Nov 2017
+Tags: go functional streams
+
+Stefan Hans
+Go Rookie and Native Speaker Wannabe
+contact@stefan-hans.de
+https://github.com/stefanhans/go-present/
+
+
+* About Myself And Go
+
+- doing my kind of 'research and development' of cutting-edge technology for over two years now
+- doing Go programming since February 2017
+- Go at the center of my way forward facing the changes of digitization yet to come
+- expecting increasing demand for Go expertise in programming and ecosystem
+- visioning a strategy towards a business model around Go experts
+- talks on Go related topics are a part of this strategy
+
+.image images/gopher-talks.png
+
+
+* Advanced Functional Streaming?
+
+Systems handling data streams controlled by functions is a static model. If you take functions as first-class citizens being itself part of these data streams the system becomes more dynamic.
+Finally, if all basic parts of the structure like nodes and edges can be transferred within the structure the system is maximally dynamic and flexible.
+
+Having the bricks of 'Functional Streaming' we build upon them on the next level.
+
+
+* Agenda
+
+- acting on streams with channels and functions
+- meta channel
+- composites
+- registration
+- APIs
+
+Is that enough?
+
+- network and use cases
+
+.image images/academic_gopher.png
+
+
+* Meta channel
+
+Implementing the Stringer interface
+
+
+* Acting on Streams (1/4)
+
+- span, tee, move, copy
+
+
+* Building Streams (2/4)
+
+.code functionalstreams/node_of_int.go /START_3/,/END_3/
+Helper function to trigger input
+.code functionalstreams/util_of_int.go /START_3/,/END_3/
+
+
+* Building Streams (3/4)
+
+Connects the output of a node with the input of another
+.code functionalstreams/node_of_int.go /START_5/,/END_5/
+
+Exchange the function of a node
+.code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
+
+Helper function to show output
+.code functionalstreams/util_of_int.go /START_2/,/END_2/
+
+
+* Building Streams (4/4)
+
+.play -edit sn_connect.go /func main/,/^}/
+
+Best to implement in the following order:
+
+1st: finish node creation
+2nd: finish stream configuration
+3rd: start sending data
+4th: change function via channel (optional)
+
+
+* Some Practical Tips
+
+- test with and without the race option
+- do not forget make()
+- use select
+- use go routines to avoid blocking
+- follow the Unix philosophy 'do one thing and do it well'
+
+.image images/project.png
+
+
+* Forecast
+
+Ideas for Talks
+
+- Functional Streaming in Distributed Systems
+
+- Reactive Systems with Functional Streaming
+
+- Functional Streaming and Machine Learning
+
+.image images/pkg.png
+
