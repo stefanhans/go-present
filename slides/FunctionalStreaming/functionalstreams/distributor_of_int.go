@@ -5,11 +5,11 @@ func (node *NodeOfInt) Tee() (*NodeOfInt, *NodeOfInt) {
 	publisher := NewPublisherOfInt()
 	node.ConnectPublisher(publisher)
 
-	nodeA := NewNodeOfInt()
-	nodeB := NewNodeOfInt()
+	nodeA := NewNodeOfInt("<tee a>")
+	nodeB := NewNodeOfInt("<tee b>")
 
-	publisher.SubscribePublisher("A", nodeA)
-	publisher.SubscribePublisher("B", nodeB)
+	publisher.SubscribePublisher(nodeA.name, nodeA)
+	publisher.SubscribePublisher(nodeB.name, nodeB)
 
 	return nodeA, nodeB
 }
@@ -46,7 +46,7 @@ func (publisher *PublisherOfInt) DistributeToAll() {
 func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 	publisher := NewPublisherOfInt()
 	node.ConnectPublisher(publisher)
-	nextNode := NewNodeOfInt()
+	nextNode := NewNodeOfInt("<filter>")
 	publisher.SubscribePublisher("t", nextNode)
 
 	publisher.cf <- func(in int) {
@@ -64,10 +64,10 @@ func (node *NodeOfInt) Switch(fswitch func(int) bool) (nodeTrue, nodeFalse *Node
 	publisher := NewPublisherOfInt()
 	node.ConnectPublisher(publisher)
 
-	nextNodeTrue := NewNodeOfInt()
-	nextNodeFalse := NewNodeOfInt()
-	publisher.SubscribePublisher("t", nextNodeTrue)
-	publisher.SubscribePublisher("f", nextNodeFalse)
+	nextNodeTrue := NewNodeOfInt("<switch true>")
+	nextNodeFalse := NewNodeOfInt("<switch false>")
+	publisher.SubscribePublisher(nextNodeTrue.name, nextNodeTrue)
+	publisher.SubscribePublisher(nextNodeFalse.name, nextNodeFalse)
 
 	publisher.cf <- func(in int) {
 		if fswitch(in) {

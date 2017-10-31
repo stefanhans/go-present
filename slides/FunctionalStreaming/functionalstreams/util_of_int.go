@@ -22,6 +22,9 @@ func (node *NodeOfInt) Print() {
 		for { select {
 		case in := <-node.out: 				// HL
 			fmt.Printf("%v ", in)		// HL
+		case metain := <-node.metaout:	// HL
+			fmt.Printf("%vEnd Report\n", metain)		// HL
+
 		}}}()
 }
 // END_2 OMIT

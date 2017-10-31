@@ -39,7 +39,7 @@ Having the bricks of 'Functional Streaming' we build upon them on the next level
 
 Is that enough?
 
-- network and use cases
+- network, cancelation, reactiveness, and use cases
 
 .image images/academic_gopher.png
 
