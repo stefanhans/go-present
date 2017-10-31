@@ -21,13 +21,24 @@ func (node *NodeOfInt) Print() {
 	go func() {
 		for { select {
 		case in := <-node.out: 				// HL
-			fmt.Printf("%v ", in)		// HL
+			fmt.Printf("%v ", in)		// HL // TODO adjust to fmt.Print
 		case metain := <-node.metaout:	// HL
-			fmt.Printf("%vEnd Report\n", metain)		// HL
+			fmt.Printf("%v%v Print()\n\n", metain, node)		// HL
 
 		}}}()
 }
 // END_2 OMIT
+
+func (node *NodeOfInt) Printf(format string) {
+	go func() {
+		for { select {
+		case in := <-node.out: 				// HL
+			fmt.Printf(format, in)		// HL
+		case metain := <-node.metaout:	// HL
+			fmt.Printf("%v%v Printf(format string)\n\n", metain, node)		// HL
+
+		}}}()
+}
 
 
 // START_3 OMIT

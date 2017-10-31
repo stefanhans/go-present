@@ -44,14 +44,52 @@ Is that enough?
 .image images/academic_gopher.png
 
 
-* Meta channel
+* Meta channel (1/4)
 
-Implementing the Stringer interface
+.code functionalstreams/node_of_int.go /START_1/,/END_1/
+.code functionalstreams/node_of_int.go /START_2/,/END_2/
+
+
+* Meta channel (2/4)
+
+.code functionalstreams/node_of_int.go /START_3/,/END_3/
+.code functionalstreams/node_of_int.go /START_5/,/END_5/
+
+
+* Meta channel (3/4)
+
+.code functionalstreams/node_of_int.go /START_STRING/,/END_STRING/
+.code functionalstreams/node_of_int.go /START_REPORT/,/END_REPORT/
+.code functionalstreams/node_of_int.go /START_CALC/,/END_CALC/
+
+
+* Meta channel (4/4)
+
+.play -edit adv_stringer.go /func main/,/^}/
 
 
 * Acting on Streams (1/4)
 
-- span, tee, move, copy
+Move edge via Connect()
+.play -edit adv_connect.go /func main/,/^}/
+
+
+* Acting on Streams (1/4)
+
+Span over nodes via Connect()
+.play -edit adv_span.go /func main/,/^}/
+
+
+* Acting on Streams (3/4)
+
+Tee new edge
+.play -edit adv_addTee.go /func main/,/^}/
+
+
+* Acting on Streams (4/4)
+
+Include nodes in new node
+.play -edit adv_include.go /func main/,/^}/
 
 
 * Building Streams (2/4)
