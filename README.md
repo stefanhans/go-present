@@ -10,7 +10,8 @@
 - **[Advanced Higher-Order Functions](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/HighOrderFunctions/advanced-high-order-functions.slide#1)** `Rookie's introduction into functional programming with Go (II)` (draft)
 
 
-- **[Functional Streaming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/FunctionalStreaming/functional-streaming.slide#1)** `Rookie's introduction into functional streaming with Go (I)` (draft)
+- **[Functional Streaming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/FunctionalStreaming/functional-streaming.slide#1)** `Rookie's introduction into functional streaming with Go (I)` (draft - *code not yet working on go-talks.appspot.com ('cannot find package') - will fix this if released*)
+
 
 
 
@@ -19,3 +20,4 @@
 - **[Higher-Order Functions](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/HighOrderFunctions/high-order-functions.article)** `Rookie's introduction into functional programming with Go` (layout problem with code background)
 
 
+Pictures were stolen from the internet and (probably) created by [Renee French](http://reneefrench.blogspot.co.uk/)
