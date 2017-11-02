@@ -17,10 +17,12 @@ func (node *NodeOfInt) Start() {
 	go func() {
 		for {
 			select {
-				case in := <-node.in: node.out <- node.f(in)
-				case node.in = <-node.cin:
-				case node.f = <-node.cf:
-				case node.out = <-node.cout:
+
+				case in := <-node.in: node.out <- node.f(in) // Handle data (DEADLOCKS!) // HL
+
+				case node.in = <-node.cin:   	// Change input channel
+				case node.f = <-node.cf: 		// Change function
+				case node.out = <-node.cout: 	// Change output channel
 				case <-node.close: return // OMIT
 			}
 		}

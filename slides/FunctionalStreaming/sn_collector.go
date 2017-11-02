@@ -15,12 +15,11 @@ func main() {
 	node_3.SetFunc(func(in int) int { k++; return in + k * 100})
 
 	node_out := NewNodeOfInt()
+	node_out.Print()
 
 	node_1.Connect(node_out)
 	node_2.Connect(node_out)
 	node_3.Connect(node_out)
-
-	node_out.Print()
 
 	node_1.ProduceAtMs(200)
 	node_2.ProduceAtMs(200)
