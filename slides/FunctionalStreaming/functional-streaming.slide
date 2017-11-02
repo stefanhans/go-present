@@ -1,6 +1,6 @@
 Functional Streaming in Go
 Functions and Go's CSP Model Controlling Data Streams
-1 Nov 2017
+2 Nov 2017
 Tags: go functional streams
 
 Stefan Hans
@@ -13,7 +13,6 @@ https://github.com/stefanhans/go-present/
 
 - doing my kind of 'research and development' of cutting-edge technology for over two years now
 - doing Go programming since February 2017
-- Go at the center of my way forward facing the changes of digitization yet to come
 - expecting increasing demand for Go expertise in programming and ecosystem
 - visioning a strategy towards a business model around Go experts
 - talks on Go related topics are a part of this strategy
@@ -21,16 +20,9 @@ https://github.com/stefanhans/go-present/
 .image images/gopher-talks.png
 
 
-* Functional Streaming?
-
-Systems handling data streams controlled by functions is a static model. If you take functions as first-class citizens being itself part of these data streams the system becomes more dynamic.
-Finally, if all basic parts of the structure like nodes and edges can be transferred within the structure the system is maximally dynamic and flexible.
-
-In this concern, 'Functional Streaming' is build upon the simplest possible principles how to combine functional programming and the CSP model from Go.
-
-
 * Agenda
 
+- introducing the core principles
 - building streams with channels and functions
 - collect and publish (pub/sub)
 - distribute between two
@@ -43,7 +35,17 @@ Is that enough?
 
 - meta channel, composites, registration, and APIs
 
-.image images/academic_gopher.png
+
+* The core principles of 'Functional Streaming' as I mean it
+
+- node-like structs with one main loop are the basic parts handling data streams
+- functions called in the main loop control or transform the data streams
+- crucial parts of structs and main loops, respectively, can be exchanged during handling data streams
+- elements can exchange meta information and act on it
+
+.image images/project.png
+
+Let's see what can we achieve with these ideas in a first attempt.
 
 
 * Building Streams (1/4)
@@ -54,12 +56,24 @@ Is that enough?
 
 * Building Streams (2/4)
 
+.play -edit sn_connect.go /func main/,/^}/
+
+Best to implement in the following order:
+
+1st: finish node creation
+2nd: finish stream configuration
+3rd: start sending data
+4th: change function via channel (optional)
+
+
+* Building Streams (3/4)
+
 .code functionalstreams/node_of_int.go /START_3/,/END_3/
 Helper function to trigger input
 .code functionalstreams/util_of_int.go /START_3/,/END_3/
 
 
-* Building Streams (3/4)
+* Building Streams (4/4)
 
 Connects the output of a node with the input of another
 .code functionalstreams/node_of_int.go /START_5/,/END_5/
@@ -71,18 +85,6 @@ Helper function to show output
 .code functionalstreams/util_of_int.go /START_2/,/END_2/
 
 
-* Building Streams (4/4)
-
-.play -edit sn_connect.go /func main/,/^}/
-
-Best to implement in the following order:
-
-	1st: finish node creation
-	2nd: finish stream configuration
-	3rd: start sending data
-	4th: change function via channel (optional)
-
-
 * Anonymous Nodes
 
 No need to change the function later? Encapsulate the node within a function.
@@ -92,15 +94,9 @@ No need to change the function later? Encapsulate the node within a function.
 The node which is following *node_1* is anonymous and not accessible
 
 
-* Collect Streams (1/2)
+* Collect Streams
 
-Collecting streams seems to be easy but it can lead to deadlocks
-.play -edit sn_collector_bug.go /func main/,/^}/
-Increase the buffer of the out channels as a workaround or wait with sending until structure is established.
-
-
-* Collect Streams (2/2)
-
+Collecting streams is easy
 .play -edit sn_collector.go /func main/,/^}/
 
 
@@ -254,7 +250,7 @@ Set a control function using input, length, and capacity of the buffer
 * Some Practical Tips
 
 - use the race option
-	$ go run -race <go file>
+$ go run -race <go file>
 - do not forget make()
 - use select
 - use go routines to avoid blocking
