@@ -17,7 +17,7 @@ func main() {
 	node_1.Connect(node_out)                                            // stream configuration // HL
 	node_2.Connect(node_out)                                            //
 	node_3.Connect(node_out)                                            //
-	node_out.Print()                                                    //
+	node_out.Printf("%v ")                                              //
 
 	node_1.ProduceAtMs(200)                                             // sending data  // HL
 	node_2.ProduceAtMs(200)                                             //

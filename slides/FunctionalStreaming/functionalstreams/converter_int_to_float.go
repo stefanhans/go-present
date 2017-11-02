@@ -5,9 +5,9 @@ type ConverterIntToFloat struct {
 	in      chan int
 	cin     chan chan int
 	convert func(int) float64 // HL
-	out     chan float64 // HL
-	cout    chan chan float64 // HL
-	close   chan bool
+	out     chan float64
+	cout    chan chan float64
+	close   chan bool // OMIT
 }
 // END_1 OMIT
 
@@ -16,10 +16,10 @@ func (converter *ConverterIntToFloat) Start() {
 	go func() {
 		for {
 			select {
-			case converter.in = <-converter.cin: // HL
+			case converter.in = <-converter.cin:
 			case in := <-converter.in: converter.out <- converter.convert(in) // HL
-			case converter.out = <-converter.cout: // HL
-			case <-converter.close: return
+			case converter.out = <-converter.cout:
+			case <-converter.close: return // OMIT
 			}
 		}
 	}()
@@ -32,9 +32,9 @@ func NewConverterIntToFloat() *ConverterIntToFloat {
 	converter.in = make(chan int)
 	converter.cin = make(chan chan int)
 	converter.convert = func(in int) float64 { return float64(in) } // HL
-	converter.out = make(chan float64) // HL
-	converter.cout = make(chan chan float64) // HL
-	converter.close = make(chan bool)
+	converter.out = make(chan float64)
+	converter.cout = make(chan chan float64)
+	converter.close = make(chan bool) // OMIT
 	converter.Start()
 	return &converter
 }
@@ -45,7 +45,7 @@ func (converter *ConverterIntToFloat) Stop() {
 }
 
 // START_CONNECT OMIT
-func (converter *ConverterIntToFloat) Connect(nextNode *NodeOfFloat) *NodeOfFloat { // HL
+func (converter *ConverterIntToFloat) Connect(nextNode *NodeOfFloat) *NodeOfFloat {
 	converter.cout <- nextNode.in
 	return nextNode
 }

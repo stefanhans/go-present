@@ -13,7 +13,7 @@ func main() {
 	node_1.SetFunc(func(in int) int { i++; return in + i })     //
 	node_2.SetFunc(func(in int) int { return in * 2 })          //
 
-	node_1.Connect(node_2).Print()                              // stream configuration // HL
+	node_1.Connect(node_2).Printf("%v ")                        // stream configuration // HL
 	node_1.ProduceAtMs(50)                                      // sending data  // HL
 	time.Sleep(time.Second)
 	fmt.Println()

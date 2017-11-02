@@ -23,7 +23,7 @@ https://github.com/stefanhans/go-present/
 * Agenda
 
 - introducing the core principles
-- building streams with channels and functions
+- building simple streams
 - collect and publish (pub/sub)
 - distribute between two
 - distribute between many
@@ -36,16 +36,16 @@ Is that enough?
 - meta channel, composites, registration, and APIs
 
 
-* The core principles of 'Functional Streaming' as I mean it
+* The core principles of 'Functional Streaming' (as I mean it)
 
-- node-like structs with one main loop are the basic parts handling data streams
+- node-like structs with one main loop goroutine connected via edge-like channels are the basic components handling data streams
 - functions called in the main loop control or transform the data streams
-- crucial parts of structs and main loops, respectively, can be exchanged during handling data streams
-- elements can exchange meta information and act on it
+- crucial parts of structs and main loops, respectively, can be exchanged during processing of data streams
+- elements can exchange meta information and react to it
 
 .image images/project.png
 
-Let's see what can we achieve with these ideas on a basic level.
+Let's see what can we achieve with these ideas for a start.
 
 
 * Building Streams (1/4)
@@ -68,21 +68,23 @@ Best to implement in the following order:
 
 * Building Streams (3/4)
 
+Declare and initialize a new node for integer values
 .code functionalstreams/node_of_int.go /START_3/,/END_3/
-Helper function to trigger input
-.code functionalstreams/util_of_int.go /START_3/,/END_3/
+
+Connects the output of one node with the input of another
+.code functionalstreams/node_of_int.go /START_5/,/END_5/
 
 
 * Building Streams (4/4)
 
-Connects the output of a node with the input of another
-.code functionalstreams/node_of_int.go /START_5/,/END_5/
+Helper function to show output
+.code functionalstreams/util_of_int.go /START_PRINTF/,/END_PRINTF/
 
 Exchange the function of a node
 .code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
 
-Helper function to show output
-.code functionalstreams/util_of_int.go /START_PRINTF/,/END_PRINTF/
+Helper function to produce input
+.code functionalstreams/util_of_int.go /START_3/,/END_3/
 
 
 * Higher-Order Function Map
