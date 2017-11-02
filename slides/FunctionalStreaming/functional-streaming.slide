@@ -1,4 +1,4 @@
-Functional Streaming in Go
+Core Functional Streaming in Go
 Functions and Go's CSP Model Controlling Data Streams
 2 Nov 2017
 Tags: go functional streams
@@ -24,7 +24,7 @@ https://github.com/stefanhans/go-present/
 
 - introducing the core principles
 - building simple streams
-- collect and publish (pub/sub)
+- collect and distribute (pub/sub)
 - distribute between two
 - distribute between many
 - buffer and flush
@@ -40,12 +40,12 @@ Is that enough?
 
 - node-like structs with one main loop goroutine connected via edge-like channels are the basic components handling data streams
 - functions called in the main loop control or transform the data streams
-- crucial parts of structs and main loops, respectively, can be exchanged during processing of data streams
-- elements can exchange meta information and react to it
+- crucial parts of structs and main loops, respectively, can be exchanged during flowing data streams
+- exchange of meta information and reactions to it
 
 .image images/project.png
 
-Let's see what can we achieve with these ideas for a start.
+Let's see what can we achieve with the first three ideas for a start.
 
 
 * Building Streams (1/4)
@@ -58,7 +58,7 @@ Let's see what can we achieve with these ideas for a start.
 
 .play -edit sn_connect.go /func main/,/^}/
 
-Best to implement in the following order:
+Best to avoid deadlocks is to implement in the following order:
 
 1st: finish node creation
 2nd: finish stream configuration
@@ -68,7 +68,7 @@ Best to implement in the following order:
 
 * Building Streams (3/4)
 
-Declare and initialize a new node for integer values
+Declare and initialize a new node
 .code functionalstreams/node_of_int.go /START_3/,/END_3/
 
 Connects the output of one node with the input of another
@@ -80,11 +80,11 @@ Connects the output of one node with the input of another
 Helper function to show output
 .code functionalstreams/util_of_int.go /START_PRINTF/,/END_PRINTF/
 
-Exchange the function of a node
-.code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
-
 Helper function to produce input
 .code functionalstreams/util_of_int.go /START_3/,/END_3/
+
+Exchange the function of a node
+.code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
 
 
 * Higher-Order Function Map
@@ -101,30 +101,31 @@ Collecting streams is easy
 .play -edit sn_collector.go /func main/,/^}/
 
 
-* Publish Streams (1/5)
+* Distribute Streams (1/5)
 
-Publishing streams is more sophisticated
-.code functionalstreams/publisher_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
-.code functionalstreams/publisher_of_int.go /START_1/,/END_1/
-
-
-* Publish Streams (2/5)
-
-.code functionalstreams/publisher_of_int.go /START_2/,/END_2/
+Distributing streams is more sophisticated
+.code functionalstreams/distributor_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
+Subscriptions are introduced, and handled by distributor nodes
+.code functionalstreams/distributor_of_int.go /START_1/,/END_1/
 
 
-* Publish Streams (3/5)
+* Distribute Streams (2/5)
 
-.code functionalstreams/publisher_of_int.go /START_3/,/END_3/
-
-
-* Publish Streams (4/5)
-.code functionalstreams/publisher_of_int.go /START_4/,/END_4/
+.code functionalstreams/distributor_of_int.go /START_2/,/END_2/
 
 
-* Publish Streams (5/5)
+* Distribute Streams (3/5)
 
-.play -edit sn_publisher.go /START_6/,/END_6/
+.code functionalstreams/distributor_of_int.go /START_3/,/END_3/
+
+
+* Distribute Streams (4/5)
+.code functionalstreams/distributor_of_int.go /START_4/,/END_4/
+
+
+* Distribute Streams (5/5)
+
+.play -edit sn_distributor.go /START_6/,/END_6/
 
 
 * Tee Streams (1/2)
@@ -155,14 +156,16 @@ Publishing streams is more sophisticated
 .play -edit sn_switch.go /func main/,/^}/
 
 
-* Distribute Streams (1/2)
+* Distributing Functions (1/2)
 
+Distribute and copy to all subscribers
 .code functionalstreams/distributor_of_int.go /START_TOALL/,/END_TOALL/
+Distribute round-robin
 .code functionalstreams/distributor_of_int.go /START_RR/,/END_RR/
 
-* Distribute Streams (2/2)
+* Distributing Functions (2/2)
 
-.play -edit sn_round_robin.go /func main/,/^}/
+.play -edit sn_distribute_functions.go /func main/,/^}/
 
 
 * Buffer and Flush (1/5)
@@ -211,6 +214,7 @@ Set a control function using input, length, and capacity of the buffer
 
 .code functionalstreams/folder_of_int.go /START_RESULT/,/END_RESULT/
 .play -edit sn_folder.go /func main/,/^}/
+Assigning another monad to variable used in *NewFolderOfInt* has no effect
 
 
 * Aggregate (1/3)
@@ -246,30 +250,4 @@ Set a control function using input, length, and capacity of the buffer
 * Convert Statically (3/3)
 
 .play -edit sn_converter_int_to_float.go /func main/,/^}/
-
-
-* Some Practical Tips
-
-- use the race option
-$ go run -race <go file>
-- do not forget make()
-- use select
-- use go routines to avoid blocking
-
-.image images/project.png
-
-
-* Forecast
-
-Ideas for Talks
-
-- Functional Streaming in Distributed Systems
-
-- Reactive Systems with Functional Streaming
-
-- Functional Streaming and Machine Learning
-
-.image images/pkg.png
-
-
 

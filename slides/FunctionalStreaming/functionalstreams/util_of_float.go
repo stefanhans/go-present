@@ -33,6 +33,17 @@ func (node *NodeOfFloat) Print() {
 	}()
 }
 
+func (node *NodeOfFloat) Printf(format string) {
+	go func() {
+		for {
+			select {
+			case in := <-node.out: // HL
+				fmt.Printf(format, in) // HL
+			}
+		}
+	}()
+}
+
 // END_2 OMIT
 
 // START_3 OMIT

@@ -16,24 +16,26 @@ func main() {
 	})
 
 	// START_6 OMIT
-	publisher := NewPublisherOfInt()
+	distributor := NewDistributorOfInt()
 	subscriber_1 := NewNodeOfInt()
 	subscriber_2 := NewNodeOfInt()
 	subscriber_3 := NewNodeOfInt()
 
-	node_1.ProduceAtMs(200).ConnectPublisher(publisher)
-	publisher.SubscribePublisher("1st", subscriber_1)
-	publisher.SubscribePublisher("2nd", subscriber_2)
-	publisher.SubscribePublisher("3rd", subscriber_3)
+	node_1.ConnectDistributor(distributor)
+	distributor.SubscribeDistributor("1st", subscriber_1)
+	distributor.SubscribeDistributor("2nd", subscriber_2)
+	distributor.SubscribeDistributor("3rd", subscriber_3)
 
 	subscriber_1.Printf("%v ")
 	subscriber_2.Map(func(i int) int { return i * 10 }).Printf("%v ")
 	subscriber_3.Map(func(i int) int { return i * 100 }).Printf("%v ")
-	time.Sleep(time.Second)
 
+	node_1.ProduceAtMs(200)
+
+	time.Sleep(time.Second)
 	fmt.Println()
 
-	publisher.UnsubscribePublisher("2nd")
+	distributor.UnsubscribeDistributor("2nd")
 	time.Sleep(time.Second)
 	// END_6 OMIT
 }

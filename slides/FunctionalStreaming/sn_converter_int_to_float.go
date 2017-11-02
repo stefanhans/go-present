@@ -13,12 +13,10 @@ func main() {
 
 	converter := NewConverterIntToFloat()
 	node_out := NewNodeOfFloat()
-	node_in.ConnectConverterIntToFloat(converter).Connect(node_out).Print()
 
+	node_in.ConnectConverterIntToFloat(converter).Connect(node_out).Printf("%f ")
 
 	node_in.ProduceAtMs(200)
+
 	time.Sleep(time.Second)
-
-
-
 }
