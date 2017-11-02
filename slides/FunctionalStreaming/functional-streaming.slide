@@ -45,7 +45,7 @@ Is that enough?
 
 .image images/project.png
 
-Let's see what can we achieve with these ideas in a first attempt.
+Let's see what can we achieve with these ideas on a basic level.
 
 
 * Building Streams (1/4)
@@ -82,14 +82,13 @@ Exchange the function of a node
 .code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
 
 Helper function to show output
-.code functionalstreams/util_of_int.go /START_2/,/END_2/
+.code functionalstreams/util_of_int.go /START_PRINTF/,/END_PRINTF/
 
 
-* Anonymous Nodes
+* Higher-Order Function Map
 
-No need to change the function later? Encapsulate the node within a function.
-.code functionalstreams/node_of_int.go /START_CALC/,/END_CALC/
-.play -edit sn_calculate.go /func main/,/^}/
+.code functionalstreams/node_of_int.go /START_MAP/,/END_MAP/
+.play -edit map.go /func main/,/^}/
 
 The node which is following *node_1* is anonymous and not accessible
 
@@ -135,31 +134,31 @@ Publishing streams is more sophisticated
 .play -edit sn_tee.go /func main/,/^}/
 
 
-* Anonymous Filter (1/2)
+* Higher-Order Function Filter (1/2)
 
 .code functionalstreams/distributor_of_int.go /START_FILTER/,/END_FILTER/
 
 
-* Anonymous Filter (2/2)
+* Higher-Order Function Filter (2/2)
 
 .play -edit sn_filter.go /func main/,/^}/
 
 
-* Anonymous Switch (1/2)
+* Switch Streams (1/2)
 
 .code functionalstreams/distributor_of_int.go /START_SWITCH/,/END_SWITCH/
 
-* Anonymous Switch (2/2)
+* Switch Streams (2/2)
 
 .play -edit sn_switch.go /func main/,/^}/
 
 
-* Distribute to All or Round-Robin (1/2)
+* Distribute Streams (1/2)
 
 .code functionalstreams/distributor_of_int.go /START_TOALL/,/END_TOALL/
 .code functionalstreams/distributor_of_int.go /START_RR/,/END_RR/
 
-* Distribute to All or Round-Robin (2/2)
+* Distribute Streams (2/2)
 
 .play -edit sn_round_robin.go /func main/,/^}/
 
@@ -193,20 +192,20 @@ Set a control function using input, length, and capacity of the buffer
 .play -edit sn_buffer_func.go /START_BUFFUNC/,/END_BUFFUNC/
 
 
-* Fold (1/3)
+* Higher-Order Function Fold (1/3)
 
 .code functionalstreams/folder_of_int.go /START_1/,/END_1/
 .code functionalstreams/folder_of_int.go /START_3/,/END_3/
 
 
-* Fold (2/3)
+* Higher-Order Function Fold (2/3)
 
 .code functionalstreams/monad_of_int.go /START_1/,/END_1/
 .code functionalstreams/monad_of_int.go /START_2/,/END_2/
 .code functionalstreams/folder_of_int.go /START_2/,/END_2/
 
 
-* Fold (3/3)
+* Higher-Order Function Fold (3/3)
 
 .code functionalstreams/folder_of_int.go /START_RESULT/,/END_RESULT/
 .play -edit sn_folder.go /func main/,/^}/

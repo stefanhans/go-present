@@ -8,7 +8,7 @@ type FolderOfInt struct {
 	cmonad  chan MonadOfInt // HL
 	result  int             // HL
 	cresult chan int // HL
-	close   chan bool
+	close   chan bool // OMIT
 }
 
 // END_1 OMIT
@@ -21,7 +21,7 @@ func (folder *FolderOfInt) Start() {
 				folder.result = folder.monad.assocFunc(folder.result, in) // HL
 			case folder.in = <-folder.cin: // HL
 			case <-folder.cresult: folder.cresult <- folder.result // HL
-			case <-folder.close: return
+			case <-folder.close: return // OMIT
 	}}}()
 }
 
@@ -35,7 +35,7 @@ func NewFolderOfInt(monad *MonadOfInt) *FolderOfInt { // HL
 	folder.monad = monad                  // HL
 	folder.cmonad = make(chan MonadOfInt) // HL
 	folder.cresult = make(chan int) // HL
-	folder.close = make(chan bool)
+	folder.close = make(chan bool) // OMIT
 	folder.Start()
 	return &folder
 }

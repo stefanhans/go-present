@@ -9,7 +9,7 @@ type AggregatorOfInt struct {
 	aggregator_map  *map[int]int                 // HL
 	caggregator_map chan *map[int]int            // HL
 	aggregate       func(int, *map[int]int)      // HL
-	close           chan bool
+	close           chan bool // OMIT
 }
 
 // END_1 OMIT
@@ -25,7 +25,7 @@ func (aggregator *AggregatorOfInt) Start() {
 			case aggregator_map := <-aggregator.caggregator_map: // HL
 				aggregator.caggregator_map <- aggregator.aggregator_map // HL
 				aggregator.aggregator_map = aggregator_map              // HL
-			case <-aggregator.close: return
+			case <-aggregator.close: return // OMIT
 			}
 		}
 	}()
@@ -41,7 +41,7 @@ func NewAggregatorOfInt(aggr_map *map[int]int, f func(int, *map[int]int)) *Aggre
 	aggregator.aggregator_map = aggr_map                       // HL
 	aggregator.caggregator_map = make(chan *map[int]int)       // HL
 	aggregator.aggregate = f                                   // HL
-	aggregator.close = make(chan bool)
+	aggregator.close = make(chan bool) // OMIT
 	aggregator.Start()
 	return &aggregator
 }

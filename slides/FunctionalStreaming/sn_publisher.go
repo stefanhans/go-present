@@ -26,9 +26,9 @@ func main() {
 	publisher.SubscribePublisher("2nd", subscriber_2)
 	publisher.SubscribePublisher("3rd", subscriber_3)
 
-	subscriber_1.Print()
-	subscriber_2.Calculate(func(i int) int { return i * 10 }).Print()
-	subscriber_3.Calculate(func(i int) int { return i * 100 }).Print()
+	subscriber_1.Printf("%v ")
+	subscriber_2.Map(func(i int) int { return i * 10 }).Printf("%v ")
+	subscriber_3.Map(func(i int) int { return i * 100 }).Printf("%v ")
 	time.Sleep(time.Second)
 
 	fmt.Println()

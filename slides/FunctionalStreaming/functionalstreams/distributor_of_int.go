@@ -45,9 +45,6 @@ func (publisher *PublisherOfInt) DistributeToAll() {
 // START_FILTER OMIT
 func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 	publisher := NewPublisherOfInt()
-	node.ConnectPublisher(publisher)
-	nextNode := NewNodeOfInt()
-	publisher.SubscribePublisher("t", nextNode)
 
 	publisher.cf <- func(in int) {
 		if filter(in) {
@@ -55,6 +52,11 @@ func (node *NodeOfInt) Filter(filter func(int) bool) *NodeOfInt {
 			cout <- in
 		}
 	}
+
+	nextNode := NewNodeOfInt()
+
+	node.ConnectPublisher(publisher).SubscribePublisher("t", nextNode)
+
 	return nextNode
 }
 // END_FILTER OMIT

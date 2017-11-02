@@ -62,15 +62,15 @@ func (node *NodeOfInt) SetFunc(f func(int) int) {
 }
 // END_SETFUNC OMIT
 
-// START_CALC OMIT
-func (node *NodeOfInt) Calculate(calc func(int) int) *NodeOfInt {
+// START_MAP OMIT
+func (node *NodeOfInt) Map(calc func(int) int) *NodeOfInt {
 	nextNode := NewNodeOfInt()
 	nextNode.cf <- calc
 
 	node.Connect(nextNode)
 	return nextNode
 }
-// END_CALC OMIT
+// END_MAP OMIT
 
 
 func (node *NodeOfInt) ConnectBuffer(nextNode *BufferOfInt) *BufferOfInt {

@@ -51,3 +51,15 @@ func (node *NodeOfInt) ProduceRandPositivAtMs(max int, ms time.Duration) *NodeOf
 	return node
 }
 // END_4 OMIT
+
+
+
+// START_PRINTF OMIT
+func (node *NodeOfInt) Printf(format string) {
+	go func() {
+		for { select {
+		case in := <-node.out: 				// HL
+			fmt.Printf(format, in)		// HL
+		}}}()
+}
+// END_PRINTF OMIT

@@ -11,10 +11,12 @@ func main() {
 	var i int
 	node.SetFunc(func(in int) int { i++; return in + i })
 
-	node_true, node_false := node.ProduceAtMs(50).Switch(func(i int) bool { return i%2 == 0 }) // HL
+	node_true, node_false := node.Switch(func(i int) bool { return i%2 == 0 }) // HL
 
-	node_true.Print()                                                                           // HL
-	node_false.Calculate(func(i int) int { return i * 10 }).Print()                             // HL
+	node_true.Printf("%v ")                                                                          // HL
+	node_false.Map(func(i int) int { return i * 10 }).Printf("%v ")                             // HL
+
+	node.ProduceAtMs(50)
 
 	time.Sleep(time.Second)
 }
