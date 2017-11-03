@@ -50,6 +50,7 @@ func NewNodeOfInt() *NodeOfInt {
 }
 // END_3 OMIT
 
+
 // START_5 OMIT
 func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 	node.cout <- nextNode.in
@@ -61,6 +62,27 @@ func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 func (node *NodeOfInt) SetFunc(f func(int) int) { node.cf <- f }
 // END_SETFUNC OMIT
 
+// START_MAP OMIT
+func (node *NodeOfInt) Map(f func(int) int) *NodeOfInt {
+	nextNode := NewNodeOfInt()
+	nextNode.cf <- f
+
+	node.Connect(nextNode)
+	return nextNode
+}
+// END_MAP OMIT
+
+
+func main() {
+	node_1 := NewNodeOfInt()                                     // node creation // HL
+	var i int                                                    //
+	node_1.SetFunc(func(in int) int { i++; return in+i })        //
+
+	node_1.Map(func(in int) int { return in * 3 }).Printf("%v ") // stream configuration // HL
+
+	node_1.ProduceAtMs(50)                                       // sending data // HL
+	time.Sleep(time.Second)
+}
 
 // START_PRINTF OMIT
 func (node *NodeOfInt) Printf(format string) {
@@ -80,24 +102,3 @@ func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 	return node
 }
 // END_3 OMIT
-
-
-func main() {
-	node_1, node_2, node_3 := NewNodeOfInt(), NewNodeOfInt(), NewNodeOfInt()  // nodes' creation // HL
-	var i, j, k int                                                           //
-	node_1.SetFunc(func(in int) int { i++; return in + i })                   //
-	node_2.SetFunc(func(in int) int { j++; return in + j * 10 })              //
-	node_3.SetFunc(func(in int) int { k++; return in + k * 100})              //
-	node_out := NewNodeOfInt()                                                //
-
-	node_1.Connect(node_out)                                            // stream configuration // HL
-	node_2.Connect(node_out)                                            //
-	node_3.Connect(node_out)                                            //
-	node_out.Printf("%v ")                                              //
-
-	node_1.ProduceAtMs(200)                                             // sending data  // HL
-	node_2.ProduceAtMs(200)                                             //
-	node_3.ProduceAtMs(200)                                             //
-
-	time.Sleep(time.Second)
-}

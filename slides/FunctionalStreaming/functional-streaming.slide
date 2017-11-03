@@ -1,6 +1,6 @@
 Core Functional Streaming in Go
 Functions and Go's CSP Model Controlling Data Streams
-2 Nov 2017
+20 Nov 2017
 Tags: go functional streams
 
 Stefan Hans
@@ -90,7 +90,7 @@ Exchange the function of a node
 * Higher-Order Function Map
 
 .code functionalstreams/node_of_int.go /START_MAP/,/END_MAP/
-.play -edit map.go /func main/,/^}/
+.play -edit sn_map.go /func main/,/^}/
 
 The node which is following *node_1* is anonymous and not accessible
 
