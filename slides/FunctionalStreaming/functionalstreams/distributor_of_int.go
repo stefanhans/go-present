@@ -31,17 +31,22 @@ func (distributor *DistributorOfInt) Start() {
 		for { select {
 			case distributor.in = <-distributor.cin:
 
-			case in := <-distributor.in: distributor.f(in) // HL
-			case distributor.f = <-distributor.cf: // HL
+			// Function distributes the input value // HL
+			case in := <-distributor.in: distributor.f(in)
 
-			case subscription := <-distributor.cout_map_subscribe: // HL
-				distributor.out_map[subscription.name] = subscription.cint // HL
-				distributor.out_index = append(distributor.out_index, subscription) // HL
+			case distributor.f = <-distributor.cf:
 
-			case name := <-distributor.cout_map_unsubscribe: // HL
-				delete(distributor.out_map, name) // HL
-				// delete from distributor.out_index accordingly // HL
-				// ...
+			// Subscribe to the distributor // HL
+			case subscription := <-distributor.cout_map_subscribe:
+				distributor.out_map[subscription.name] = subscription.cint
+				distributor.out_index = append(distributor.out_index, subscription)
+
+			// Unsubscribe from the distributor // HL
+			case name := <-distributor.cout_map_unsubscribe:
+				delete(distributor.out_map, name)
+
+				// delete from distributor.out_index accordingly
+				// (not shown for brevity) ...
 				i := -1; _ = i 	// OMIT
 				for n, subscription := range distributor.out_index { 	// OMIT
 					if subscription.name == name { i = n }} 	// OMIT
@@ -60,37 +65,44 @@ func NewDistributorOfInt() *DistributorOfInt {
 	distributor := DistributorOfInt{}
 	distributor.in = make(chan int)
 	distributor.cin = make(chan chan int)
-	distributor.out_map = make(map[string]chan int)               // HL
-	distributor.cout_map_subscribe = make(chan SubscriptionToInt) // HL
-	distributor.cout_map_unsubscribe = make(chan string)          // HL
-	distributor.out_index = make([]SubscriptionToInt, 0)			// HL
-	distributor.f = func(in int) {                                // HL
-		for _, cout := range distributor.out_map { // HL
-			go func(cout chan int, in int) { cout <- in }(cout, in) // HL
-		} // HL
-	} // HL
-	distributor.cf = make(chan func(int)) // HL
-	distributor.close = make(chan bool)
+
+	distributor.out_map = make(map[string]chan int)
+	distributor.cout_map_subscribe = make(chan SubscriptionToInt)
+	distributor.cout_map_unsubscribe = make(chan string)
+
+	distributor.out_index = make([]SubscriptionToInt, 0)
+
+	// Each subsription gets a goroutine for sending to its channel  // HL
+	distributor.f = func(in int) {
+		for _, cout := range distributor.out_map {
+			go func(cout chan int, in int) { cout <- in }(cout, in)
+		}
+	}
+	distributor.cf = make(chan func(int))
+	distributor.close = make(chan bool) // OMIT
 	distributor.Start()
 	return &distributor
 }
 
 // END_3 OMIT
 
-// START_4 OMIT
+// START_CONNECTD OMIT
 func (node *NodeOfInt) ConnectDistributor(distributor *DistributorOfInt) *DistributorOfInt {
 	node.cout <- distributor.in
 	return distributor
 }
+// END_CONNECTD OMIT
 
+// START_SUBSCRIBE OMIT
 func (distributor *DistributorOfInt) SubscribeDistributor(name string, nextNode *NodeOfInt) {
 	distributor.cout_map_subscribe <- SubscriptionToInt{name, nextNode.in}
 }
+
 func (distributor *DistributorOfInt) UnsubscribeDistributor(name string) {
 	distributor.cout_map_unsubscribe <- name
 }
+// END_SUBSCRIBE OMIT
 
-// END_4 OMIT
 
 
 // START_TEE OMIT

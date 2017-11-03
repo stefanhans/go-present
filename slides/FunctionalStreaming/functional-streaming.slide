@@ -120,7 +120,10 @@ Subscriptions are introduced, and handled by distributor nodes
 
 
 * Distribute Streams (4/5)
-.code functionalstreams/distributor_of_int.go /START_4/,/END_4/
+Connect a distributor to a node
+.code functionalstreams/distributor_of_int.go /START_CONNECTD/,/END_CONNECTD/
+Subscribe to and unsubscribe from a distributor
+.code functionalstreams/distributor_of_int.go /START_SUBSCRIBE/,/END_SUBSCRIBE/
 
 
 * Distribute Streams (5/5)

@@ -35,7 +35,7 @@ func NewNodeOfInt() *NodeOfInt {
 	node := NodeOfInt{}
 	node.in = make(chan int)
 	node.cin = make(chan chan int)
-	node.f = func(in int) int { return in }        // Default function returns value unchanged
+	node.f = func(in int) int { return in }        // Default function returns input value
 	node.cf = make(chan func(int) int)
 	node.out = make(chan int)
 	node.cout = make(chan chan int)

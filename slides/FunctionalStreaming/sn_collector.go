@@ -7,12 +7,12 @@ import (
 )
 
 func main() {
-	node_1, node_2, node_3 := NewNodeOfInt(), NewNodeOfInt(), NewNodeOfInt()   // node creation // HL
-	var i, j, k int                                                            //
-	node_1.SetFunc(func(in int) int { i++; return in + i })                    //
-	node_2.SetFunc(func(in int) int { j++; return in + j * 10 })               //
-	node_3.SetFunc(func(in int) int { k++; return in + k * 100})               //
-	node_out := NewNodeOfInt()                                                 //
+	node_1, node_2, node_3 := NewNodeOfInt(), NewNodeOfInt(), NewNodeOfInt()  // nodes' creation // HL
+	var i, j, k int                                                           //
+	node_1.SetFunc(func(in int) int { i++; return in + i })                   //
+	node_2.SetFunc(func(in int) int { j++; return in + j * 10 })              //
+	node_3.SetFunc(func(in int) int { k++; return in + k * 100})              //
+	node_out := NewNodeOfInt()                                                //
 
 	node_1.Connect(node_out)                                            // stream configuration // HL
 	node_2.Connect(node_out)                                            //
