@@ -79,24 +79,24 @@ func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 }
 // END_3 OMIT
 
-// START_1 OMIT
+// START_MonadOfInt_1 OMIT
 type MonadOfInt struct {
 	neutralElement int
 	assocFunc      func(int, int) int
 }
-// END_1 OMIT
+// END_MonadOfInt_1 OMIT
 
 
-// START_2 OMIT
+// START_MonadOfInt_2 OMIT
 func NewMonadOfInt(neutralElement int, assocFunc func(int, int) int) *MonadOfInt { // HL
 	monad := MonadOfInt{}
 	monad.neutralElement = neutralElement                       // HL
 	monad.assocFunc = assocFunc                       // HL
 	return &monad
 }
-// END_2 OMIT
+// END_MonadOfInt_2 OMIT
 
-// START_1 OMIT
+// START_FolderOfInt_1 OMIT
 type FolderOfInt struct {
 	in      chan int
 	cin     chan chan int
@@ -107,9 +107,9 @@ type FolderOfInt struct {
 	close   chan bool // OMIT
 }
 
-// END_1 OMIT
+// END_FolderOfInt_1 OMIT
 
-// START_2 OMIT
+// START_FolderOfInt_2 OMIT
 func (folder *FolderOfInt) Start() {
 	folder.result = folder.monad.neutralElement // HL
 	go func() { for { select {
@@ -121,9 +121,9 @@ func (folder *FolderOfInt) Start() {
 	}}}()
 }
 
-// END_2 OMIT
+// END_FolderOfInt_2 OMIT
 
-// START_3 OMIT
+// START_FolderOfInt_3 OMIT
 func NewFolderOfInt(monad *MonadOfInt) *FolderOfInt { // HL
 	folder := FolderOfInt{}
 	folder.in = make(chan int)
@@ -136,7 +136,7 @@ func NewFolderOfInt(monad *MonadOfInt) *FolderOfInt { // HL
 	return &folder
 }
 
-// END_3 OMIT
+// END_FolderOfInt_3 OMIT
 
 // START_RESULT OMIT
 func (folder *FolderOfInt) Result() int {

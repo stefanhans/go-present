@@ -84,7 +84,7 @@ func (node *NodeOfInt) ProduceRandPositivAtMs(max int, ms time.Duration) *NodeOf
 }
 // END_4 OMIT
 
-// START_1 OMIT
+// START_AggregatorOfInt_1 OMIT
 type AggregatorOfInt struct {
 	in              chan int
 	cin             chan chan int
@@ -94,9 +94,9 @@ type AggregatorOfInt struct {
 	close           chan bool // OMIT
 }
 
-// END_1 OMIT
+// END_AggregatorOfInt_1 OMIT
 
-// START_2 OMIT
+// START_AggregatorOfInt_2 OMIT
 func (aggregator *AggregatorOfInt) Start() {
 	go func() {
 		for {
@@ -113,9 +113,9 @@ func (aggregator *AggregatorOfInt) Start() {
 	}()
 }
 
-// END_2 OMIT
+// END_AggregatorOfInt_2 OMIT
 
-// START_3 OMIT
+// START_AggregatorOfInt_3 OMIT
 func NewAggregatorOfInt(aggr_map *map[int]int, f func(int, *map[int]int)) *AggregatorOfInt { // HL
 	aggregator := AggregatorOfInt{}
 	aggregator.in = make(chan int)
@@ -128,7 +128,7 @@ func NewAggregatorOfInt(aggr_map *map[int]int, f func(int, *map[int]int)) *Aggre
 	return &aggregator
 }
 
-// END_3 OMIT
+// END_AggregatorOfInt_3 OMIT
 
 // START_RESET OMIT
 func (aggregator *AggregatorOfInt) Reset(aggr_map *map[int]int) *map[int]int {

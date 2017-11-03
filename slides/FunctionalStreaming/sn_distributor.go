@@ -88,7 +88,7 @@ type SubscriptionToInt struct {
 
 // END_SUBSCRIPTION OMIT
 
-// START_1 OMIT
+// START_DistributorOfInt_1 OMIT
 type DistributorOfInt struct {
 	in                   chan int
 	cin                  chan chan int
@@ -103,9 +103,9 @@ type DistributorOfInt struct {
 	close                chan bool 	// OMIT
 }
 
-// END_1 OMIT
+// END_DistributorOfInt_1 OMIT
 
-// START_2 OMIT
+// START_DistributorOfInt_2 OMIT
 func (distributor *DistributorOfInt) Start() {
 	go func() {
 		for { select {
@@ -138,9 +138,9 @@ func (distributor *DistributorOfInt) Start() {
 	}()
 }
 
-// END_2 OMIT
+// END_DistributorOfInt_2 OMIT
 
-// START_3 OMIT
+// START_DistributorOfInt_3 OMIT
 func NewDistributorOfInt() *DistributorOfInt {
 	distributor := DistributorOfInt{}
 	distributor.in = make(chan int)
@@ -164,7 +164,7 @@ func NewDistributorOfInt() *DistributorOfInt {
 	return &distributor
 }
 
-// END_3 OMIT
+// END_DistributorOfInt_3 OMIT
 
 // START_CONNECTD OMIT
 func (node *NodeOfInt) ConnectDistributor(distributor *DistributorOfInt) *DistributorOfInt {

@@ -57,9 +57,9 @@ func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 }
 // END_5 OMIT
 
-// START_SETFUNC OMIT
+// START_NODE_SETFUNC OMIT
 func (node *NodeOfInt) SetFunc(f func(int) int) { node.cf <- f }
-// END_SETFUNC OMIT
+// END_NODE_SETFUNC OMIT
 
 // START_PRINTF OMIT
 func (node *NodeOfInt) Printf(format string) {
@@ -70,7 +70,7 @@ func (node *NodeOfInt) Printf(format string) {
 // END_PRINTF OMIT
 
 
-// START_3 OMIT
+// START_ProduceAtMs OMIT
 func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 	go func() { for { select {
 	default: node.in <- 0 }	               // Trigger permanently // HL
@@ -78,7 +78,7 @@ func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 	}}()
 	return node
 }
-// END_3 OMIT
+// END_ProduceAtMs OMIT
 
 
 func main() {

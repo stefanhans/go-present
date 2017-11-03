@@ -80,7 +80,7 @@ func (node *NodeOfInt) ProduceAtMs(n time.Duration) *NodeOfInt {
 }
 // END_3 OMIT
 
-// START_1 OMIT
+// START_ConverterIntToFloat_1 OMIT
 type ConverterIntToFloat struct {
 	in      chan int
 	cin     chan chan int
@@ -89,9 +89,9 @@ type ConverterIntToFloat struct {
 	cout    chan chan float64
 	close   chan bool // OMIT
 }
-// END_1 OMIT
+// END_ConverterIntToFloat_1 OMIT
 
-// START_2 OMIT
+// START_ConverterIntToFloat_2 OMIT
 func (converter *ConverterIntToFloat) Start() {
 	go func() {
 		for {
@@ -104,9 +104,9 @@ func (converter *ConverterIntToFloat) Start() {
 		}
 	}()
 }
-// END_2 OMIT
+// END_ConverterIntToFloat_2 OMIT
 
-// START_3 OMIT
+// START_ConverterIntToFloat_3 OMIT
 func NewConverterIntToFloat() *ConverterIntToFloat {
 	converter := ConverterIntToFloat{}
 	converter.in = make(chan int)
@@ -118,7 +118,7 @@ func NewConverterIntToFloat() *ConverterIntToFloat {
 	converter.Start()
 	return &converter
 }
-// END_3 OMIT
+// END_ConverterIntToFloat_3 OMIT
 
 func (converter *ConverterIntToFloat) Stop() {
 	converter.close <- true

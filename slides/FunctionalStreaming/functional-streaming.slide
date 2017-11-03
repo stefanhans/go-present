@@ -50,8 +50,8 @@ Let's see what can we achieve with the first three ideas for a start.
 
 * Building Streams (1/4)
 
-.code functionalstreams/node_of_int.go /START_1/,/END_1/
-.code functionalstreams/node_of_int.go /START_2/,/END_2/
+.code sn_connect.go /START_1/,/END_1/
+.code sn_connect.go /START_2/,/END_2/
 
 
 * Building Streams (2/4)
@@ -69,27 +69,27 @@ Best to avoid deadlocks is to implement in the following order:
 * Building Streams (3/4)
 
 Declare and initialize a new node
-.code functionalstreams/node_of_int.go /START_3/,/END_3/
+.code sn_connect.go /START_3/,/END_3/
 
 Connects the output of one node with the input of another
-.code functionalstreams/node_of_int.go /START_5/,/END_5/
+.code sn_connect.go /START_5/,/END_5/
 
 
 * Building Streams (4/4)
 
 Helper function to show output
-.code functionalstreams/util_of_int.go /START_PRINTF/,/END_PRINTF/
+.code sn_connect.go /START_PRINTF/,/END_PRINTF/
 
 Helper function to produce input
-.code functionalstreams/util_of_int.go /START_3/,/END_3/
+.code sn_connect.go /START_ProduceAtMs/,/END_ProduceAtMs/
 
 Exchange the function of a node
-.code functionalstreams/node_of_int.go /START_SETFUNC/,/END_SETFUNC/
+.code sn_connect.go /START_NODE_SETFUNC/,/END_NODE_SETFUNC/
 
 
 * Higher-Order Function Map
 
-.code functionalstreams/node_of_int.go /START_MAP/,/END_MAP/
+.code sn_map.go /START_MAP/,/END_MAP/
 .play -edit sn_map.go /func main/,/^}/
 
 The node which is following *node_1* is anonymous and not accessible
@@ -104,26 +104,26 @@ Collecting streams is easy
 * Distribute Streams (1/5)
 
 Distributing streams is more sophisticated
-.code functionalstreams/distributor_of_int.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
+.code sn_distributor.go /START_SUBSCRIPTION/,/END_SUBSCRIPTION/
 Subscriptions are introduced, and handled by distributor nodes
-.code functionalstreams/distributor_of_int.go /START_1/,/END_1/
+.code sn_distributor.go /START_DistributorOfInt_1/,/END_DistributorOfInt_1/
 
 
 * Distribute Streams (2/5)
 
-.code functionalstreams/distributor_of_int.go /START_2/,/END_2/
+.code sn_distributor.go /START_DistributorOfInt_2/,/END_DistributorOfInt_2/
 
 
 * Distribute Streams (3/5)
 
-.code functionalstreams/distributor_of_int.go /START_3/,/END_3/
+.code sn_distributor.go /START_DistributorOfInt_3/,/END_DistributorOfInt_3/
 
 
 * Distribute Streams (4/5)
 Connect a distributor to a node
-.code functionalstreams/distributor_of_int.go /START_CONNECTD/,/END_CONNECTD/
+.code sn_distributor.go /START_CONNECTD/,/END_CONNECTD/
 Subscribe to and unsubscribe from a distributor
-.code functionalstreams/distributor_of_int.go /START_SUBSCRIBE/,/END_SUBSCRIBE/
+.code sn_distributor.go /START_SUBSCRIBE/,/END_SUBSCRIBE/
 
 
 * Distribute Streams (5/5)
@@ -133,7 +133,7 @@ Subscribe to and unsubscribe from a distributor
 
 * Tee Streams (1/2)
 
-.code functionalstreams/distributor_of_int.go /START_TEE/,/END_TEE/
+.code sn_tee.go /START_TEE/,/END_TEE/
 
 * Tee Streams (2/2)
 
@@ -142,7 +142,7 @@ Subscribe to and unsubscribe from a distributor
 
 * Higher-Order Function Filter (1/2)
 
-.code functionalstreams/distributor_of_int.go /START_FILTER/,/END_FILTER/
+.code sn_filter.go /START_FILTER/,/END_FILTER/
 
 
 * Higher-Order Function Filter (2/2)
@@ -152,7 +152,7 @@ Subscribe to and unsubscribe from a distributor
 
 * Switch Streams (1/2)
 
-.code functionalstreams/distributor_of_int.go /START_SWITCH/,/END_SWITCH/
+.code sn_switch.go /START_SWITCH/,/END_SWITCH/
 
 * Switch Streams (2/2)
 
@@ -162,9 +162,9 @@ Subscribe to and unsubscribe from a distributor
 * Distributing Functions (1/2)
 
 Distribute and copy to all subscribers
-.code functionalstreams/distributor_of_int.go /START_TOALL/,/END_TOALL/
+.code sn_distribute_functions.go /START_TOALL/,/END_TOALL/
 Distribute round-robin
-.code functionalstreams/distributor_of_int.go /START_RR/,/END_RR/
+.code sn_distribute_functions.go /START_RR/,/END_RR/
 
 * Distributing Functions (2/2)
 
@@ -173,21 +173,21 @@ Distribute round-robin
 
 * Buffer and Flush (1/5)
 
-.code functionalstreams/buffer_of_int.go /START_1/,/END_1/
-.code functionalstreams/buffer_of_int.go /START_3/,/END_3/
+.code sn_buffer.go /START_BufferOfInt_1/,/END_BufferOfInt_1/
+.code sn_buffer.go /START_BufferOfInt_3/,/END_BufferOfInt_3/
 
 
 * Buffer and Flush (2/5)
 
-.code functionalstreams/buffer_of_int.go /START_2/,/END_2/
+.code sn_buffer.go /START_BufferOfInt_2/,/END_BufferOfInt_2/
 
 
 * Buffer and Flush (3/5)
 Values will be buffered and flushed
-.code functionalstreams/buffer_of_int.go /START_BUFFER/,/END_BUFFER/
-.code functionalstreams/buffer_of_int.go /START_FLUSH/,/END_FLUSH/
+.code sn_buffer.go /START_BUFFER/,/END_BUFFER/
+.code sn_buffer.go /START_FLUSH/,/END_FLUSH/
 Set a control function using input, length, and capacity of the buffer
-.code functionalstreams/buffer_of_int.go /START_FUNC/,/END_FUNC/
+.code sn_buffer.go /START_FUNC/,/END_FUNC/
 
 
 * Buffer and Flush (4/5)
@@ -197,39 +197,39 @@ Set a control function using input, length, and capacity of the buffer
 
 * Buffer and Flush (5/5)
 
-.play -edit sn_buffer_func.go /START_BUFFUNC/,/END_BUFFUNC/
+.play -edit sn_buffer_func.go /func main/,/^}/
 
 
 * Higher-Order Function Fold (1/3)
 
-.code functionalstreams/folder_of_int.go /START_1/,/END_1/
-.code functionalstreams/folder_of_int.go /START_3/,/END_3/
+.code sn_folder.go /START_FolderOfInt_1/,/END_FolderOfInt_1/
+.code sn_folder.go /START_FolderOfInt_3/,/END_FolderOfInt_/
 
 
 * Higher-Order Function Fold (2/3)
 
-.code functionalstreams/monad_of_int.go /START_1/,/END_1/
-.code functionalstreams/monad_of_int.go /START_2/,/END_2/
-.code functionalstreams/folder_of_int.go /START_2/,/END_2/
+.code sn_folder.go /START_MonadOfInt_1/,/END_MonadOfInt_1/
+.code sn_folder.go /START_MonadOfInt_2/,/END_MonadOfInt_2/
+.code sn_folder.go /START_FolderOfInt_2/,/END_FolderOfInt_2/
 
 
 * Higher-Order Function Fold (3/3)
 
-.code functionalstreams/folder_of_int.go /START_RESULT/,/END_RESULT/
+.code sn_folder.go /START_RESULT/,/END_RESULT/
 .play -edit sn_folder.go /func main/,/^}/
 Assigning another monad to variable used in *NewFolderOfInt* has no effect
 
 
 * Aggregate (1/3)
 
-.code functionalstreams/aggregator_of_int.go /START_1/,/END_1/
-.code functionalstreams/aggregator_of_int.go /START_3/,/END_3/
+.code sn_aggregator.go /START_AggregatorOfInt_1/,/END_AggregatorOfInt_1/
+.code sn_aggregator.go /START_AggregatorOfInt_3/,/END_AggregatorOfInt_3/
 
 
 * Aggregate (2/3)
 
-.code functionalstreams/aggregator_of_int.go /START_2/,/END_2/
-.code functionalstreams/aggregator_of_int.go /START_RESET/,/END_RESET/
+.code sn_aggregator.go /START_AggregatorOfInt_2/,/END_AggregatorOfInt_2/
+.code sn_aggregator.go /START_RESET/,/END_RESET/
 
 
 * Aggregate (3/3)
@@ -239,15 +239,15 @@ Assigning another monad to variable used in *NewFolderOfInt* has no effect
 
 * Convert Statically (1/3)
 
-.code functionalstreams/converter_int_to_float.go /START_1/,/END_1/
-.code functionalstreams/converter_int_to_float.go /START_3/,/END_3/
+.code sn_converter_int_to_float.go /START_ConverterIntToFloat_1/,/END_ConverterIntToFloat_1/
+.code sn_converter_int_to_float.go /START_ConverterIntToFloat_3/,/END_ConverterIntToFloat_3/
 
 
 * Convert Statically (2/3)
 
-.code functionalstreams/converter_int_to_float.go /START_2/,/END_2/
-.code functionalstreams/node_of_int.go /START_CONNECTCONVERTER/,/END_CONNECTCONVERTER/
-.code functionalstreams/converter_int_to_float.go /START_CONNECT/,/END_CONNECT/
+.code sn_converter_int_to_float.go /START_ConverterIntToFloat_2/,/END_ConverterIntToFloat_2/
+.code sn_converter_int_to_float.go /START_CONNECTCONVERTER/,/END_CONNECTCONVERTER/
+.code sn_converter_int_to_float.go /START_CONNECT/,/END_CONNECT/
 
 
 * Convert Statically (3/3)

@@ -61,7 +61,7 @@ func (node *NodeOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 func (node *NodeOfInt) SetFunc(f func(int) int) { node.cf <- f }
 // END_SETFUNC OMIT
 
-// START_1 OMIT
+// START_BufferOfInt_1 OMIT
 type BufferOfInt struct {
 	in           chan int
 	out          chan int
@@ -70,11 +70,11 @@ type BufferOfInt struct {
 	cin          chan chan int       // HL
 	cout         chan chan int       // HL
 	cflush       chan func(int) bool // HL
-	close        chan bool
+	close        chan bool // OMIT
 }
-// END_1 OMIT
+// END_BufferOfInt_1 OMIT
 
-// START_2 OMIT
+// START_BufferOfInt_2 OMIT
 func (buffer *BufferOfInt) Start() {
 	go func() {
 		for {
@@ -90,14 +90,14 @@ func (buffer *BufferOfInt) Start() {
 					} // HL
 				} // HL
 			case buffer.flush = <-buffer.cflush: // HL
-			case <-buffer.close: return
+			case <-buffer.close: return // OMIT
 			}
 		}
 	}()
 }
-// END_2 OMIT
+// END_BufferOfInt_2 OMIT
 
-// START_3 OMIT
+// START_BufferOfInt_3 OMIT
 func NewBufferOfInt() *BufferOfInt {
 	buffer := BufferOfInt{}
 	buffer.in = make(chan int)
@@ -107,11 +107,11 @@ func NewBufferOfInt() *BufferOfInt {
 	buffer.buffer = make(chan int, 1024) // HL
 	buffer.flush = func(in int) bool { return true } // HL
 	buffer.cflush = make(chan func(int) bool) // HL
-	buffer.close = make(chan bool)
+	buffer.close = make(chan bool) // OMIT
 	buffer.Start()
 	return &buffer
 }
-// END_3 OMIT
+// END_BufferOfInt_3 OMIT
 
 func (buffer *BufferOfInt) Connect(nextNode *NodeOfInt) *NodeOfInt {
 	buffer.cout <- nextNode.in
