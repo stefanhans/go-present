@@ -33,7 +33,7 @@ https://github.com/stefanhans/go-present/
 
 Is that enough?
 
-- meta channel, composites, registration, and APIs
+- meta channel, orchestration and container, registration and configuration, and APIs
 
 
 * The core principles of 'Functional Streaming' (as I mean it)
@@ -254,3 +254,15 @@ Assigning another monad to variable used in *NewFolderOfInt* has no effect
 
 .play -edit sn_converter_int_to_float.go /func main/,/^}/
 
+
+* Discussion: Makes this sense? What's next?
+
+- meta channels can be used for controlling
+- orchestration and container - like k8s with docker and/or in docker images
+- dynamic registration of functions and nodes
+- declarative configuration can be used avoid deadlocks etc.
+- gRPC with protobuf
+- APIs: CLI, JSON/YAML, GUI
+- context, interfaces, generics-like ...
+
+.image images/project.png
