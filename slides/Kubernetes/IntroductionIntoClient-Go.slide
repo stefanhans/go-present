@@ -1,0 +1,44 @@
+K8s API & Go Programming
+My First Steps with Kubernetes and client-go
+24 Jan 2018
+Tags: go k8s
+
+Stefan Hans
+Go Rookie and Native Speaker Wannabe
+contact@stefan-hans.de
+https://github.com/stefanhans/go-present/
+
+
+* About myself
+
+- in IT since the late-Nineties, mostly as supporter (who can code)
+- doing my kind of 'research and development' of cutting-edge technology for over two years now
+- doing Go programming since February 2017
+- exploring Kubernetes since 6 weeks
+- playing with client-go since 10 days
+
+.image images/gopher-talks.png
+
+* Offers to start with for free
+
+- MOOCs
+.link https://www.coursera.org/learn/google-kubernetes-engine Getting Started with Google Kubernetes Engine (by Coursera)
+.link https://www.udacity.com/course/scalable-microservices-with-kubernetes--ud615 Scalable Microservices with Kubernetes (by Udacity)
+
+- YouTube
+.link https://www.youtube.com/user/janakirammsv Janakiram & Associates
+.link https://www.youtube.com/watch?v=9YYeE-bMWv8&list=PLvmPtYZtoXOENHJiAQc6HmV2jmuexKfrJ TGI Kubernetes
+
+- Environments
+.link https://cloud.google.com/kubernetes-engine/ Google Kubernetes Engine
+.link https://kubernetes.io/docs/getting-started-guides/minikube/ minikube
+.link https://github.com/kelseyhightower/kubernetes-the-hard-way Kubernetes The Hard Way
+
+* client-go
+.link https://github.com/kubernetes/client-go kubernetes/client-go
+
+.image images/gopher.jpg
+
+.link https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#-strong-api-overview-strong- Kubernetes API
+.image images/k8s.png
+
