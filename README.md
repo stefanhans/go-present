@@ -13,6 +13,9 @@
 - **[Functional Streaming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/FunctionalStreaming/functional-streaming.slide#1)** `Rookie's introduction into functional streaming with Go (I)` (alpha)
 
 
+- **[K8s API & Go Programming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/Kubernetes/IntroductionIntoClient-Go.slide#1)** `My First Steps with Kubernetes and client-go` (draft)
+
+
 
 
 ## Articles
