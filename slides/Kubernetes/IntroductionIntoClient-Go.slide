@@ -7,6 +7,7 @@ Stefan Hans
 Go Rookie and Native Speaker Wannabe
 contact@stefan-hans.de
 https://github.com/stefanhans/go-present/
+https://github.com/stefanhans/Go4k8s/
 
 
 * About myself
@@ -16,8 +17,36 @@ https://github.com/stefanhans/go-present/
 - doing Go programming since February 2017
 - exploring Kubernetes since 6 weeks
 - playing with client-go since 10 days
+- going to cooperate with [[https://www.loodse.com/][Loodse]]
+.image images/loodse.svg
 
-.image images/gopher-talks.png
+
+
+* What you should have heard about
+
+.caption All cited from [[https://en.wikipedia.org/][Wikipedia]]
+
+- Kubernetes
+
+Kubernetes (commonly referred to as "K8s") is an open-source system for automating deployment, scaling and management of containerized applications that was originally designed by Google and donated to the Cloud Native Computing Foundation.
+
+- Docker
+
+Docker is a software technology providing containers, promoted by the company Docker, Inc. Docker provides an additional layer of abstraction and automation of operating-system-level virtualization on Windows and Linux.
+
+- Go
+
+Go (often referred to as golang) is a programming language created at Google in 2009 by Robert Griesemer, Rob Pike, and Ken Thompson.
+
+
+* What we will focus on, finally
+
+.link https://github.com/kubernetes/client-go kubernetes/client-go
+.image images/k8s.png
+.image images/gopher.jpg
+
+.caption _All_Gophers_ by [[https://www.instagram.com/reneefrench/][Renée French]]
+
 
 * Offers to start with for free
 
@@ -34,11 +63,130 @@ https://github.com/stefanhans/go-present/
 .link https://kubernetes.io/docs/getting-started-guides/minikube/ minikube
 .link https://github.com/kelseyhightower/kubernetes-the-hard-way Kubernetes The Hard Way
 
-* client-go
-.link https://github.com/kubernetes/client-go kubernetes/client-go
 
-.image images/gopher.jpg
+* Basics from the start
 
-.link https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/#-strong-api-overview-strong- Kubernetes API
-.image images/k8s.png
+- Three ways of talking to K8s - exploring imperative, declarative, and programmatic
 
+.link https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands Kubectl Reference Docs
+.link https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/ Kubernetes API Reference Docs
+.link https://godoc.org/k8s.io/client-go GoDoc 'client-go'
+
+- Golang
+
+.link https://golang.org/ref/spec The Go Programming Language Specification
+.link https://golang.org/pkg/ Go Packages
+
+- Docker
+
+.link https://docs.docker.com/engine/reference/builder/ Dockerfile reference
+.link https://docs.docker.com/engine/reference/commandline/cli/ Use the Docker command line
+
+
+* Get hands dirty
+
+- Installations
+
+.link https://kubernetes.io/docs/tasks/tools/install-minikube/ Install Minikube
+.link https://golang.org/dl/ The Go Programming Language
+.link https://github.com/kubernetes/client-go/blob/master/INSTALL.md Installing client-go
+.link https://www.jetbrains.com/go/download/#section=linux Download GoLand (free 30-day trial)
+
+
+- Client-go from outside and from inside of the cluster
+
+.link https://raw.githubusercontent.com/kubernetes/client-go/master/examples/out-of-cluster-client-configuration/main.go Example from outside with BuildConfigFromFlags()
+.link https://raw.githubusercontent.com/kubernetes/client-go/master/examples/in-cluster-client-configuration/main.go Example from inside with InClusterConfig()
+
+* Get an idea by example (1)
+
+.link https://raw.githubusercontent.com/kubernetes/client-go/v6.0.0/examples/create-update-delete-deployment/main.go Create, get, update, delete a Deployment resource
+
+- Context ("k8s.io/client-go/tools/clientcmd")
+    config, err := clientcmd.BuildConfigFromFlags("", "/home/stefan/.kube/config")
+
+- Clientset ("k8s.io/client-go/kubernetes")
+    clientset, err := kubernetes.NewForConfig(config)
+
+- Client for deployments (apiv1 "k8s.io/api/core/v1")
+    deploymentsClient := clientset.AppsV1beta1().Deployments(apiv1.NamespaceDefault)
+
+- Define deployment (metav1 "k8s.io/apimachinery/pkg/apis/meta/v1")
+    deployment := &appsv1beta1.Deployment{
+    	ObjectMeta: metav1.ObjectMeta{...},
+    	Spec: appsv1beta1.DeploymentSpec{...},
+    }
+
+
+* Get an idea by example (2)
+
+- Create deployment
+    resultDeployment, err := deploymentsClient.Create(deployment)
+
+.image images/project.png
+
+
+* What we can define or do
+
+- Resource Deployment
+    type Deployment struct {
+        metav1.TypeMeta `json:",inline"`
+        metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
+        Spec DeploymentSpec `json:"spec,omitempty" protobuf:"bytes,2,opt,name=spec"`
+        Status DeploymentStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
+    }
+
+- Interface for deployments
+    type DeploymentInterface interface {
+    	Create(*v1beta1.Deployment) (*v1beta1.Deployment, error)
+    	Update(*v1beta1.Deployment) (*v1beta1.Deployment, error)
+    	UpdateStatus(*v1beta1.Deployment) (*v1beta1.Deployment, error)
+    	Delete(name string, options *v1.DeleteOptions) error
+    	DeleteCollection(options *v1.DeleteOptions, listOptions v1.ListOptions) error
+    	Get(name string, options v1.GetOptions) (*v1beta1.Deployment, error)
+    	List(opts v1.ListOptions) (*v1beta1.DeploymentList, error)
+    	Watch(opts v1.ListOptions) (watch.Interface, error)
+    	Patch(name string, pt types.PatchType, data []byte, subresources ...string) (result *v1beta1.Deployment, err error)
+    	DeploymentExpansion
+    }
+
+
+* Entry points to the structure
+
+- type ... struct
+    find k8s.io/api -name types.go
+    find k8s.io/api -name types.go -exec grep struct {} \; | egrep '^type'
+
+- e.g. Service struct
+    find k8s.io/api -name types.go -exec grep -l "type Service struct" {} \;
+    k8s.io/api/core/v1/types.go
+
+
+- type ... interface
+    find k8s.io/client-go -name '*.go' -exec egrep -l '^type [[:alnum:]]+Interface interface' {} \;
+    find k8s.io/client-go -name '*.go' -exec egrep '^type [[:alnum:]]+Interface interface' {} \;
+
+- e.g. Service interface
+    find k8s.io/client-go -name '*.go' -exec grep -l "type ServiceInterface interface" {} \;
+    k8s.io/client-go/kubernetes/typed/core/v1/service.go
+
+Not found what you're looking for? Enlarge the search radius accordingly.
+
+* What I wanna show
+
+- A simple deployment of "Hello World" - with a little surprise, at least for me
+
+- A more playful deployment providing a webpage - showing some developer howtos
+
+.image images/project.png
+
+- A minimalistic CI/CD approach
+
+Staging Pod:     Start, get code, prepare, build, run, push image, and stop
+
+Production Pods: Running containers get updated with new version
+
+
+* Now pray to the live demo gods
+
+.image images/biggerProject.jpeg
