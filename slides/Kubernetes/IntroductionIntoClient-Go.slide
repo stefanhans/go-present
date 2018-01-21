@@ -24,8 +24,6 @@ https://github.com/stefanhans/Go4k8s/
 
 * What you should have heard about
 
-.caption All cited from [[https://en.wikipedia.org/][Wikipedia]]
-
 - Kubernetes
 
 Kubernetes (commonly referred to as "K8s") is an open-source system for automating deployment, scaling and management of containerized applications that was originally designed by Google and donated to the Cloud Native Computing Foundation.
@@ -37,6 +35,9 @@ Docker is a software technology providing containers, promoted by the company Do
 - Go
 
 Go (often referred to as golang) is a programming language created at Google in 2009 by Robert Griesemer, Rob Pike, and Ken Thompson.
+
+_._
+.caption All cited from [[https://en.wikipedia.org/][Wikipedia]]
 
 
 * What we will focus on, finally
@@ -128,7 +129,7 @@ Go (often referred to as golang) is a programming language created at Google in 
 
 * What we can define or do
 
-- Resource Deployment
+- Resource 'Deployment'
     type Deployment struct {
         metav1.TypeMeta `json:",inline"`
         metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
