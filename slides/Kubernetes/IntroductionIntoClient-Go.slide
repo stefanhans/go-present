@@ -182,9 +182,13 @@ Not found what you're looking for? Enlarge the search radius accordingly.
 
 - A minimalistic CI/CD approach
 
-Staging Pod:     Start, get code, prepare, build, run, push image, and stop
+Deployment for testing in Docker container:
 
-Production Pods: Running containers get updated with new version
+_Fetch_source_code_from_GitHub,_check,_build_and_run_for_verification_
+
+Blue-Green Deployment with Go:
+
+_Start_staging_deployment,_verify,_change_services_and_deployment,_and_delete_staging_deployment_
 
 
 * Now pray to the live demo gods
