@@ -11,32 +11,13 @@ https://github.com/stefanhans/Go4k8s
 
 * About myself
 
-- in IT since the late-Nineties, mostly as supporter (who can code)
+- working in IT since the late-Nineties, mostly as supporter (who can code)
 - doing my kind of 'research and development' of cutting-edge technology for over two years now
 - doing Go programming since February 2017
 - exploring Kubernetes since 6 weeks
 - playing with client-go since 10 days
 - going to cooperate with [[https://www.loodse.com/][Loodse]]
 .image images/loodse.svg
-
-
-
-* What you should have heard about
-
-- Kubernetes
-
-Kubernetes (commonly referred to as "K8s") is an open-source system for automating deployment, scaling and management of containerized applications that was originally designed by Google and donated to the Cloud Native Computing Foundation.
-
-- Docker
-
-Docker is a software technology providing containers, promoted by the company Docker, Inc. Docker provides an additional layer of abstraction and automation of operating-system-level virtualization on Windows and Linux.
-
-- Go
-
-Go (often referred to as golang) is a programming language created at Google in 2009 by Robert Griesemer, Rob Pike, and Ken Thompson.
-
-_._
-.caption All cited from [[https://en.wikipedia.org/][Wikipedia]]
 
 
 * What we will focus on, finally
@@ -48,7 +29,7 @@ _._
 .caption _All_Gophers_ by [[https://www.instagram.com/reneefrench/][Renée French]]
 
 
-* Offers to start with for free
+* Offers to start with Kubernetes for free
 
 - MOOCs
 .link https://www.coursera.org/learn/google-kubernetes-engine Getting Started with Google Kubernetes Engine (by Coursera)
@@ -64,9 +45,9 @@ _._
 .link https://github.com/kelseyhightower/kubernetes-the-hard-way Kubernetes The Hard Way
 
 
-* Basics from the start
+* Main references - imperative, declarative, and programmatic
 
-- Three ways of talking to K8s - exploring imperative, declarative, and programmatic
+- Kubernetes
 
 .link https://kubernetes.io/docs/reference/generated/kubectl/kubectl-commands Kubectl Reference Docs
 .link https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/ Kubernetes API Reference Docs
@@ -126,9 +107,9 @@ _._
 .image images/project.png
 
 
-* What we can define or do
+* Resource definitions and what to do with them
 
-- Resource 'Deployment'
+- Resource 'Deployment' - top level of the hierarchy
     type Deployment struct {
         metav1.TypeMeta `json:",inline"`
         metav1.ObjectMeta `json:"metadata,omitempty" protobuf:"bytes,1,opt,name=metadata"`
@@ -151,13 +132,13 @@ _._
     }
 
 
-* Entry points to the structure
+* Structs and Interfaces - first glance of the filesystem structure
 
 - type ... struct
     find k8s.io/api -name types.go
     find k8s.io/api -name types.go -exec grep struct {} \; | egrep '^type'
 
-- e.g. Service struct
+- e.g. search 'Service' struct
     find k8s.io/api -name types.go -exec grep -l "type Service struct" {} \;
     k8s.io/api/core/v1/types.go
 
@@ -166,17 +147,16 @@ _._
     find k8s.io/client-go -name '*.go' -exec egrep -l '^type [[:alnum:]]+Interface interface' {} \;
     find k8s.io/client-go -name '*.go' -exec egrep '^type [[:alnum:]]+Interface interface' {} \;
 
-- e.g. Service interface
+- e.g. search 'Service' interface
     find k8s.io/client-go -name '*.go' -exec grep -l "type ServiceInterface interface" {} \;
     k8s.io/client-go/kubernetes/typed/core/v1/service.go
 
-Not found what you're looking for? Enlarge the search radius accordingly.
 
 * What I wanna show
 
 - A simple deployment of "Hello World" - with a little surprise, at least for me
 
-- A more playful deployment providing a webpage - showing some developer howtos
+- A more playful deployment providing a webpage - showing some howtos
 
 .image images/project.png
 
