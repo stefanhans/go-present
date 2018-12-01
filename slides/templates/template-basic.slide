@@ -1,0 +1,74 @@
+title of my talk
+description of my talk
+28 Nov 2018
+Tags: go libp2p ipfs
+
+Stefan Hans
+Go Developer and Cloud-Native Engineer
+stefanhans65@gmail.com
+https://github.com/stefanhans/go-present/
+@stefanhans65
+
+
+* About Myself, this, and that
+
+- doing my kind of 'research and development' of cutting-edge technology for over four years now
+- doing Go programming since February 2017
+- using Go professionally in the cloud domain (k8s, GCP)
+- working on my thesis "Programming Reactive Systems in Go"
+- talks on topics related to Go, cloud-native, serverless, and beyond
+- fiddling around with this for about two weeks now
+
+.image images/gopher-talks.png
+
+
+* Agenda
+
+- start
+- 1st
+- 2nd
+- demo time
+- the good, the bad and the ugly
+- what's next?
+
+.image images/project.png
+
+* Now it's demo time ...
+
+.image images/project.png
+
+
+* The Good, ...
+
+My opinion, only a first impression
+
+- very open architecture
+- good approach on network programming
+
+
+* ... the Bad, ...
+
+My opinion, only a first impression
+
+- lack of documentation
+- confusing many packages
+- redundancy
+
+
+* ... and the Ugly
+
+My opinion, only a first impression
+
+- not yet responsive enough
+- not yet reliable enough
+
+
+* What's next?
+
+- build a chat with Protocol Buffer including message types for multiplexing
+- analyze streams and alternatives concerning 'message driven'
+- investigate HashiCorp's SWIM++ implementation 'memberlist'
+- research about consistency implementations in libp2p
+- design and implement a prototype for Distributed Contexting
+
+.image images/project.png

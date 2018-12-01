@@ -1,0 +1,190 @@
+go-libp2p
+Introduction to libp2p for Golang Developer
+28 Nov 2018
+Tags: go libp2p ipfs
+
+Stefan Hans
+Go Developer and Cloud-Native Engineer
+stefanhans65@gmail.com
+https://github.com/stefanhans/go-present/
+@stefanhans65
+
+
+* About Myself, Go, and go-libp2p
+
+- doing my kind of 'research and development' of cutting-edge technology for over four years now
+- doing Go programming since February 2017
+- using Go professionally in the cloud domain (k8s, GCP)
+- working on my thesis "Programming Reactive Systems in Go"
+- talks on topics related to Go, cloud-native, serverless, and beyond
+- fiddling around with libp2p for about two weeks now
+
+.image images/gopher-talks.png
+
+
+* Agenda
+
+- functional Options of the libp2p API
+- hosts and peers
+- chat example (playing and testing)
+- the good, the bad and the ugly
+- what's next?
+
+.image images/project.png
+
+
+* Functional Options (1/3)
+
+The API of libp2p uses a configuration with functional options
+
+    type Config = config.Config
+
+    type Option = config.Option
+
+'Config' is a struct and 'Option' is a function
+
+    type Option func(cfg *Config) error
+
+It creates a host with defaults and optional options variadically
+
+    func New(ctx context.Context, opts ...Option) (host.Host, error) {
+    	return NewWithoutDefaults(ctx, append(opts, FallbackDefaults)...)
+    }
+
+i.e. it is closed against change but open for extensions
+
+
+* Functional API for libp2p API (2/3)
+
+Options will be applied to a configuration
+
+    func NewWithoutDefaults(ctx context.Context, opts ...Option) (host.Host, error) {
+        var cfg Config
+        if err := cfg.Apply(opts...); err != nil {
+            return nil, err
+        }
+        return cfg.NewNode(ctx)
+    }
+
+e.g. the default options
+
+    var FallbackDefaults Option = func(cfg *Config) error {
+        for _, def := range defaults {
+            if !def.fallback(cfg) {
+                continue
+            }
+            if err := cfg.Apply(def.opt); err != nil {
+                return err
+            }
+        } return nil
+    }
+
+
+* Functional API (3/3)
+
+The defaults are stored in a slice of structs
+
+    var defaults = []struct {
+        fallback func(cfg *Config) bool
+        opt      Option
+    }{
+        {
+            fallback: func(cfg *Config) bool {
+                return cfg.Transports == nil && cfg.ListenAddrs == nil },
+            opt:      DefaultListenAddrs,
+        },
+        ...
+    }
+
+and mostly defined elsewhere
+
+    import "github.com/multiformats/go-multiaddr"
+
+    var DefaultListenAddrs = func(cfg *Config) error {
+        defaultIP4ListenAddr, err := multiaddr.NewMultiaddr("/ip4/0.0.0.0/tcp/0")
+
+        ...
+    }
+
+
+* Hosts and Peers (1/3)
+
+.play -edit host_1.go /START/,/END/
+
+
+* Hosts and Peers (2/3)
+
+.play -edit host_2.go /START/,/END/
+
+
+* Hosts and Peers (3/3)
+
+.play -edit host_3.go /START/,/END/
+
+
+* Chat Example (1/5)
+
+Write lines from standard input to all chat member
+.code chat.go /func writeData/,/^}/
+
+
+* Chat Example (2/5)
+
+Read incoming lines and write them to standard output
+.code chat.go /func readData/,/^}/
+
+
+* Chat Example (3/5)
+
+.code chat.go /func handleStream/,/^}/
+
+
+* Chat Example (4/5)
+
+.code chat.go /START_1/,/END_1/
+
+
+* Chat Example (5/5)
+
+.code chat.go /START_2/,/END_2/
+
+
+* Now it's demo time ...
+
+.image images/project.png
+
+
+* The Good, ...
+
+My opinion, only a first impression
+
+- very open architecture
+- good approach on network programming
+
+
+* ... the Bad, ...
+
+My opinion, only a first impression
+
+- lack of documentation
+- confusing many packages
+- redundancy
+
+
+* ... and the Ugly
+
+My opinion, only a first impression
+
+- not yet responsive enough
+- not yet reliable enough
+
+
+* What's next?
+
+- build a chat with Protocol Buffer including message types for multiplexing
+- analyze streams and alternatives concerning 'message driven'
+- investigate HashiCorp's SWIM++ implementation 'memberlist'
+- research about consistency implementations in libp2p
+- design and implement a prototype for Distributed Contexting
+
+.image images/project.png

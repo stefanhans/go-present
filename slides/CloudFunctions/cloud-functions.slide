@@ -1,0 +1,123 @@
+Google Cloud Functions for Go
+Experiences as Tester Playing with Cloud Functions for Go
+13 Dec 2018
+Tags: go gcp cloudfunctions
+
+Stefan Hans
+Go Developer and Cloud-Native Engineer
+stefanhans65@gmail.com
+https://github.com/stefanhans/go-present/
+@stefanhans65
+
+
+* About Myself, Go, and Cloud Functions
+
+- doing my kind of 'research and development' of cutting-edge technology for over four years now
+- doing Go programming since February 2017
+- using Go professionally in the cloud domain (k8s)
+- working on my thesis "Programming Reactive Systems in Go"
+- talks on topics related to Go, cloud-native, serverless, and beyond
+- fiddling around with this for about two weeks now
+
+.image images/gopher-talks.png
+
+
+* Agenda
+
+- Preparations
+- Hello World
+- 2nd
+- demo time
+- the good, the bad and the ugly
+- what's next?
+
+.image images/project.png
+
+* Preparations (1/2)
+
+.link https://cloud.google.com/free/ Google Cloud Platform Free Tier
+.link https://golang.org/doc/install Getting Started - The Go Programming Language
+.link https://docs.google.com/forms/d/e/1FAIpQLSfJ08R2z7FumQyYGGuTyK4x5M-6ch7WmJ_3uWYI5SdZUb5SBw/viewform Apply for Early Access
+
+
+* Preparations (2/2)
+
+
+* Hello World (1/)
+
+Define the function
+
+.code functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
+
+Deploy the function
+
+.play helloworld_1.go /START/,/END/
+
+Use the function
+
+.play helloworld_2.go /START/,/END/
+
+* Hello World
+
+
+
+* Hello World
+
+.play helloworld_2.go /START/,/END/
+
+
+* Hello World
+
+.play shell.go /START/,/END/
+
+
+* Hello World
+
+.play helloworld_1.go /START/,/END/
+
+
+* Hello World
+
+.play helloworld_2.go /START/,/END/
+
+
+
+* Now it's demo time ...
+
+.image images/project.png
+
+
+* The Good, ...
+
+My opinion, only a first impression
+
+- very open architecture
+- good approach on network programming
+
+
+* ... the Bad, ...
+
+My opinion, only a first impression
+
+- lack of documentation
+- confusing many packages
+- redundancy
+
+
+* ... and the Ugly
+
+My opinion, only a first impression
+
+- not yet responsive enough
+- not yet reliable enough
+
+
+* What's next?
+
+- build a chat with Protocol Buffer including message types for multiplexing
+- analyze streams and alternatives concerning 'message driven'
+- investigate HashiCorp's SWIM++ implementation 'memberlist'
+- research about consistency implementations in libp2p
+- design and implement a prototype for Distributed Contexting
+
+.image images/project.png

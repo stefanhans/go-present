@@ -5,11 +5,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"log"
-	"os"
-	"strings"
-	"time"
-
 	"github.com/ipfs/go-cid"
 	"github.com/ipfs/go-ipfs-addr"
 	"github.com/libp2p/go-libp2p"
@@ -19,6 +14,9 @@ import (
 	"github.com/libp2p/go-libp2p-peer"
 	"github.com/libp2p/go-libp2p-peerstore"
 	"github.com/multiformats/go-multihash"
+	"log"
+	"os"
+	"strings"
 )
 
 // IPFS bootstrap nodes. Used to find other peers in the network.
@@ -181,23 +179,14 @@ func usage() {
 // handleStream manages new incoming streams
 func handleStream(stream net.Stream) {
 
-	// Add new remote peer as peer to read from
-	readFromPeers = append(readFromPeers, stream.Conn().RemotePeer())
-
 	// Create a buffer stream for non blocking read and write
 	rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
 
 	// Go routine to process stream lines
 	go readData(rw)
 
-	// TODO: Unclear, if we need this Go routine and how many
+	// Go routine to write lines
 	go writeData()
-
-	// Shows the number of saved peers and connections, respectively
-	fmt.Printf("\rInbound Connections: %d Outbound Connections: %d ",
-		len(readFromPeers), len(writeToPeers))
-
-	// 'stream' will stay open until you close it (or the other side closes it).
 }
 
 // TODO: Still we miss read connections in tests!
@@ -207,25 +196,20 @@ func readData(rw *bufio.ReadWriter) {
 
 	// Continuously waiting for incoming lines
 	for {
-		str, err := rw.ReadString('\n')
-		if err != nil {
-			if err.Error() != lastError {
-				log.Println("ERROR: ", err)
-				lastError = err.Error()
-			}
-			continue
-		}
 
+		// Read next line
+		str, _ := rw.ReadString('\n')
+
+		// Ignore empty lines
 		if str == "" {
 			continue
 		}
 
 		if str != "\n" {
-			// Green console colour: 	\x1b[32m
-			// Reset console colour: 	\x1b[0m
-
-			// By default the sender's peer id was sent at the beginning of every line
+			// The sender's peer id is printed as green prompt before the line
 			fmt.Printf("\n\x1b[32m%s\x1b[0m", str)
+
+			// Print a new line with prompt
 			fmt.Printf("%s ", chat.ID())
 		}
 	}
@@ -241,31 +225,14 @@ func writeData() {
 	for {
 
 		// Wait and read last line
-		line, err := stdReader.ReadString('\n')
-		if err != nil {
-			panic(err)
-		}
-
-		// Set default prompt
-		fmt.Print(chat.ID(), " ")
-
-		// An empty line writes a prompt locally but does not send anything
-		if strings.Trim(line, "\n") == "" {
-			continue
-		}
-
-		// Remove linebreak and check leading backslash for a chat command
-		if strings.HasPrefix(strings.Trim(line, "\n"), "\\") {
-			executeCommand(line)
-			continue
-		}
+		line, _ := stdReader.ReadString('\n')
 
 		// Loop over all connected writers
-		for _, rx := range readWriters {
+		for _, rw := range readWriters {
 
 			// Write sender's ID and the last line written
-			rx.WriteString(fmt.Sprintf("%v %s", chat.ID(), line))
-			rx.Flush()
+			rw.WriteString(fmt.Sprintf("%v %s", chat.ID(), line))
+			rw.Flush()
 		}
 	}
 }
@@ -288,33 +255,22 @@ func main() {
 	// Initialise the chat commands
 	commandUsageInit()
 
-	// libp2p.New constructs a new libp2p Host.
-	// Other options can be added here.
+	// START_1 OMIT
+	// Create chat host
 	ctx := context.Background()
-	chat, err = libp2p.New(ctx, libp2p.DisableRelay())
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("Starting chat for peer %q ...\n", chat.ID())
+	chat, _ = libp2p.New(ctx, libp2p.DisableRelay())
 
 	// Set a function as stream handler.
-	// This function is called when a peer initiate a connection and starts a stream with this peer.
 	chat.SetStreamHandler("/chat/1.1.0", handleStream)
 
 	// Create new distributed hash table
-	kadDht, err := dht.New(ctx, chat)
-	if err != nil {
-		panic(err)
-	}
+	kadDht, _ := dht.New(ctx, chat)
 
-	// Let's connect to the bootstrap nodes first. They will tell us about the other nodes in the network.
+	// Let's connect to the bootstrap nodes which tell us about the other nodes
 	for _, peerAddr := range bootstrapPeers {
 		pAddr, _ := ipfsaddr.ParseString(peerAddr)
 		peerinfo, _ := peerstore.InfoFromP2pAddr(pAddr.Multiaddr())
-
-		if err := chat.Connect(ctx, *peerinfo); err != nil {
-			log.Println("ERROR: ", err)
-		}
+		chat.Connect(ctx, *peerinfo)
 	}
 
 	// We use a rendezvous point to announce our location.
@@ -322,34 +278,17 @@ func main() {
 	rendezvousPoint, _ := v1b.Sum([]byte(*rendezvousString))
 
 	// We provide the rendezvous point to the distributed hash table
-	tctx, cancel := context.WithTimeout(ctx, time.Second*10)
-	defer cancel()
-	if err := kadDht.Provide(tctx, rendezvousPoint, true); err != nil {
-		panic(err)
-	}
+	kadDht.Provide(context.Background(), rendezvousPoint, true)
+	// END_1 OMIT
 
 	// Search in the background permanently for peers at the rendezvous point
+	// START_2 OMIT
 	go func() {
 		for {
+			// Find all registered peers
+			peers, _ := kadDht.FindProviders(context.Background(), rendezvousPoint)
 
-			// 'FindProviders' will return 'PeerInfo' of all the peers which
-			// have 'Provide' or announced themselves previously.
-			tctx, cancel = context.WithTimeout(ctx, time.Second*10)
-			peers, err := kadDht.FindProviders(tctx, rendezvousPoint)
-			if err != nil {
-				panic(err)
-			}
-
-			// Check all returned peers at the rendezvous point
 			for _, p := range peers {
-
-				// TODO: Find out why out host has never an address provided or returned
-
-				// Ignore our host and peers without address
-				if p.ID == chat.ID() || len(p.Addrs) == 0 {
-					// No sense connecting to ourselves or if addrs are not available
-					continue
-				}
 
 				// Check, if the peer already is known for writing to
 				exists := false
@@ -358,39 +297,18 @@ func main() {
 						exists = true
 					}
 				}
-
-				// Create a stream for a new peer
 				if !exists {
+					// Create a stream for the new peer
+					stream, _ := chat.NewStream(ctx, p.ID, "/chat/1.1.0")
 
-					stream, err := chat.NewStream(ctx, p.ID, "/chat/1.1.0")
-					if err != nil {
-						log.Printf("ERROR (%s): %v\n", p.ID, err)
-					} else {
-
-						// Add new remote peer as peer to write to
-						writeToPeers = append(writeToPeers, stream.Conn().RemotePeer())
-
-						// Create a buffer stream for non blocking read and write
-						rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
-						// Add new buffer to write to
-						readWriters = append(readWriters, rw)
-
-						// Go routine to process stream lines
-						go readData(rw)
-
-						// TODO: Unclear, if we need this Go routine and how many
-						go writeData()
-
-						// Shows the number of saved peers and connections, respectively
-						fmt.Printf("\rInbound Connections: %d Outbound Connections: %d ",
-							len(readFromPeers), len(writeToPeers))
-					}
+					// Go routine to process stream lines
+					rw := bufio.NewReadWriter(bufio.NewReader(stream), bufio.NewWriter(stream))
+					go readData(rw)
 				}
 			}
-			// Instead of calling "defer cancel()" inside the for loop
-			cancel()
 		}
 	}()
+	// END_2 OMIT
 
 	// Keep the chat running
 	select {}
