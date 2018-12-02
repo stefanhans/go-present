@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	binary, lookErr := exec.LookPath("helloworld_2.bash")
+	binary, lookErr := exec.LookPath("helloworld_3.bash")
 	if lookErr != nil {
 		panic(lookErr)
 	}
@@ -22,7 +22,7 @@ func main() {
 
 	/*
 	   // START OMIT
-	   curl https://europe-west1-gke-serverless-211907.cloudfunctions.net/HelloWorld
+	   gcloud alpha functions call --region=europe-west1 HelloWorld
 	   // END OMIT
 	*/
 }

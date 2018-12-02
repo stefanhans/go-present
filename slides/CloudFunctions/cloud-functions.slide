@@ -1,5 +1,5 @@
 Google Cloud Functions for Go
-Experiences as Tester Playing with Cloud Functions for Go
+From a Playing Alpha Tester ¯\_(ツ)_/¯
 13 Dec 2018
 Tags: go gcp cloudfunctions
 
@@ -33,31 +33,64 @@ https://github.com/stefanhans/go-present/
 
 .image images/project.png
 
-* Preparations (1/2)
+* Preparations
 
 .link https://cloud.google.com/free/ Google Cloud Platform Free Tier
 .link https://golang.org/doc/install Getting Started - The Go Programming Language
 .link https://docs.google.com/forms/d/e/1FAIpQLSfJ08R2z7FumQyYGGuTyK4x5M-6ch7WmJ_3uWYI5SdZUb5SBw/viewform Apply for Early Access
+.link https://cloud.google.com/functions/docs/quickstarts Quickstarts: gcloud CLI or Console
 
+*Others:*
 
-* Preparations (2/2)
+.link https://cloud.google.com/functions/ Google Cloud Functions
+.link https://cloud.google.com/go/docs/ Go on Google Cloud Platform
 
+* Overview
+
+Execution Environment
+
+- Node.js v6.14.0 (GA) and Node.js v8.11.1 (Beta)
+- Python 3.7.1 (Beta)
+- Go 1.11 (Alpha)
+
+Triggers
+
+- HTTP
+- gcloud
+- GCP Pub/Sub
+- GCP Storage
+- GCP Firebase/Firestore
+- GCP Scheduler, Stackdriver, Compute Engine, BigQuery, ...
 
 * Hello World (1/)
 
 Define the function
 
-.code functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
+.code functions/functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
 
-Deploy the function
+Prepare and deploy the function
+
+    GCP_PROJECT="gke-serverless-211907"
+    GOOGLE_APPLICATION_CREDENTIALS="/Users/stefan/.secret/gke-serverless-211907-181ed186fa7f.json"
+
 
 .play helloworld_1.go /START/,/END/
 
-Use the function
+Use the function via HTTP
 
 .play helloworld_2.go /START/,/END/
 
+or via CLI
+
+.play helloworld_3.go /START/,/END/
+
+
 * Hello World
+
+For functions with dependencies
+
+    GO111MODULE=on
+    go mod init && go mod vendor
 
 
 
@@ -114,7 +147,8 @@ My opinion, only a first impression
 
 * What's next?
 
-- build a chat with Protocol Buffer including message types for multiplexing
+.link https://cloud.google.com/solutions/using-gcp-services-from-gke Using Google Cloud Platform Services from Google Kubernetes Engine
+.link https://github.com/GoogleCloudPlatform/golang-samples Google Cloud Platform Go Samples
 - analyze streams and alternatives concerning 'message driven'
 - investigate HashiCorp's SWIM++ implementation 'memberlist'
 - research about consistency implementations in libp2p
