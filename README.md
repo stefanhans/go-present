@@ -13,7 +13,10 @@
 - **[Functional Streaming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/FunctionalStreaming/functional-streaming.slide#1)** `Rookie's introduction into functional streaming with Go (I)` (alpha)
 
 
-- **[K8s API & Go Programming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/Kubernetes/IntroductionIntoClient-Go.slide#1)** `My First Steps with Kubernetes and client-go` (draft)
+- **[K8s API & Go Programming](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/Kubernetes/IntroductionIntoClient-Go.slide#1)** `My First Steps with Kubernetes and client-go`
+
+
+- **[go-libp2p](http://go-talks.appspot.com/github.com/stefanhans/go-present/slides/libp2p/go-libp2p.slide#1)** `Introduction to libp2p for Golang Developer`
 
 
 
