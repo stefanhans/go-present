@@ -26,12 +26,14 @@ https://github.com/stefanhans/go-present/
 
 - Preparations
 - Hello World
-- 2nd
-- demo time
-- the good, the bad and the ugly
-- what's next?
+- Dependencies
+- Registration service
+- Demo time
+- The good, the bad and the ugly
+- What's next?
 
 .image images/project.png
+
 
 * Preparations
 
@@ -40,10 +42,12 @@ https://github.com/stefanhans/go-present/
 .link https://docs.google.com/forms/d/e/1FAIpQLSfJ08R2z7FumQyYGGuTyK4x5M-6ch7WmJ_3uWYI5SdZUb5SBw/viewform Apply for Early Access
 .link https://cloud.google.com/functions/docs/quickstarts Quickstarts: gcloud CLI or Console
 
-*Others:*
+*and*more*
 
 .link https://cloud.google.com/functions/ Google Cloud Functions
 .link https://cloud.google.com/go/docs/ Go on Google Cloud Platform
+.link https://firebase.google.com/docs/firestore/ Google Cloud Firestore
+
 
 * Overview
 
@@ -62,9 +66,10 @@ Triggers
 - GCP Firebase/Firestore
 - GCP Scheduler, Stackdriver, Compute Engine, BigQuery, ...
 
-* Hello World (1/)
 
-Define the function
+* Hello World
+
+Define the function with fixed input parameters signature - *no* "package main" ☝️
 
 .code functions/functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
 
@@ -72,7 +77,6 @@ Prepare and deploy the function
 
     GCP_PROJECT="gke-serverless-211907"
     GOOGLE_APPLICATION_CREDENTIALS="/Users/stefan/.secret/gke-serverless-211907-181ed186fa7f.json"
-
 
 .play helloworld_1.go /START/,/END/
 
@@ -85,73 +89,142 @@ or via CLI
 .play helloworld_3.go /START/,/END/
 
 
-* Hello World
+* Dependencies
 
-For functions with dependencies
+Functions with dependencies need Go modules
 
     GO111MODULE=on
     go mod init && go mod vendor
 
+to be vendored
+
+    ├── go.mod
+    ├── go.sum
+    ├── functions.go
+    ├── ...
+    └── vendor
+        ├── ...
+        └── modules.txt
+
+.image images/academic-gopher.png
 
 
-* Hello World
+* Registration Service (1/3)
 
-.play helloworld_2.go /START/,/END/
+- JSON as encoding format
+- Cloud Firestore (Beta), a real-time document database for storage
+- Only subscribe() and unsubscribe() needed
+- Additional functions for convenience
+
+.image images/run.png
+
+* Registration Service (2/3)
+
+The struct
+
+    // IpAddress is the struct for the collection
+    type IpAddress struct {
+        Name     string `firestore:"name,omitempty"`
+        Ip       string `firestore:"ip,omitempty"`
+        Port     string `firestore:"port,omitempty"`
+        Protocol string `firestore:"protocol,omitempty"` // "tcp" or "udp"
+    }
+
+and the functions which are expecting a string of words
 
 
-* Hello World
+    // Subscribe gets information of the new member via HTTP, stores it in Firestore
+    // and responds with the list of all members
+    func Subscribe(w http.ResponseWriter, r *http.Request)
 
-.play shell.go /START/,/END/
-
-
-* Hello World
-
-.play helloworld_1.go /START/,/END/
+    // Unsubscribe deletes the member specified by UUID in Firestore
+    func Unsubscribe(w http.ResponseWriter, r *http.Request)
 
 
-* Hello World
+are "as simple as possible but not simpler" ✊
 
-.play helloworld_2.go /START/,/END/
+* Registration Service (2/3)
+
+Read the body and create a struct out of the body (except first word, i.e. UUID)
+
+	body, err := ioutil.ReadAll(r.Body)
+
+	ipAddress := &IpAddress{
+		Name:     strings.Split(string(body), " ")[1],
+		Ip:       strings.Split(string(body), " ")[2],
+		Port:     strings.Split(string(body), " ")[3],
+		Protocol: strings.Split(string(body), " ")[4],
+	}
+
+Marshall the struct to JSON
+
+	ipAddressJson, err := json.MarshalIndent(ipAddress, "", "  ")
+
+and save it as string in a document named by the UUID
+
+    client.Collection(collectionName).Doc(strings.Split(string(body), " ")[0])
+        .Set(ctx, map[string]interface{}{
+        strings.Split(string(body), " ")[0]: fmt.Sprintf("%v", string(ipAddressJson)),
+    })
 
 
+* Registration Service (2/3)
+
+Get all IP addresses from documents,
+
+    // Map of IpAddress
+    var ipAdresses map[string]IpAddress = make(map[string]IpAddress)
+
+    // Get iterator over the documents and members, respectively
+    iter := client.Collection(collectionName).Documents(ctx)
+    for {
+        if doc, err := iter.Next(); err == iterator.Done { break }
+
+        // Get the JSON string, unmarshall it, and insert it into the map
+        if v, ok := doc.Data()[doc.Ref.ID].(string); ok {
+            json.Unmarshal([]byte(v), &ipAddr)
+        }
+        ipAdresses[doc.Ref.ID] = ipAddr
+    }
+
+marshall to JSON and send back
+
+	ipAddressesJson, err := json.Marshal(ipAdresses)
+
+	fmt.Fprintf(w, "%v", string(ipAddressesJson))
 
 * Now it's demo time ...
 
 .image images/project.png
 
 
-* The Good, ...
+* The Good,
 
-My opinion, only a first impression
-
-- very open architecture
-- good approach on network programming
-
-
-* ... the Bad, ...
-
-My opinion, only a first impression
-
-- lack of documentation
-- confusing many packages
-- redundancy
+- free (2 million invocations per month, ...)
+- available online
+- additional services
 
 
-* ... and the Ugly
+*the*Bad,*
 
-My opinion, only a first impression
+- redundancy-independency contradiction
 
-- not yet responsive enough
-- not yet reliable enough
+
+*and*the*Ugly*
+
+- deployment performance (no emulator for GO) and debugging, i.e. "no details available"
+
+.image images/gopher-talks.png
 
 
 * What's next?
 
+.link https://cloud.google.com/functions/docs/deploying/repo Deploying from Source Control
+
+
+*and*more*
+
 .link https://cloud.google.com/solutions/using-gcp-services-from-gke Using Google Cloud Platform Services from Google Kubernetes Engine
 .link https://github.com/GoogleCloudPlatform/golang-samples Google Cloud Platform Go Samples
-- analyze streams and alternatives concerning 'message driven'
-- investigate HashiCorp's SWIM++ implementation 'memberlist'
-- research about consistency implementations in libp2p
-- design and implement a prototype for Distributed Contexting
 
 .image images/project.png
