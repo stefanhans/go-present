@@ -21,8 +21,8 @@ func main() {
 	}
 
 	/*
-	   // START OMIT
-	   gcloud alpha functions call --region=europe-west1 HelloWorld
-	   // END OMIT
+		   // START OMIT
+	gcloud alpha functions call --region=europe-west1 HelloWorld
+		   // END OMIT
 	*/
 }

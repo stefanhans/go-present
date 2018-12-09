@@ -21,8 +21,8 @@ func main() {
 	}
 
 	/*
-	   // START OMIT
-	   gcloud alpha functions deploy HelloWorld --region europe-west1 --runtime go111 --trigger-http
-	   // END OMIT
+	// START OMIT
+	gcloud alpha functions deploy HelloWorld --region europe-west1 --runtime go111 --trigger-http
+	// END OMIT
 	*/
 }

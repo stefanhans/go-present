@@ -21,8 +21,8 @@ func main() {
 	}
 
 	/*
-	   // START OMIT
-	   curl https://europe-west1-gke-serverless-211907.cloudfunctions.net/HelloWorld
-	   // END OMIT
+		   // START OMIT
+	curl https://europe-west1-cloud-functions-talk-22365.cloudfunctions.net/HelloWorld
+		   // END OMIT
 	*/
 }

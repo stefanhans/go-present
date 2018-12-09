@@ -71,12 +71,12 @@ Triggers
 
 Define the function with fixed input parameters signature - *no* "package main" ☝️
 
-.code functions/functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
+.code helloworld/functions.go /HELLOWORLD_START/,/HELLOWORLD_END/
 
 Prepare and deploy the function
 
-    GCP_PROJECT="gke-serverless-211907"
-    GOOGLE_APPLICATION_CREDENTIALS="/Users/stefan/.secret/gke-serverless-211907-181ed186fa7f.json"
+    GCP_PROJECT="cloud-functions-talk-22365"
+    GOOGLE_APPLICATION_CREDENTIALS="~/.secret/cloud-functions-talk-22365-6ba5c5af57f4.json"
 
 .play helloworld_1.go /START/,/END/
 
@@ -117,6 +117,8 @@ to be vendored
 - Additional functions for convenience
 
 .image images/run.png
+
+- Service registration as API approach
 
 * Registration Service (2/3)
 
@@ -196,6 +198,10 @@ marshall to JSON and send back
 * Now it's demo time ...
 
 .image images/project.png
+
+
+
+.play chat_1.go /START/,/END/
 
 
 * The Good,
