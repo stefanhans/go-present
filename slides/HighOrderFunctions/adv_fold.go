@@ -12,6 +12,7 @@ func (list ListOfInt) Fold(f func(int, int) int) int {
 	}
 	return out
 }
+
 // HALF OMIT
 
 func main() {
@@ -21,4 +22,5 @@ func main() {
 	fmt.Printf("list%v.Fold(sum) yields %v\n",
 		list, list.Fold(sum))
 }
+
 // END OMIT

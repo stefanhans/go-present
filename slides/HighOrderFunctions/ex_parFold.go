@@ -22,9 +22,8 @@ func (list ListOfInt) Fold(monad IntMonad) int {
 	return out
 }
 
-
 // START OMIT
-func (list ListOfInt) chanFold(monad IntMonad, from, to int, end chan<- int)  {
+func (list ListOfInt) chanFold(monad IntMonad, from, to int, end chan<- int) {
 	out := monad.NeutralElement
 	for i := from; i < to; i++ {
 		out = monad.AssocFunc(out, list[i])
@@ -41,21 +40,25 @@ func (list ListOfInt) ParFold(monad IntMonad, cores int) int {
 		go list.chanFold(monad, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { out += <-end }
+	for i := 0; i < cores; i++ {
+		out += <-end
+	}
 	return out
 }
+
 // END OMIT
 
 func main() {
 	var list ListOfInt
 	j, k := 1, 50
-	for i:=j; i<=k; i++ {
+	for i := j; i <= k; i++ {
 		list = append(list, i)
 	}
 
 	monad := IntMonad{0, func(x, y int) int {
 		time.Sleep(time.Duration(1 * time.Millisecond))
-		return x + y }}
+		return x + y
+	}}
 
 	start := time.Now()
 	fmt.Printf("list[%v-%v].Fold(monad) yields %v\n", j, k, list.Fold(monad))

@@ -15,6 +15,7 @@ func (list ListOfInt) Zip(otherList ListOfInt, f func(int, int) int) ListOfInt {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {
@@ -22,7 +23,9 @@ func main() {
 	list2 := ListOfInt{-2, -10, 0, 2, 4, 3}
 
 	max := func(x, y int) int {
-		if x > y { return x }
+		if x > y {
+			return x
+		}
 		return y
 	}
 	fmt.Printf("list%v.\nZip(%v, max) yields\nlist%v\n",

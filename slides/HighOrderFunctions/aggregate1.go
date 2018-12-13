@@ -19,6 +19,7 @@ func (list ListOfInt) Aggregate(f intAggregateFunc) MapIntAggregates {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

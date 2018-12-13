@@ -24,6 +24,7 @@ func (list List) FoldToFloat(monad Monad) interface{} {
 	}
 	return out
 }
+
 // END_FOLD OMIT
 
 func main() {

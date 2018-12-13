@@ -26,34 +26,35 @@ func (list ListOfPerson) GroupBy(f PersonsGroupByFunc) PersonsGroupByMap {
 	}
 	return out
 }
+
 // DEF_END OMIT
 
 func main() {
 
 	// STRUCT_START OMIT
 	list := ListOfPerson{
-		Person{ Name: "Peter",   Age:  18, Male: true,  },
-		Person{ Name: "Petra",   Age:  21, Male: false, },
-		Person{ Name: "Karl",    Age:  21, Male: true,  },
-		Person{ Name: "Gustav",  Age:  21, Male: true,  },
-		Person{ Name: "Sabine",  Age:  22, Male: false, },
-		Person{ Name: "Sabine",  Age:  22, Male: false, },
-		Person{ Name: "Stefan",  Age:  24, Male: true,  },
-		Person{ Name: "Jochen",  Age:  25, Male: true,  },
-		Person{ Name: "Eva",     Age:  21, Male: false, },
-		Person{ Name: "Peter",   Age:  18, Male: true,  },
-		Person{ Name: "Petra",   Age:  21, Male: false, },
-		Person{ Name: "Karl",    Age:  21, Male: true,  },
-		Person{ Name: "Gustav",  Age:  21, Male: true,  },
-		Person{ Name: "Sabine",  Age:  22, Male: false, },
-		Person{ Name: "Sabine",  Age:  22, Male: false, },
-		Person{ Name: "Stefan",  Age:  24, Male: true,  },
-		Person{ Name: "Jochen",  Age:  25, Male: true,  },
-		Person{ Name: "Eva",     Age:  21, Male: false, },
-		Person{ Name: "Peter",   Age:  18, Male: true,  },
-		Person{ Name: "Petra",   Age:  21, Male: false, },
-		Person{ Name: "Karl",    Age:  21, Male: true,  },
-		Person{ Name: "Gustav",  Age:  21, Male: true,  },
+		Person{Name: "Peter", Age: 18, Male: true},
+		Person{Name: "Petra", Age: 21, Male: false},
+		Person{Name: "Karl", Age: 21, Male: true},
+		Person{Name: "Gustav", Age: 21, Male: true},
+		Person{Name: "Sabine", Age: 22, Male: false},
+		Person{Name: "Sabine", Age: 22, Male: false},
+		Person{Name: "Stefan", Age: 24, Male: true},
+		Person{Name: "Jochen", Age: 25, Male: true},
+		Person{Name: "Eva", Age: 21, Male: false},
+		Person{Name: "Peter", Age: 18, Male: true},
+		Person{Name: "Petra", Age: 21, Male: false},
+		Person{Name: "Karl", Age: 21, Male: true},
+		Person{Name: "Gustav", Age: 21, Male: true},
+		Person{Name: "Sabine", Age: 22, Male: false},
+		Person{Name: "Sabine", Age: 22, Male: false},
+		Person{Name: "Stefan", Age: 24, Male: true},
+		Person{Name: "Jochen", Age: 25, Male: true},
+		Person{Name: "Eva", Age: 21, Male: false},
+		Person{Name: "Peter", Age: 18, Male: true},
+		Person{Name: "Petra", Age: 21, Male: false},
+		Person{Name: "Karl", Age: 21, Male: true},
+		Person{Name: "Gustav", Age: 21, Male: true},
 	}
 	// STRUCT_END OMIT
 
@@ -74,4 +75,4 @@ func main() {
 
 	sumAgeByMale := func(p Person) (interface{}, int) { return p.Male, p.Age }
 	fmt.Printf("list.GroupBy(sumAgeByMale): %v\n", list.GroupBy(sumAgeByMale))
- */
+*/

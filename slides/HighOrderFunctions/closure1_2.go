@@ -11,7 +11,6 @@ func main() {
 	// f() OMIT
 	// CLOSURE END OMIT
 
-
 	// type f func()
 	// var fi f = func() { fmt.Println(" I was executed") } // 2
 

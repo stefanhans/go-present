@@ -19,7 +19,7 @@ func (list ListOfInt) Aggregate(monad IntMonad) MapIntAggregates {
 
 	for _, inK := range list {
 		v, ok := out[inK]
-		if ! ok {
+		if !ok {
 			out[inK] = monad.AssocFunc(monad.NeutralElement, inK)
 		} else {
 			out[inK] = monad.AssocFunc(v, inK)
@@ -27,6 +27,7 @@ func (list ListOfInt) Aggregate(monad IntMonad) MapIntAggregates {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

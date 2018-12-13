@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	_ "time"
 	"time"
+	_ "time"
 )
 
 func main() {
@@ -20,5 +20,5 @@ func main() {
 	// In the background
 	// go func(x f) { x() }(fi) // 5
 
-	time.Sleep(1 *time.Millisecond)
+	time.Sleep(1 * time.Millisecond)
 }

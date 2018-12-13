@@ -19,6 +19,7 @@ func (list ListOfInt) Fold(monad IntMonad) int {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {
@@ -28,4 +29,5 @@ func main() {
 
 	fmt.Printf("list%v.Fold(monad) yields %v\n", list, list.Fold(monad))
 }
+
 // END OMIT

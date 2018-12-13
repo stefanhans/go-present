@@ -6,7 +6,7 @@ import (
 
 // START OMIT
 type Account struct {
-	Name string
+	Name   string
 	Amount float64
 }
 
@@ -19,6 +19,7 @@ func (list ListOfAccount) GroupBy(f func(float64, float64) float64) map[string]f
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {
@@ -28,10 +29,10 @@ func main() {
 		Account{"Peter", -10.0},
 		Account{"Susann", 12.75},
 		Account{"Susann", -12.50},
-		}
+	}
 
 	balance := func(i float64, old float64) float64 {
-		return old+i
+		return old + i
 	}
 
 	fmt.Printf("list%v.GroupBy(balance) yields\n%v\n", list, list.GroupBy(balance))

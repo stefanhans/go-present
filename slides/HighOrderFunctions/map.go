@@ -37,6 +37,7 @@ func main() {
 	list.AnotherMap(tenTimes)
 	fmt.Printf("list%v\n", list)
 }
+
 // MUTABLE MAP END OMIT
 
 // END OMIT

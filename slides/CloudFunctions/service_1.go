@@ -8,7 +8,7 @@ import (
 
 func main() {
 
-	binary, lookErr := exec.LookPath("helloworld_2.bash")
+	binary, lookErr := exec.LookPath("service_1.bash")
 	if lookErr != nil {
 		panic(lookErr)
 	}
@@ -22,7 +22,9 @@ func main() {
 
 	/*
 				   // START OMIT
-	curl https://europe-west1-cloud-functions-talk-22365.cloudfunctions.net/HelloWorld
+	curl -d "hi https://europe-west1-cloud-functions-talk-22365.cloudfunctions.net/HelloWorld \
+	        hi says 'Hello, World!'" \
+			https://europe-west1-cloud-functions-talk-22365.cloudfunctions.net/register
 				   // END OMIT
 	*/
 }

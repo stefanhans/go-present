@@ -13,13 +13,18 @@ func (list ListOfInt) Map(f func(int) int) {
 		list[i] = f(list[i])
 	}
 }
+
 // END OMIT
 
 func main() {
 	tenTimes := func(x int) int {
-		time.Sleep(time.Duration(1 * time.Millisecond)); return x * 10
+		time.Sleep(time.Duration(1 * time.Millisecond))
+		return x * 10
 	}
-	var list ListOfInt; for i := 0; i < 10; i++ { list = append(list, i) }
+	var list ListOfInt
+	for i := 0; i < 10; i++ {
+		list = append(list, i)
+	}
 
 	start := time.Now()
 	fmt.Printf("list%v.Map(tenTimes) ", list)

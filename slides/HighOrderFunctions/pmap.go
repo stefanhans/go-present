@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"runtime"
 	"time"
-	"math"
 )
 
 type ListOfInt []int
@@ -23,7 +23,7 @@ func (list ListOfInt) chanMap(f listMapFunc, from, to int, end chan<- bool) {
 	for i := from; i < to; i++ {
 		list[i] = f(list[i])
 	}
-	end <-true
+	end <- true
 }
 
 func (list ListOfInt) ParMap(f listMapFunc, cores int) ListOfInt {
@@ -38,16 +38,21 @@ func (list ListOfInt) ParMap(f listMapFunc, cores int) ListOfInt {
 		go (&out).chanMap(f, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { <-end }
+	for i := 0; i < cores; i++ {
+		<-end
+	}
 	return out
 }
 
 func main() {
-	tenTimes := func(x int) int { time.Sleep(time.Duration(1 * time.Millisecond))
+	tenTimes := func(x int) int {
+		time.Sleep(time.Duration(1 * time.Millisecond))
 		return x * 10
 	}
 	var list ListOfInt
-	for i := 0; i < 10; i++ { list = append(list, i) }
+	for i := 0; i < 10; i++ {
+		list = append(list, i)
+	}
 
 	start := time.Now()
 	fmt.Printf("list%v.Map(tenTimes) yields %v\n", list, list.Map(tenTimes))
@@ -58,4 +63,5 @@ func main() {
 	fmt.Println(time.Since(start))
 	fmt.Printf("and list%v is immutable\n", list)
 }
+
 // END OMIT

@@ -16,6 +16,7 @@ func (list ListOfInt) Filter(f func(int) bool) ListOfInt {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-
 type ListOfInt []int
 
 type listMapFunc func(int) int
@@ -29,7 +28,6 @@ func (list ListOfInt) Filter(f ListFilterFunc) ListOfInt {
 	return out
 }
 
-
 func main() {
 	var list = ListOfInt{-2, -1, 0, 2, 2, 3}
 
@@ -38,7 +36,7 @@ func main() {
 
 	fmt.Printf("list%v.Filter(isEven).Map(tenTimes) yields %v\n", list,
 		list.
-		Filter(isEven).
+			Filter(isEven).
 			Map(tenTimes))
 }
 

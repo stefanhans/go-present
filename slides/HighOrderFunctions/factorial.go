@@ -25,17 +25,16 @@ func main() {
 
 	end := in
 	out := uint(2)
-	for i:=uint(2); i<end; i++ {
-		fmt.Printf("%v*(%v-1)=%v*%v\n", out, i, out, (i+1))
-		out = out*(i+1)
+	for i := uint(2); i < end; i++ {
+		fmt.Printf("%v*(%v-1)=%v*%v\n", out, i, out, (i + 1))
+		out = out * (i + 1)
 	}
 	fmt.Println(out)
 
-
 	out = uint(2)
-	for i:=uint(2); stop(i, end); i++ {
-		fmt.Printf("%v*(%v-1)=%v*%v\n", out, i, out, (i+1))
-		out = mult(out, (i+1))
+	for i := uint(2); stop(i, end); i++ {
+		fmt.Printf("%v*(%v-1)=%v*%v\n", out, i, out, (i + 1))
+		out = mult(out, (i + 1))
 	}
 	fmt.Println(out)
 }

@@ -12,6 +12,7 @@ func (list ListOfInt) Fold(f func(int, int) int) int {
 	}
 	return out
 }
+
 // HALF OMIT
 
 func main() {
@@ -20,4 +21,5 @@ func main() {
 	fmt.Printf("list%v.Fold(func(x, y int) int { return x + y }) yields %v\n", // HL
 		list, list.Fold(func(x, y int) int { return x + y })) // HL
 }
+
 // END OMIT

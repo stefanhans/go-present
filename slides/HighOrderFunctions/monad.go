@@ -19,6 +19,7 @@ func (list ListOfInt) Fold(monad IntMonad) int {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

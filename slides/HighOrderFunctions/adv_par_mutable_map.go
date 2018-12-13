@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"runtime"
 	"time"
-	"math"
 )
 
 type ListOfInt []int
@@ -19,7 +19,7 @@ func (list ListOfInt) chanMap(f func(int) int, from, to int, end chan<- bool) {
 	for i := from; i < to; i++ {
 		(list)[i] = f((list)[i])
 	}
-	end <-true
+	end <- true
 }
 
 func (list ListOfInt) ParMap(f func(int) int, cores int) {
@@ -31,7 +31,9 @@ func (list ListOfInt) ParMap(f func(int) int, cores int) {
 		go list.chanMap(f, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { <-end }
+	for i := 0; i < cores; i++ {
+		<-end
+	}
 }
 
 func main() {
@@ -41,7 +43,9 @@ func main() {
 	}
 
 	list := ListOfInt{}
-	for i := 0; i < 10; i++ { list = append(list, i) }
+	for i := 0; i < 10; i++ {
+		list = append(list, i)
+	}
 
 	start := time.Now()
 	fmt.Printf("list%v.ParMap(tenTimes, %v) ", list, runtime.NumCPU())
@@ -49,4 +53,5 @@ func main() {
 	fmt.Printf("yields %v\n", list)
 	fmt.Print(time.Since(start))
 }
+
 // END OMIT

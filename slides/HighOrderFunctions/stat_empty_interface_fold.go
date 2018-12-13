@@ -6,6 +6,7 @@ import (
 
 // START_IF OMIT
 type List []interface{}
+
 // END_IF OMIT
 
 // START_IMPL OMIT
@@ -13,6 +14,7 @@ type Monad struct {
 	NeutralElement interface{}
 	AssocFunc      func(interface{}, interface{}) interface{}
 }
+
 // END_IMPL OMIT
 
 // START_FOLD OMIT
@@ -23,6 +25,7 @@ func (list List) Fold(monad Monad) interface{} {
 	}
 	return out
 }
+
 // END_FOLD OMIT
 
 func main() {
@@ -51,4 +54,4 @@ func main() {
 	fmt.Printf("listComplex%v.Fold(monadComplex) yields %v\n",
 		listComplex, listComplex.Fold(monadComplex))
 
- */
+*/

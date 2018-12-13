@@ -14,6 +14,7 @@ func (list ListOfInt) Map(f func(int) int) ListOfInt {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

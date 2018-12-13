@@ -18,11 +18,12 @@ func MultiCompose(funcs ...func(x int) int) func(x int) int {
 		return fout(x)
 	}
 }
+
 // COMPOSE END OMIT
 
 func main() {
 	fmt.Println(MultiCompose(
-		func(x int) int { return x+1 },
-		func(x int) int { return x*x },
-		func(x int) int { return x+3 })(4))
+		func(x int) int { return x + 1 },
+		func(x int) int { return x * x },
+		func(x int) int { return x + 3 })(4))
 }

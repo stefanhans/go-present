@@ -23,7 +23,7 @@ type Service struct {
 // Structure of the collection
 var collectionName string = "Services"
 
-// Register get information of the new member via http and stores it in Firestore
+// Register information of the new service via http and stores it in Firestore
 func Register(w http.ResponseWriter, r *http.Request) {
 
 	// Get rid of warnings
@@ -74,7 +74,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Unregister deletes the member specified by name in Firestore
+// Unregister deletes the service specified by name in Firestore
 func Unregister(w http.ResponseWriter, r *http.Request) {
 
 	// Sets your Google Cloud Platform project ID.
@@ -105,7 +105,7 @@ func Unregister(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// List returns the list of members from Firestore
+// List returns the list of services from Firestore
 func List(w http.ResponseWriter, r *http.Request) {
 
 	// Get rid of warnings

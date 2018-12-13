@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"runtime"
 	"time"
-	"math"
 )
 
 type ListOfInt []int
@@ -21,7 +21,7 @@ func (list ListOfInt) chanMap(f listMapFunc, from, to int, end chan<- bool) {
 	for i := from; i < to; i++ {
 		(list)[i] = f((list)[i])
 	}
-	end <-true
+	end <- true
 }
 
 func (list ListOfInt) ParMap(f listMapFunc, cores int) {
@@ -33,7 +33,9 @@ func (list ListOfInt) ParMap(f listMapFunc, cores int) {
 		go list.chanMap(f, from, to, end)
 		from = to
 	}
-	for i := 0; i < cores; i++ { <-end }
+	for i := 0; i < cores; i++ {
+		<-end
+	}
 }
 
 func main() {

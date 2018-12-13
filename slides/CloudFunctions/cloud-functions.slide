@@ -29,6 +29,7 @@ https://github.com/stefanhans/go-present/
 - Dependencies
 - Registration service
 - Demo time
+- Service registration
 - The good, the bad and the ugly
 - What's next?
 
@@ -111,14 +112,12 @@ to be vendored
 
 * Registration Service (1/3)
 
-- JSON as encoding format
 - Cloud Firestore (Beta), a real-time document database for storage
+- JSON as encoding format
 - Only subscribe() and unsubscribe() needed
 - Additional functions for convenience
 
 .image images/run.png
-
-- Service registration as API approach
 
 * Registration Service (2/3)
 
@@ -200,8 +199,38 @@ marshall to JSON and send back
 .image images/project.png
 
 
+* Service registration (1/2)
 
-.play chat_1.go /START/,/END/
+The struct
+
+    // Service is the struct for the collection
+    type Service struct {
+        Name        string `firestore:"name,omitempty"`
+        Url         string `firestore:"url,omitempty"`
+        Description string `firestore:"description,omitempty"`
+    }
+
+and the functions which are expecting a string of words
+
+    // Register information of the new service in Firestore
+    func Register(w http.ResponseWriter, r *http.Request)
+
+    // Unregister deletes the service specified by name in Firestore
+    func Unregister(w http.ResponseWriter, r *http.Request)
+
+    // List returns the list of services from Firestore
+    func List(w http.ResponseWriter, r *http.Request)
+
+
+* Service registration (2/2)
+
+Let's register HelloWorld as a service
+
+.play service_1.go /START/,/END/
+
+and see how it works in the chat
+
+.image images/project.png
 
 
 * The Good,
@@ -213,7 +242,7 @@ marshall to JSON and send back
 
 *the*Bad,*
 
-- redundancy-independency contradiction
+- redundancy-independency contradiction, i.e. how to define the *context*domain*?
 
 
 *and*the*Ugly*

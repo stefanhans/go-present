@@ -18,6 +18,7 @@ func (list ListOfInt) Filter(f ListFilterFunc) ListOfInt {
 	}
 	return out
 }
+
 // END OMIT
 
 func main() {

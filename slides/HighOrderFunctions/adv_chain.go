@@ -4,7 +4,6 @@ import (
 	"fmt"
 )
 
-
 type ListOfInt []int
 
 type listMapFunc func(int) int

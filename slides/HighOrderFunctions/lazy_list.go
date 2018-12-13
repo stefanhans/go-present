@@ -7,11 +7,11 @@ import (
 
 type FloatDef struct {
 	StartElement float64
-	Func      func(float64) float64
+	Func         func(float64) float64
 }
 
 type LazyListOfFloat struct {
-	Def  FloatDef
+	Def    FloatDef
 	floats []float64
 	last   float64
 }
@@ -32,7 +32,6 @@ func (list *LazyListOfFloat) Get(ord int) float64 {
 	}
 	return list.floats[ord-1]
 }
-
 
 func main() {
 	var list LazyListOfFloat

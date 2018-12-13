@@ -12,6 +12,6 @@ func ComposeString(f, g func(str string) string) func(str string) string {
 
 func main() {
 	fmt.Println(ComposeString(
-		func(str string) string { return str+" hello" },
-		func(str string) string { return str+" Peter" })("my friend"))
+		func(str string) string { return str + " hello" },
+		func(str string) string { return str + " Peter" })("my friend"))
 }
